@@ -39,9 +39,33 @@ class User_Model extends CI_Model {
 		}
 	}
 
+	public function disable($username) {
+		$this->load->database();
+		$query = $this->db->get_where('user', array('username' => $username));
+		//$result = $query->result();
+		if ($query->num_rows() <= 0) {
+			return false;
+		} else {
+			$row = $query->row();
+			return $this->db->update('user', array('state' => 1), array('username = ' => $row->username));
+		}
+	}
+
+	public function edit($id, $username, $password) {
+		$this->load->database();
+		$query = $this->db->get_where('user', array('username' => $username));
+		//$result = $query->result();
+		if ($query->num_rows() <= 0) {
+			return false;
+		} else {
+			$row = $query->row();
+			return $this->db->update('user', array('state' => 1), array('username = ' => $row->username));
+		}
+	}
+
 	public function list() {
 		$this->load->database();
-		$q = $this->db->get_('user', array('type' => 1));
+		$q = $this->db->get_where('user', array('type' => 1));
 		return $q->result_array();
 	}
 

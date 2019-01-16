@@ -31,7 +31,7 @@ class Member_Model extends CI_Model {
 		if (isset($row)) {	
 			// 看推荐人已经推荐过几个了，最多推荐2个
 			$q = $this->db->get_where('member', array('recommend' => $recommend));
-			if ($q->num_rows() > 2) {
+			if ($q->num_rows() >= 2) {
 				// 推荐人满2人了
 				return array('code' => 100, 'msg' => '推荐人已推荐满2个了');
 			} else {

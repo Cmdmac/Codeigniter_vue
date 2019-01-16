@@ -42,6 +42,9 @@ import {Tabs} from 'element-ui'
 import {TabPane} from 'element-ui'
 import {Form} from 'element-ui'
 import {FormItem} from 'element-ui'
+import {Table} from 'element-ui'
+import {TableColumn} from 'element-ui'
+
 
 Vue.use(Button);
 Vue.use(Input);
@@ -49,6 +52,8 @@ Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Table);
+Vue.use(TableColumn);
 
 //主体
 import App from './App.vue';
