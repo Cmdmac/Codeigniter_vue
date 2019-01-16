@@ -38,13 +38,23 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import {Button} from 'element-ui'
 import {Input} from 'element-ui'
+import {Tabs} from 'element-ui'
+import {TabPane} from 'element-ui'
+import {Form} from 'element-ui'
+import {FormItem} from 'element-ui'
 
 Vue.use(Button);
 Vue.use(Input);
+Vue.use(Tabs); 
+Vue.use(TabPane);
+Vue.use(Form);
+Vue.use(FormItem);
+
 //主体
 import App from './App.vue';
 import HelloWorld from './components/HelloWorld.vue'
 import User from './components/User.vue'
+import Manager from './components/Manager.vue'
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -52,7 +62,8 @@ Vue.use(VueRouter); //挂载属性
 let r = [
         //一个个对象 
         { path: '/', component: HelloWorld },
-        { path: '/user', component: User }
+        { path: '/user', component: User },
+        { path: '/manager', component: Manager }
     ];
 let router = new VueRouter({
     routes: r

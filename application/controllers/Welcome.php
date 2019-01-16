@@ -22,4 +22,10 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function add() {
+		$this->load->model('User_Model');
+		$node = $this->User_Model->add(1, 'sdsdf');
+		echo json_encode($node);
+	}
 }
