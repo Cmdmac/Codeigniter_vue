@@ -53,13 +53,12 @@ class User_Model extends CI_Model {
 
 	public function edit($id, $username, $password) {
 		$this->load->database();
-		$query = $this->db->get_where('user', array('username' => $username));
+		$query = $this->db->get_where('user', array('id' => $id));
 		//$result = $query->result();
 		if ($query->num_rows() <= 0) {
 			return false;
 		} else {
-			$row = $query->row();
-			return $this->db->update('user', array('state' => 1), array('username = ' => $row->username));
+			return $this->db->update('user', array('username' => $username, 'password' => $password), array('id' => $id));
 		}
 	}
 

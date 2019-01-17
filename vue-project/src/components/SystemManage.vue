@@ -50,6 +50,20 @@
 	      </template>
 	    </el-table-column>
 	  </el-table>
+	  <el-dialog title="修改管理信息" :visible.sync="dialogFormVisible" width="30%">
+		  <el-form ref="form" :model="form" :rules="rules">
+		    <el-form-item label="姓名" :label-width="formLabelWidth" prop="username">
+		      <el-input v-model="form.username" autocomplete="off"></el-input>
+		    </el-form-item>
+		    <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+		      <el-input v-model="form.password" autocomplete="off"></el-input>
+		    </el-form-item>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="dialogFormVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+		  </div>
+		</el-dialog>
 	</div>
 </template>
 
@@ -57,6 +71,20 @@
 	import axios from 'axios';
 	import qs from 'qs';
 	import {Message} from 'element-ui';
+
+	function isValidName(str) {
+		const nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
+		return nameReg.test(str);
+	}
+	var validName = (rule, value, callback) => {
+		if (!value){
+          	callback(new Error('请输入姓名'))
+      	} else  if (!isValidName(value)){
+      	  	callback(new Error('请输入长度为2~4的中文姓名'))
+      	} else {
+          	callback()
+      	}
+  	}
 
 	export default {
     methods: {
@@ -147,8 +175,65 @@
       },
 
       onEdit(row) {
-
+      	this.$set(this, 'dialogFormVisible', true);
+      	this.form.id = row.id;
+      	this.form.username = row.username;
+      	this.form.password = row.password;
+      	this.$set(this, 'form', this.form);
       },
+
+      submitForm(formName) {
+      	let that = this;
+      	this.$refs[formName].validate((valid) => {
+      		if (valid) {
+      			let that = this;
+			    let instance = axios.create({
+			  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
+			  				withCredentials: true});
+				instance.post("http://localhost/index.php/manager/edit",
+				  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password }))
+				.then(function (response) {
+				  		if (response.data.code == 200) {
+				  			Message({
+				  				showClose: true,
+				  				message: response.data.msg, 
+				  				type: 'success',
+				  				duration: 2000
+				  			});
+				  			//row.state = '1';
+				  			for (let i = 0; i < that.tableData.length; i++) {
+				  				let row = that.tableData[i];
+				  				if (row.id == that.form.id) {
+				  					row.username = that.form.username;
+				  					row.password = that.form.password;
+				  					console.log('break;');
+				  					break;
+				  				}
+				  			}
+				  			that.$set(that, 'tableData', that.tableData);
+				  			//window.location.reload();		  			
+				  		} else {
+				  				//alert(response.data.msg);
+				  			Message({
+				  				showClose: true,
+				  				message: response.data.msg, 
+				  				type: 'error',
+				  				duration: 2000
+				  			});
+				  		}
+				  }).catch(function (error) {
+			                //eslint-disable-next-line
+			        console.log(error);
+			                //alert('error');
+			    });
+
+      			that.$set(that, 'dialogFormVisible', false);
+      		} else {
+      			console.log('error submit!!');
+      			return false;
+      		}
+      	});
+	    },
 
 		formatType: function(row, column) {
       		if (row.type == 0) {
@@ -174,6 +259,8 @@
 
     data() {
       return {
+      	formLabelWidth: '80px',
+      	dialogFormVisible: false,
         tableData: [/*{
           time: '2016-05-03',
           name: '王小虎1',
@@ -194,7 +281,17 @@
           name: '王小虎',
           type: '1',
           state: '未激活'
-        }*/]
+        }*/],
+        form: {
+        	id: '',
+          username: '',
+          password: ''
+        },
+        rules: {
+	        username: [{ required: true, trigger: 'blur', validator: validName }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+	        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+
+	    }
       }
     },
     

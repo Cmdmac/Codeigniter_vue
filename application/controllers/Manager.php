@@ -61,7 +61,7 @@ class Manager extends MY_Controller {
 		}		
 	}
 
-	public function edit($username) {
+	public function edit() {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
