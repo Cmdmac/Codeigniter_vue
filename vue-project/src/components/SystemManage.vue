@@ -54,7 +54,7 @@
 	    </el-table-column>
 	  </el-table>
 	  
-	  	  <el-dialog ref="addDialog" title="增加管理员" :visible.sync="addDialogFormVisible" width="30%">
+	  	  <el-dialog ref="addDialog" title="增加管理员" :visible.sync="addDialogFormVisible" width="80%">
 		  <el-form ref="addForm" :model="form" :rules="rules">
 		    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
 		      <el-input v-model="form.username" autocomplete="off"></el-input>
@@ -69,7 +69,7 @@
 		  </div>
 		</el-dialog>
 
-	  <el-dialog ref="modifyDialog" title="修改管理信息" :visible.sync="dialogFormVisible" width="30%">
+	  <el-dialog ref="modifyDialog" title="修改管理信息" :visible.sync="dialogFormVisible">
 		  <el-form ref="form" :model="form" :rules="rules">
 		    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
 		      <el-input v-model="form.username" autocomplete="off"></el-input>

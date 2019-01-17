@@ -47,7 +47,7 @@ class User extends MY_Controller {
 					//$this->json();	
 					$this->json($r);
 				} else {
-					$this->json_with_code_msg(1001, 'username or password is not correct');
+					$this->json_with_code_msg(1001, '用户名或密码错误');
 				}		
 			}
 		}
@@ -55,7 +55,7 @@ class User extends MY_Controller {
 
 	private function checkParams($username, $password) {
 		if (empty($username) || empty($password)) {
-			$data = array('code' => '1001', 'msg' => 'username or password is empty');			
+			$data = array('code' => '1001', 'msg' => '用户名或密码不能为空');			
 			$this->json($data);
 			return false;
 		}

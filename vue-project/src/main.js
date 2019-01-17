@@ -75,6 +75,7 @@ let r = [
 let router = new VueRouter({
     routes: r
 });
+
 //new Vue 启动
 new Vue({
     el: '#app',
