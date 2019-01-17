@@ -44,6 +44,8 @@ export default {
   				)).then(function (response) {
   			if (response.data.code == 200) {
   				//alert(response.data.msg);
+  				window.localStorage.setItem('username', response.data.username);
+  				window.localStorage.setItem('type', response.data.type);
   				window.location = 'http://localhost:8080/#/manager?username=' + that.username
   				//alert(response.data.last_login_time);
   			} else {
