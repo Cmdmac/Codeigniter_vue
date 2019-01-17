@@ -33,6 +33,7 @@ export default {
   		this.$set(this, 'needEnsure', false);
   	},
   	onLogin() {
+		//android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://localhost:8080/#/manager,http://localhost:8080/#/manager,http://localhost:8080/#/manager"));
   		//alert('ddd')
   		let that = this;
   		let instance = axios.create({
@@ -47,6 +48,9 @@ export default {
   				window.localStorage.setItem('username', response.data.username);
   				window.localStorage.setItem('type', response.data.type);
   				window.localStorage.setItem('time', new Date().getTime());
+  				if (android) {
+  					android.navigateTo("local://navigator/manager?tabs=http://localhost:8080/#/manager,http://localhost:8080/#/manager,http://localhost:8080/#/manager");
+  				}
   				window.location = window.location.origin + '/#/manager';
   				//alert(response.data.last_login_time);
   			} else {
