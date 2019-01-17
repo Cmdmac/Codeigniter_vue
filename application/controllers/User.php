@@ -11,9 +11,9 @@ class User extends MY_Controller {
 		if ($isValideParams) {
 			$this->load->model('User_Model');
 			if ($this->User_Model->register($username, $password)) {
-				$this->json_with_code_msg(200, 'register success');
+				$this->json_with_code_msg(200, '注册成功');
 			} else {
-				$this->json_with_code_msg(1001, 'register failure, user already exitst!');
+				$this->json_with_code_msg(1001, '注册失败，用户名已存在');
 			}
 		}
 	}
