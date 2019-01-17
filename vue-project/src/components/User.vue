@@ -48,7 +48,7 @@ export default {
   				window.localStorage.setItem('username', response.data.username);
   				window.localStorage.setItem('type', response.data.type);
   				window.localStorage.setItem('time', new Date().getTime());
-  				if (android) {
+  				if (window.android != undefined) {
   					android.navigateTo("local://navigator/manager?tabs=http://localhost:8080/#/manager,http://localhost:8080/#/manager,http://localhost:8080/#/manager");
   				}
   				window.location = window.location.origin + '/#/manager';
