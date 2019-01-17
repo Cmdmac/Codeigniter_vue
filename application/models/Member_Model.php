@@ -46,7 +46,7 @@ class Member_Model extends CI_Model {
 			}
 		} else {
 			if ($this->getMembersCount() == 0) {
-				$node = array('name' => $name, 'phone' => $phone, 'recommend' => '第一个', 'level' => 1, 'line' => 1);
+				$node = array('name' => $name, 'phone' => $phone, 'recommend' => 'root', 'level' => 1, 'line' => 1);
 				if ($this->db->insert('member', $node)) {
 					return array('code' => 100, 'msg' => '推荐成功，是第一个会员');;
 				}

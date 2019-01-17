@@ -1,6 +1,6 @@
 <template>
 	<div >
-		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules" align="center" style="width: 30%; margin-top: 30px">
+		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules" align="center" style="width: 80%; max-width: 500px; margin-top: 30px">
 		  <el-form-item label="姓名" prop="name">
 		    <el-input v-model="model.name" ></el-input>
 		  </el-form-item>
@@ -21,7 +21,7 @@
 	import axios from "axios";
 	import qs from 'qs';
 	import {Message} from 'element-ui';
-	
+
 	function isvalidPhone(str) {
   		const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
   		return reg.test(str)

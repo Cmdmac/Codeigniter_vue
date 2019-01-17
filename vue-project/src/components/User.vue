@@ -46,7 +46,8 @@ export default {
   				//alert(response.data.msg);
   				window.localStorage.setItem('username', response.data.username);
   				window.localStorage.setItem('type', response.data.type);
-  				window.location = 'http://localhost:8080/#/manager?username=' + that.username
+  				window.localStorage.setItem('time', new Date().getTime());
+  				window.location = window.location.origin + '/#/manager';
   				//alert(response.data.last_login_time);
   			} else {
   				Message({
@@ -118,7 +119,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style type="text/css" scoped>
 	td {
 		margin: 10px;
 	}

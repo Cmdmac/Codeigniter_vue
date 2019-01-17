@@ -4,33 +4,36 @@
 	  <el-table
 	    :data="tableData"
 	    border
-	    style=" width: 90%; margin-top: 20px;">
+	    style="margin-top: 20px; position: relative; overflow: auto;">
 	    <el-table-column
-	      fixed
 	      prop="username"
 	      align="center"
 	      label="用户名"
-	      min-width="150">
+	      max-width="100"
+	      min-width="80">
 	    </el-table-column>
 	    <el-table-column
 	      prop="password"
 	      label="密码"
 	      align="center"
-	      min-width="120">
+	      max-width="100"
+	      min-width="80">
 	    </el-table-column>
 	    <el-table-column
 	      prop="type"
 	      label="类型"
 	      :formatter="formatType"
 	      align="center"
-	      min-width="120">
+	      max-width="80"
+	      min-width="80">
 	    </el-table-column>
 	    <el-table-column
 	      prop="state"
 	      label="状态"
 	      :formatter="formatState"
 	      align="center"
-	      min-width="120">
+	      max-width="80"
+	      min-width="80">
 	    </el-table-column>
 	    <el-table-column
 	      prop="time"
@@ -42,7 +45,7 @@
 	      fixed="right"
 	      label="操作"
 	      align="center"
-	      min-width="100">
+	      min-width="120">
 	      <template slot-scope="scope">
 	        <el-button @click="onReview(scope.row)" type="text" size="small">审核</el-button>
 	        <el-button @click="onDisable(scope.row)" type="text" size="small">停用</el-button>

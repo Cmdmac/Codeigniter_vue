@@ -29,6 +29,33 @@ class Member extends MY_Controller
 		}		
 	}
 
+	public function init() {
+		//$this->load->helper('url');
+		$this->load->model('Member_Model');
+		$root = $this->Member_Model->getChildren('root');
+		$r = $this->encode_children($root[0], 1);
+		$this->json_with_data(200, 'ok', $r);
+	}
+
+	private function encode_children($node, $level) {
+		//var_dump($node);
+		if ($node == null) {
+			return array();
+		}
+		$children = $this->Member_Model->getChildren($node['name']);
+		//var_dump($children);
+		$arr = array('name' => $node['name']);
+		if ($level == 5) {
+			return $arr;
+		}
+		foreach ($children as $item) {
+			# code...
+			$r = $this->encode_children($item, $level + 1);
+			$arr['children'][] = $r;
+		}
+		return $arr;
+	}
+
 	public function getChildren() {
 		$this->load->helper('url');
 		$recommend = $this->input->get('recommend');
@@ -58,7 +85,7 @@ class Member extends MY_Controller
 		$this->json_with_data('200', 'ok', $list);
 	}
 
-	public function init() {
+	public function init_test() {
 		
 		$arr = array('name' => 'A', 'phone' => '1', 'recommend' => '');
 		$this->doRegister($arr['name'], $arr['phone'], $arr['recommend']);

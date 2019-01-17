@@ -1,0 +1,169 @@
+<template>
+  <div id="app">
+    <div align="right"><span style="font-weight: bold; font-size: 15pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员</span></div>
+    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
+    <footer class="foot">
+        <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1">
+    </div>
+    <!--
+    <el-button type="primary" @click="onFind">查找</el-button>
+  -->
+    </footer>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios';
+  import qs from 'qs';
+  import {Message} from 'element-ui';
+  import TreeChart from "@/components/TreeChart";
+
+export default {
+  name: 'StaticsManager',
+  components: {
+    TreeChart
+  },
+  data() {
+    return {
+      totalMemberCount: 0,
+      landscape: [],
+      tree: {
+      }
+    }
+  },
+  methods: {
+    onFind() {
+      let r = this.findNode(this.tree, 'grandchild3');
+      if (r != undefined) {
+        //console.log(r);
+      }
+    },
+
+    clickNode: function(node){
+      // eslint-disable-next-line
+      //console.log(node)
+      this.getChildren(node.name);
+    },
+
+    onClickHandler: function(e) {
+      console.log(e);
+    },
+
+    getChildren(recommend) {
+      let that = this;
+      let instance = axios.create({
+              headers: { 'content-type': 'application/x-www-form-urlencoded' },
+              withCredentials: true});
+            instance.get("http://localhost/index.php/member/getChildren?recommend=" + recommend)
+            .then(function (response) {
+              if (response.data.code == 200) {
+                //console.log(response.data);
+                // empty tree
+                let children = response.data.data;
+                let node = that.findNode(that.tree, recommend);
+                //console.log(node);
+                node.children = children;
+                node.leaf = node.children.length == 0;
+                
+                //console.log(that.tree);
+                that.$set(that, 'tree', that.tree);
+                //that.$refs.tree.toggleExtend(that.$refs.tree.treeData);
+
+              } else {
+                //alert(response.data.msg);
+                Message({
+                  showClose: true,
+                  message: response.data.msg, 
+                  type: 'error',
+                  duration: 1000
+                });
+              }
+            }).catch(function (error) {
+                      //eslint-disable-next-line
+                console.log(error);
+                      //alert('error');
+              });
+    },
+
+    findNode(node, name) {
+      if (node.name == name) {
+        return node;
+      } else {
+        if (node.children == undefined) {
+          return undefined;
+        }
+        for (let i = 0; i < node.children.length; i++) {
+          let n = node.children[i];
+          let r = this.findNode(n, name);
+          if (r != undefined) {
+            return r;
+          }
+        }
+        return undefined;
+      }
+    }
+  },
+
+  mounted() {
+    //this.getChildren('root');
+    let that = this;
+    let instance = axios.create({
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            withCredentials: true});
+          instance.get("http://localhost/index.php/member/init")
+          .then(function (response) {
+            if (response.data.code == 200) {
+              //console.log(response.data);
+              that.$set(that, 'tree', response.data.data);
+            } else {
+              //alert(response.data.msg);
+              Message({
+                showClose: true,
+                message: response.data.msg, 
+                type: 'error',
+                duration: 1000
+              });
+            }
+          }).catch(function (error) {
+                    //eslint-disable-next-line
+              console.log(error);
+                    //alert('error');
+            });
+
+          instance.get("http://localhost/index.php/member/getMemberCount")
+          .then(function(response) {
+            if (response.data.code == 200) {
+              that.totalMemberCount = response.data.data;
+              that.$set(that, 'totalMemberCount', that.totalMemberCount);
+            }
+          }).catch(function(error) {
+
+          }) 
+  }
+}
+</script>
+
+<style scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#app .avat{border-radius: 2em;border-width:2px;}
+#app .name{font-weight:700;}
+.foot {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    padding: 10px;
+    overflow: hidden;
+    color: #999;
+    font-size: 14px;
+    text-align: center;
+}
+.foot a{color:#fff; margin:0 .5em}
+</style>
