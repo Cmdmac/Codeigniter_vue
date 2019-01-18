@@ -33,7 +33,9 @@ export default {
   		this.$set(this, 'needEnsure', false);
   	},
   	onLogin() {
-		//android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://localhost:8080/#/manager,http://localhost:8080/#/manager,http://localhost:8080/#/manager"));
+  		if (window.android != undefined) {
+			window.android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager"));
+		}
   		//alert('ddd')
   		let that = this;
   		let instance = axios.create({

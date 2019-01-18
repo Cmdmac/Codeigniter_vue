@@ -78,6 +78,12 @@ const Manager = resovle => {
 	})
 };
 
+const ManagerPage = resovle => {
+	require.ensure(['@/components/ManagerPage'], () => {
+		resovle(require('@/components/ManagerPage'))
+	})
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -86,7 +92,8 @@ let r = [
         //一个个对象 
         // { path: '/', component: HelloWorld },
         { path: '/user', component: User },
-        { path: '/manager', component: Manager }
+        { path: '/manager', component: Manager },
+        { path: '/manager_page', component: ManagerPage}
     ];
 let router = new VueRouter({
     routes: r
