@@ -59,16 +59,29 @@ Vue.use(Dialog);
 
 //主体
 import App from './App.vue';
-import HelloWorld from './components/HelloWorld.vue'
-import User from './components/User.vue'
-import Manager from './components/Manager.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import User from './components/User.vue'
+// import Manager from './components/Manager.vue'
+
+const User = resovle => {
+	require.ensure(['@/components/User'], () => {
+		resovle(require('@/components/User'))
+	})
+};
+
+const Manager = resovle => {
+	require.ensure(['@/components/Manager'], () => {
+		resovle(require('@/components/Manager'))
+	})
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
 // 命名不能跟routers一样，不然会显示空白界面
 let r = [
         //一个个对象 
-        { path: '/', component: HelloWorld },
+        // { path: '/', component: HelloWorld },
         { path: '/user', component: User },
         { path: '/manager', component: Manager }
     ];
