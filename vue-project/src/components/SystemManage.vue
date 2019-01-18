@@ -114,7 +114,7 @@
 		    	let instance = axios.create({
 		    		headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		    		withCredentials: true});
-		    	instance.get("http://localhost/index.php/manager/list")
+		    	instance.get(this.Server.api.manager.list)
 		    	.then(function (response) {
 
 		    		if (response.data.code == 200) {
@@ -138,7 +138,7 @@
 				    let instance = axios.create({
 				  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 				  				withCredentials: true});
-					instance.post("http://localhost/index.php/manager/active",
+					instance.post(this.Server.api.manager.active,
 					  			qs.stringify({ username: row.username }))
 					.then(function (response) {
 					  		if (response.data.code == 200) {
@@ -182,7 +182,7 @@
 		    let instance = axios.create({
 		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		  				withCredentials: true});
-			instance.post("http://localhost/index.php/manager/disable",
+			instance.post(this.Server.api.manager.disable,
 			  			qs.stringify({ username: row.username }))
 			.then(function (response) {
 			  		if (response.data.code == 200) {
@@ -227,7 +227,7 @@
 	    let instance = axios.create({
 	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 	  				withCredentials: true});
-		instance.post("http://localhost/index.php/manager/edit",
+		instance.post(this.Server.api.manager.edit,
 		  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password }))
 		.then(function (response) {
 		  		if (response.data.code == 200) {
@@ -269,7 +269,7 @@
 	    let instance = axios.create({
 	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 	  				withCredentials: true});
-		instance.post("http://localhost/index.php/manager/add",
+		instance.post(this.Server.api.manager.add,
 		  			qs.stringify({ username: this.form.username, password: this.form.password }))
 		.then(function (response) {
 		  		if (response.data.code == 200) {

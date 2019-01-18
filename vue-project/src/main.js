@@ -57,6 +57,9 @@ Vue.use(TableColumn);
 Vue.use(Table);
 Vue.use(Dialog);
 
+import {config} from "./config";
+Vue.prototype.Server = config;
+
 //主体
 import App from './App.vue';
 // import HelloWorld from './components/HelloWorld.vue'

@@ -54,7 +54,7 @@ export default {
       let instance = axios.create({
               headers: { 'content-type': 'application/x-www-form-urlencoded' },
               withCredentials: true});
-            instance.get("http://localhost/index.php/member/getChildren?recommend=" + recommend)
+            instance.get(this.Server.api.member.getChildren + recommend)
             .then(function (response) {
               if (response.data.code == 200) {
                 //console.log(response.data);
@@ -110,7 +110,7 @@ export default {
     let instance = axios.create({
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             withCredentials: true});
-          instance.get("http://localhost/index.php/member/init")
+          instance.get(this.Server.api.member.init)
           .then(function (response) {
             if (response.data.code == 200) {
               //console.log(response.data);
@@ -130,7 +130,7 @@ export default {
                     //alert('error');
             });
 
-          instance.get("http://localhost/index.php/member/getMemberCount")
+          instance.get(this.Server.api.member.getMemberCount)
           .then(function(response) {
             if (response.data.code == 200) {
               that.totalMemberCount = response.data.data;

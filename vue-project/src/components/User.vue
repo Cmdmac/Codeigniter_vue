@@ -40,7 +40,7 @@ export default {
   			headers: { 'content-type': 'application/x-www-form-urlencoded' },
   			withCredentials: true 
   		});
-  		instance.post("http://localhost/index.php/user/login",
+  		instance.post(this.Server.api.user.login,
   			qs.stringify({ username: this.username, password: this.password }
   				)).then(function (response) {
   			if (response.data.code == 200) {
@@ -82,7 +82,7 @@ export default {
   			headers: { 'content-type': 'application/x-www-form-urlencoded' },
   			withCredentials: true 
 	  		});
-	  		instance.post("http://localhost/index.php/user/register",
+	  		instance.post(this.Server.api.user.register,
 	  			qs.stringify({ username: this.username, password: this.password }
 	  				)).then(function (response) {
 	  			if (response.data.code == 200) {

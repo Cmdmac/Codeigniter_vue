@@ -78,7 +78,7 @@
 		            let instance = axios.create({
 		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		  				withCredentials: true});
-			  		instance.post("http://localhost/index.php/member/register",
+			  		instance.post(this.Server.api.member.register,
 			  			qs.stringify({ name: this.model.name, phone: this.model.phone, recommend: this.model.recommend }))
 			  		.then(function (response) {
 			  			if (response.data.code == 200) {
