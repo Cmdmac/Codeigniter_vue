@@ -67,9 +67,9 @@ class User extends MY_Controller {
 
 	public function test() {
 		//$this->load->view('User');
-		$this->load->model('User_Model');
-		$node = $this->User_Model->test();
-		echo json_encode($node);
+		$sessionpath = session_save_path();
+
+		echo $sessionpath;
 	}
 
 }

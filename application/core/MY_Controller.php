@@ -24,7 +24,7 @@ class MY_Controller extends CI_Controller {
 
 	protected function json($data) {
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://hgx830330.applinzi.com"); 
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
@@ -32,7 +32,7 @@ class MY_Controller extends CI_Controller {
 	protected function json_with_code_msg($code, $msg) {
 		$data = array('code' => $code, 'msg' => $msg);
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://hgx830330.applinzi.com"); 
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
@@ -40,7 +40,7 @@ class MY_Controller extends CI_Controller {
 	protected function json_with_data($code, $msg, $data) {
 		$data = array('code' => $code, 'msg' => $msg, 'data' => $data);
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://hgx830330.applinzi.com"); 
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
