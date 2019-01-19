@@ -1,9 +1,10 @@
 var config = {
-    host : "http://localhost:8080/",
+    host : "http://192.168.31.8:8080/#/",
     api: {
         user: {
             register: 'http://192.168.31.8/index.php/user/register',
-            login: 'http://192.168.31.8/index.php/user/login'
+            login: 'http://192.168.31.8/index.php/user/login',
+            logout: 'http://192.168.31.8/index.php/user/logout'
         },
         member: {
             init: "http://192.168.31.8/index.php/member/init",

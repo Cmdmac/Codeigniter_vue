@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div align="right"><span style="font-weight: bold; font-size: 15pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员</span></div>
+    <div align="right"><span style="font-weight: bold; font-size: 15pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员</span><el-button type="text" @click="loadTree">刷新</el-button></div>
     <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
     <footer class="foot">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1">
@@ -101,13 +101,11 @@ export default {
         }
         return undefined;
       }
-    }
-  },
+    },
 
-  mounted() {
-    //this.getChildren('root');
-    let that = this;
-    let instance = axios.create({
+    loadTree() {
+      let that = this;
+      let instance = axios.create({
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             withCredentials: true});
           instance.get(this.Server.api.member.init)
@@ -138,7 +136,13 @@ export default {
             }
           }).catch(function(error) {
 
-          }) 
+          });
+    }
+  },
+
+  mounted() {
+    //this.getChildren('root');
+    this.loadTree();
   }
 }
 </script>

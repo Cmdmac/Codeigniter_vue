@@ -39,7 +39,7 @@
 	      prop="time"
 	      label="注册时间"
 	      align="center"
-	      min-width="120">
+	      min-width="180">
 	    </el-table-column>
 	    <el-table-column
 	      fixed="right"

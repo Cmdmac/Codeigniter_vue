@@ -1,6 +1,7 @@
 <template>
 	<div align="center" style="width: 100%;">
-		<div align="left" style="margin-left: 10px; margin-bottom: 20px; font-size: 15pt;">欢迎<span style="font-weight: bold">{{username}}</span>欢迎登录爱我中华自助系统</div>
+		<div align="left" style="margin-left: 10px; margin-bottom: 20px; font-size: 15pt;">欢迎<span style="font-weight: bold">{{username}}</span>！
+			<el-button type="small" @click="onLogout">退出</el-button></div>
 		<el-tabs type="card" @tab-click="handleClick" tab-position="top" v-model="activeName">
 		    <el-tab-pane label="会员管理" name="first"><MemberManage /></el-tab-pane>
 		    <el-tab-pane v-if="showSystemPage" label="系统管理" name="second" :lazy='true'><SystemManage /></el-tab-pane>
@@ -14,6 +15,10 @@
 	// import MemberManage from './MemberManage.vue'
 	// import SystemManage from './SystemManage.vue'
 	// import StaticsManager from './StaticsManager.vue'
+	import {Message} from 'element-ui';
+	import axios from 'axios';
+	import qs from 'qs';
+
 	export default {
 		components: {'MemberManage': () => import("@/components/MemberManage"), 'SystemManage': () => import("@/components/SystemManage"), 'StaticsManager': () => import("@/components/StaticsManager")},
 	    data() {
@@ -22,12 +27,52 @@
 	      	loadTab2: false,
 	      	loadTab3: false,
 	      	showSystemPage: false,
-	        activeName: 'second'
+	        activeName: 'first'
 	      };
 	    },
 	    methods: {
 	      handleClick(tab, event) {
-	        console.log(tab, event);
+	        //console.log(tab, event);
+	      },
+
+	      onLogout() {
+	      	let username = window.localStorage.getItem('username');
+	      	let that = this;
+		            let instance = axios.create({
+		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
+		  				withCredentials: true});
+			  		instance.post(this.Server.api.user.logout,
+			  			qs.stringify({ username: username}))
+			  		.then(function (response) {
+			  			if (response.data.code == 200) {
+			  				//alert(response.data.msg);
+			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
+			  				//alert(response.data.last_login_time);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'success',
+			  					duration: 1000
+			  				});
+			  				//退出，清除登录数据，回到登录
+			  				window.localStorage.removeItem('username');
+			  				window.localStorage.removeItem('type');
+			  				window.localStorage.removeItem('time');
+			  				window.location = that.Server.host;
+			  			} else {
+			  				//alert(response.data.msg);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'error',
+			  					duration: 1000
+			  				});
+			  			}
+			  		}).catch(function (error) {
+			                //eslint-disable-next-line
+			                console.log(error);
+			                //alert('error');
+			        });
 	      }
 	    },
 

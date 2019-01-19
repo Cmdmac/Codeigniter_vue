@@ -5,6 +5,9 @@
 </template>
 
 <script type="text/javascript">
+	import axios from 'axios';
+	import qs from 'qs';
+	
 	export default {
 		components: {'MemberManage': () => import("@/components/MemberManage"), 'SystemManage': () => import("@/components/SystemManage"), 'StaticsManager': () => import("@/components/StaticsManager")},
 		data() {
@@ -33,6 +36,45 @@
 		methods: {
 			navigateTo(target) {
 				this.$set(this, 'target', target);
+			},
+			logout() {
+				let username = window.localStorage.getItem('username');
+	      	let that = this;
+		            let instance = axios.create({
+		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
+		  				withCredentials: true});
+			  		instance.post(this.Server.api.user.logout,
+			  			qs.stringify({ username: username}))
+			  		.then(function (response) {
+			  			if (response.data.code == 200) {
+			  				//alert(response.data.msg);
+			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
+			  				//alert(response.data.last_login_time);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'success',
+			  					duration: 1000
+			  				});
+			  				//退出，清除登录数据，回到登录
+			  				window.localStorage.removeItem('username');
+			  				window.localStorage.removeItem('type');
+			  				window.localStorage.removeItem('time');
+			  				window.location = that.Server.host;
+			  			} else {
+			  				//alert(response.data.msg);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'error',
+			  					duration: 1000
+			  				});
+			  			}
+			  		}).catch(function (error) {
+			                //eslint-disable-next-line
+			                console.log(error);
+			                //alert('error');
+			        });
 			}
 		}
 	}

@@ -1,3 +1,11 @@
+ajax跨域配置application/core/MY_Controller.php
+服务器地址配置vue-project/src/config.js
+
+
+
+
+
+
 CI框架3.0关于session的设置改动及存数据库的使用方法
 Session的设置跟之前有点不一样
 

@@ -1,7 +1,29 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends MY_Controller {
+class User extends CI_Controller {
+	protected function json($data) {
+		header('Access-Control-Allow-Credentials: true');
+		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+
+	protected function json_with_code_msg($code, $msg) {
+		$data = array('code' => $code, 'msg' => $msg);
+		header('Access-Control-Allow-Credentials: true');
+		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+
+	protected function json_with_data($code, $msg, $data) {
+		$data = array('code' => $code, 'msg' => $msg, 'data' => $data);
+		header('Access-Control-Allow-Credentials: true');
+		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
 
 	public function register() {
 		$username = $this->input->post('username');
@@ -51,6 +73,19 @@ class User extends MY_Controller {
 					$this->json_with_code_msg(1001, '用户名或密码错误');
 				}		
 			}
+		}
+	}
+
+	public function logout() {
+		$username = $this->input->post('username');
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') && $this->session->username == $username) {
+			$this->session->unset_userdata('username');
+			$this->session->unset_userdata('last_login_time');
+			$this->session->unset_userdata('type');
+			$this->json_with_code_msg(200, '已退出');
+		} else {
+			$this->json_with_code_msg(200, '未登录');
 		}
 	}
 

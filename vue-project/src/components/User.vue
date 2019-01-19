@@ -99,7 +99,7 @@ export default {
 	  				Message({
 			  			showClose: true,
 			  			message: response.data.msg, 
-			  			type: 'error',
+			  			type: 'success',
 			  			duration: 2000
 		  			});
 	  				that.showLogin();
