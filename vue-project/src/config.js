@@ -19,7 +19,13 @@ var config = {
             edit: "http://192.168.31.8/index.php/manager/edit",
             add: "http://192.168.31.8/index.php/manager/add"
         },
-
+    },
+    page: {
+        manager: {
+            member: "http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理",
+            system: "http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理",
+            statics: "http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"
+        }
     }
 }
 

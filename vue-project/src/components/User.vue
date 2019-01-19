@@ -53,7 +53,9 @@ export default {
   				window.localStorage.setItem('time', t);
   				if (window.android != undefined) {
             if (response.data.type == 0) {
-              android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理,http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理,http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"));
+              let url = "local://navigator/manager?tabs=" + encodeURIComponent(that.Server.page.manager.member + "," + that.Server.page.manager.system + "," + that.Server.page.manager.statics);
+              console.log(url);
+              android.navigateTo(url);
               
             }
             console.log("login time=" + t);
@@ -134,7 +136,7 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-	td {
+td {
 		margin: 10px;
 	}
 </style>
