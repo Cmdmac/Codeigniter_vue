@@ -1,30 +1,30 @@
 var config = {
-    host : "http://192.168.31.8:8080/#/",
+    host : "http://hgx830330.applinzi.com/#/",
     api: {
         user: {
-            register: 'http://192.168.31.8/index.php/user/register',
-            login: 'http://192.168.31.8/index.php/user/login',
-            logout: 'http://192.168.31.8/index.php/user/logout'
+            register: 'http://hgx830330.applinzi.com/index.php/user/register',
+            login: 'http://hgx830330.applinzi.com/index.php/user/login',
+            logout: 'http://hgx830330.applinzi.com/index.php/user/logout'
         },
         member: {
-            init: "http://192.168.31.8/index.php/member/init",
-            register: "http://192.168.31.8/index.php/member/register",
-            getChildren: "http://192.168.31.8/index.php/member/getChildren?recommend=",
-            getMemberCount: "http://192.168.31.8/index.php/member/getMemberCount"
+            init: "http://hgx830330.applinzi.com/index.php/member/init",
+            register: "http://hgx830330.applinzi.com/index.php/member/register",
+            getChildren: "http://hgx830330.applinzi.com/index.php/member/getChildren?recommend=",
+            getMemberCount: "http://hgx830330.applinzi.com/index.php/member/getMemberCount"
         },
         manager: {
-            list: "http://192.168.31.8/index.php/manager/list",
-            active: "http://192.168.31.8/index.php/manager/active",
-            disable: "http://192.168.31.8/index.php/manager/disable",
-            edit: "http://192.168.31.8/index.php/manager/edit",
-            add: "http://192.168.31.8/index.php/manager/add"
+            list: "http://hgx830330.applinzi.com/index.php/manager/list",
+            active: "http://hgx830330.applinzi.com/index.php/manager/active",
+            disable: "http://hgx830330.applinzi.com/index.php/manager/disable",
+            edit: "http://hgx830330.applinzi.com/index.php/manager/edit",
+            add: "http://hgx830330.applinzi.com/index.php/manager/add"
         },
     },
     page: {
         manager: {
-            member: "http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理",
-            system: "http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理",
-            statics: "http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"
+            member: "http://hgx830330.applinzi.com/#/manager_page?page=MemberManage&title=会员管理",
+            system: "http://hgx830330.applinzi.com/#/manager_page?page=SystemManage&title=系统管理",
+            statics: "http://hgx830330.applinzi.com/#/manager_page?page=StaticsManage&title=统计管理"
         }
     }
 }

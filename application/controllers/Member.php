@@ -78,6 +78,7 @@ class Member extends MY_Controller
 		$this->load->helper('url');
 		$this->load->model('Member_Model');
 		$count = $this->Member_Model->getMembersCount();
+		//var_dump($count);
 		$this->json_with_data('200', 'ok', $count);
 	}
 
