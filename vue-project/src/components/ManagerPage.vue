@@ -16,6 +16,18 @@
 		mounted() {
 			console.log(this.$route.query);
 			window.navigateTo = this.navigateTo;
+
+			//检查是否登录
+				// window.localStorage.setItem('username', response.data.username);
+  		// 		window.localStorage.setItem('type', response.data.type);
+  		// 		window.localStorage.setItem('time', new Date().getTime());
+  			let username = window.localStorage.getItem('username');
+  			let time = window.localStorage.getItem('time');
+  			let t = new Date().getTime();
+  			console.log('login d = ' + (t - time));
+  			if (t - time > 3600 * 3 * 1000) {
+  				window.location = window.location = window.location.origin + '/#/user';
+  			}
 		}, 
 
 		methods: {

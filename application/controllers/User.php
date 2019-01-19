@@ -43,6 +43,7 @@ class User extends MY_Controller {
 					}
 					$data = array('username' => $username, 'last_login_time' => time(), 'type' => $user->type);
 					$this->session->set_userdata($data);
+					 $this->input->set_cookie("username", $username, 3600);
 					$r = array('code' => '200', 'msg' => $username.' login success', 'username' => $user->username, 'type' => $user->type, 'last_login_time' => $data['last_login_time'], 'has_session' => $this->session->has_userdata('username'));
 					//$this->json();	
 					$this->json($r);

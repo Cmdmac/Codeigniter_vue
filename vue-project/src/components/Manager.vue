@@ -1,6 +1,6 @@
 <template>
 	<div align="center" style="width: 100%;">
-		<div align="left" style="margin-left: 10px; margin-bottom: 20px; font-size: 15pt;">欢迎<span style="font-weight: bold">{{username}}</span>登录XXX系统</div>
+		<div align="left" style="margin-left: 10px; margin-bottom: 20px; font-size: 15pt;">欢迎<span style="font-weight: bold">{{username}}</span>欢迎登录爱我中华自助系统</div>
 		<el-tabs type="card" @tab-click="handleClick" tab-position="top" v-model="activeName">
 		    <el-tab-pane label="会员管理" name="first"><MemberManage /></el-tab-pane>
 		    <el-tab-pane v-if="showSystemPage" label="系统管理" name="second" :lazy='true'><SystemManage /></el-tab-pane>

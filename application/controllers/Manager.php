@@ -101,5 +101,10 @@ class Manager extends MY_Controller {
 			$this->json_with_code_msg('500', '未登录');
 		}
 	}
+
+	public function test() {
+		$this->load->helper('url');
+		echo $this->input->cookie('username');
+	}
 }
 ?>

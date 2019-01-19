@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div><h2>欢迎来到XXX系统</h2></div>
+		<div><h2>欢迎来到爱我中华自助系统</h2></div>
 		<table align="center">
 			<tr><td><span>用户名：</span></td><td><el-input v-model="username" placeholder="请输入用户名"></el-input></td></tr>
 			<tr><td><span>密码：</span></td><td><el-input v-model="password" type="password" placeholder="请输入密码"></el-input></td></tr>
@@ -49,9 +49,15 @@ export default {
   				//alert(response.data.msg);
   				window.localStorage.setItem('username', response.data.username);
   				window.localStorage.setItem('type', response.data.type);
-  				window.localStorage.setItem('time', new Date().getTime());
+          let t = new Date().getTime();
+  				window.localStorage.setItem('time', t);
   				if (window.android != undefined) {
-  					android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理,http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理,http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"));
+            if (response.data.type == 0) {
+              android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理,http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理,http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"));
+              
+            }
+            console.log("login time=" + t);
+  					android.onLogin(response.data.username, response.data.type, "" + t);
             window.location = window.location.origin + '/#/manager_page?page=MemberManage';
   				} else {
   				  window.location = window.location.origin + '/#/manager';

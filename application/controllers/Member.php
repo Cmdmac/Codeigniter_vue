@@ -5,6 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Member extends MY_Controller
 {	
+	public function __construct() {
+		parent::__construct();
+	}
+
 	public function register() {
 		$this->load->helper('url');
 		$name = $this->input->post('name');
