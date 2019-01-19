@@ -33,7 +33,8 @@ class Member extends MY_Controller
 		//$this->load->helper('url');
 		$this->load->model('Member_Model');
 		$root = $this->Member_Model->getChildren('root');
-		$r = $this->encode_children($root[0], 1);
+		//var_dump($root);
+		$r = $this->encode_children(current($root), 1);
 		$this->json_with_data(200, 'ok', $r);
 	}
 

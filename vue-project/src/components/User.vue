@@ -33,9 +33,9 @@ export default {
   		this.$set(this, 'needEnsure', false);
   	},
   	onLogin() {
-  		if (window.android != undefined) {
-			window.android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager"));
-		}
+  		// if (window.android != undefined) {
+			 // window.android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager"));
+		  // }
   		//alert('ddd')
   		let that = this;
   		let instance = axios.create({
@@ -51,9 +51,11 @@ export default {
   				window.localStorage.setItem('type', response.data.type);
   				window.localStorage.setItem('time', new Date().getTime());
   				if (window.android != undefined) {
-  					android.navigateTo("local://navigator/manager?tabs=http://localhost:8080/#/manager,http://localhost:8080/#/manager,http://localhost:8080/#/manager");
-  				}
-  				window.location = window.location.origin + '/#/manager';
+  					android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://192.168.31.8:8080/#/manager_page?page=MemberManage&title=会员管理,http://192.168.31.8:8080/#/manager_page?page=SystemManage&title=系统管理,http://192.168.31.8:8080/#/manager_page?page=StaticsManage&title=统计管理"));
+            window.location = window.location.origin + '/#/manager_page?page=MemberManage';
+  				} else {
+  				  window.location = window.location.origin + '/#/manager';
+          }
   				//alert(response.data.last_login_time);
   			} else {
   				Message({

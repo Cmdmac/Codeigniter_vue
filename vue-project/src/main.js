@@ -91,6 +91,7 @@ Vue.use(VueRouter); //挂载属性
 let r = [
         //一个个对象 
         // { path: '/', component: HelloWorld },
+        { path: '/', component: User },
         { path: '/user', component: User },
         { path: '/manager', component: Manager },
         { path: '/manager_page', component: ManagerPage}

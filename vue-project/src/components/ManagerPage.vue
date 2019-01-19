@@ -15,6 +15,13 @@
 
 		mounted() {
 			console.log(this.$route.query);
+			window.navigateTo = this.navigateTo;
+		}, 
+
+		methods: {
+			navigateTo(target) {
+				this.$set(this, 'target', target);
+			}
 		}
 	}
 </script>
