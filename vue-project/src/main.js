@@ -63,7 +63,7 @@ Vue.use(RadioGroup);
 
 import {config} from "./config";
 Vue.prototype.Server = config;
-import {ajax} from "./utils";
+import {ajax} from "./ajax";
 Vue.prototype.ajax = ajax;
 
 //主体
