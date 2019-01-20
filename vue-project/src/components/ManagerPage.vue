@@ -31,9 +31,9 @@
   			let time = window.localStorage.getItem('time');
   			let t = new Date().getTime();
   			console.log('login d = ' + (t - time));
-  			if (t - time > 3600 * 3 * 1000) {
-  				window.location = window.location = window.location.origin + '/#/user';
-  			} else if (type) {
+  			if (t != undefined && t - time > 3600 * 3 * 1000) {
+  				window.location = this.Server.host + 'user';
+  			} else if (type == 0) {
   				if (window.android != undefined) {
   				     android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent(this.Server.page.manager.member + "," + this.Server.page.manager.system + "," + this.Server.page.manager.statics));
   				 }

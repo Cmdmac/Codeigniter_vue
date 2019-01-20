@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div align="right"><span style="font-weight: bold; font-size: 15pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员</span><el-button type="text" @click="loadTree">刷新</el-button></div>
+    <div align="left"><span style="font-weight: bold; font-size: 13pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员 </span><el-button type="text" @click="loadTree">刷新</el-button></div>
     <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
-    <footer class="foot">
+    <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1">
     </div>
     <!--
@@ -162,10 +162,10 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background: #333;
+    background: #ccc;
     padding: 10px;
     overflow: hidden;
-    color: #999;
+    color: #333;
     font-size: 14px;
     text-align: center;
 }
