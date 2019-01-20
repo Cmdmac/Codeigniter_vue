@@ -26,9 +26,10 @@ export default {
   		needEnsure: false,
   		ensure_password: '',
   		username: '',
-  		password: ''}
+  		password: ''
+    }
 
-  	  },
+  },
   methods: {
   	showLogin() {
   		this.$set(this, 'needEnsure', false);
@@ -38,91 +39,67 @@ export default {
 			 // window.android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager"));
 		  // }
   		//alert('ddd')
-  		let that = this;
-  		let instance = axios.create({
-  			headers: { 'content-type': 'application/x-www-form-urlencoded' },
-  			withCredentials: true 
-  		});
-  		instance.post(this.Server.api.user.login,
-  			qs.stringify({ username: this.username, password: this.password }
-  				)).then(function (response) {
-  			if (response.data.code == 200) {
-  				//alert(response.data.msg);
-  				window.localStorage.setItem('username', response.data.username);
-  				window.localStorage.setItem('type', response.data.type);
-          let t = new Date().getTime();
-  				window.localStorage.setItem('time', t);
-  				if (window.android != undefined) {
-            if (response.data.type == 0) {
-              let url = "local://navigator/manager?tabs=" + encodeURIComponent(that.Server.page.manager.member + "," + that.Server.page.manager.system + "," + that.Server.page.manager.statics);
-              console.log(url);
-              android.navigateTo(url);
-              
-            }
-            console.log("login time=" + t);
-  					android.onLogin(response.data.username, response.data.type, "" + t);
-            window.location = window.location.origin + '/#/manager_page?page=MemberManage';
-  				} else {
-  				  window.location = window.location.origin + '/#/manager';
-          }
-  				//alert(response.data.last_login_time);
-  			} else {
-  				Message({
-		  			showClose: true,
-		  			message: response.data.msg, 
-		  			type: 'error',
-		  			duration: 2000
-		  		});
-  			}
-  		}).catch(function (error) {
-                //eslint-disable-next-line
-                console.log(error);
-                //alert('error');
-        });
+      this.ajax().post(this.Server.api.user.login, { username: this.username, password: this.password })
+      .ok(function (data) {        
+          //alert(response.data.msg);
+            window.localStorage.setItem('username', data.username);
+            window.localStorage.setItem('type', data.type);
+            let t = new Date().getTime();
+            window.localStorage.setItem('time', t);
+            if (window.android != undefined) {
+              if (data.type == 0) {
+                let url = "local://navigator/manager?tabs=" + encodeURIComponent(that.Server.page.manager.member + "," + that.Server.page.manager.system + "," + that.Server.page.manager.statics);
+                console.log(url);
+                android.navigateTo(url);
+                
+              }
+              console.log("login time=" + t);
+              android.onLogin(data.username, data.type, "" + t);
+              window.location = window.location.origin + '/#/manager_page?page=MemberManage';
+            } else {
+              window.location = window.location.origin + '/#/manager';
+            } 
+          }).notOk(function(data) {
+            Message({
+              showClose: true,
+              message: data.msg, 
+              type: 'error',
+              duration: 2000
+            });
+          }).start();
   	},
 
   	doRegister() {
-		if (this.password != this.ensure_password) {
-  			Message({
-		  			showClose: true,
-		  			message: '两次密码不一致', 
-		  			type: 'error',
-		  			duration: 2000
-		  		});
-  		} else {
-  			let that = this;
-  			let instance = axios.create({
-  			headers: { 'content-type': 'application/x-www-form-urlencoded' },
-  			withCredentials: true 
-	  		});
-	  		instance.post(this.Server.api.user.register,
-	  			qs.stringify({ username: this.username, password: this.password }
-	  				)).then(function (response) {
-	  			if (response.data.code == 200) {
-	  				Message({
-			  			showClose: true,
-			  			message: response.data.msg, 
-			  			type: 'success',
-			  			duration: 2000
-		  			});
-	  				that.showLogin();
-	  				//alert(response.data.last_login_time);
-	  			} else {
-	  				Message({
-			  			showClose: true,
-			  			message: response.data.msg, 
-			  			type: 'error',
-			  			duration: 2000
-		  			});
-	  			}
-	  		}).catch(function (error) {
-	                //eslint-disable-next-line
-	                console.log(error);
-	                //alert('error');
-	        });
-  		} 		
-        
-  	},
+  		if (this.password != this.ensure_password) {
+    			Message({
+  		  			showClose: true,
+  		  			message: '两次密码不一致', 
+  		  			type: 'error',
+  		  			duration: 2000
+  		  		});
+    		} else {
+          let that = this;
+    			this.ajax().post(this.Server.api.user.register, { username: this.username, password: this.password })
+          .ok(function(data) {
+  	  				Message({
+  			  			showClose: true,
+  			  			message: data.msg, 
+  			  			type: 'success',
+  			  			duration: 2000
+  		  			});
+  	  				that.showLogin();
+  	  				//alert(response.data.last_login_time);  	  			
+  	  		}).notOk(function(data) {
+              Message({
+                showClose: true,
+                message: data.msg, 
+                type: 'error',
+                duration: 2000
+              });          
+          }).start(); 		
+          
+    	}
+    },
 
   	onRegister() {
   		//alert('onRegister');
@@ -132,6 +109,10 @@ export default {
   	onForgetPassword() {
   		alert('请联系管理员！');
   	}
+  },
+
+  mounted() {
+    //console.log(this.ajax().post('url'));
   }  
 }
 </script>
