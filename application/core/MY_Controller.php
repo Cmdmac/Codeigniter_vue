@@ -5,26 +5,9 @@ class MY_Controller extends CI_Controller {
 	public function __construct() {
 		// echo 'hhh';
 		parent::__construct();
-		$this->load->helper('url');
-
-		//echo "string";
-		$this->checkSession();
+		$this->load->helper('url');	
 	}
-
-	private function checkSession() {
-		$this->load->library('session');
-		if ($this->session->has_userdata('username') &&  $this->session->has_userdata('last_login_time')) {
-			$distance = time() - $this->session->last_login_time;
-			if ($distance >= 12 * 3600 * 1000) {
-				$this->json_with_code_msg('500', '登录已超时');
-				exit();
-			}
-		} else {
-			$this->json_with_code_msg('401', '未登录');
-			exit();
-		}
-	}
-
+	
 	protected function json($data) {
 		header('Access-Control-Allow-Credentials: true');
 		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
@@ -47,4 +30,29 @@ class MY_Controller extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
+}
+
+class Auth_Controller extends MY_Controller {
+
+	public function __construct() {
+		// echo 'hhh';
+		parent::__construct();
+		//echo "string";
+		$this->checkSession();
+	}
+
+	private function checkSession() {
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') &&  $this->session->has_userdata('last_login_time')) {
+			$distance = time() - $this->session->last_login_time;
+			if ($distance >= 12 * 3600 * 1000) {
+				$this->json_with_code_msg('500', '登录已超时');
+				exit();
+			}
+		} else {
+			$this->json_with_code_msg('401', '未登录');
+			exit();
+		}
+	}
+
 }

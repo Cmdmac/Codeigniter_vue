@@ -1,29 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
-	protected function json($data) {
-		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
-		header('Content-Type: application/json');
-		echo json_encode($data);
-	}
-
-	protected function json_with_code_msg($code, $msg) {
-		$data = array('code' => $code, 'msg' => $msg);
-		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
-		header('Content-Type: application/json');
-		echo json_encode($data);
-	}
-
-	protected function json_with_data($code, $msg, $data) {
-		$data = array('code' => $code, 'msg' => $msg, 'data' => $data);
-		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
-		header('Content-Type: application/json');
-		echo json_encode($data);
-	}
+class User extends MY_Controller {
 
 	public function register() {
 		$username = $this->input->post('username');
@@ -102,9 +80,10 @@ class User extends CI_Controller {
 
 	public function test() {
 		//$this->load->view('User');
-		$sessionpath = session_save_path();
+		//$sessionpath = session_save_path();
+			$this->load->library('session');;
 
-		echo $sessionpath;
+		echo $this->session->username;
 	}
 
 }

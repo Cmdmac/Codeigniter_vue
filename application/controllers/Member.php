@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Member extends MY_Controller
+class Member extends Auth_Controller
 {	
 	public function __construct() {
 		parent::__construct();
@@ -31,6 +31,30 @@ class Member extends MY_Controller
 			$r = $this->Member_Model->addMember($name, $phone, $recommend);
 			$this->json($r);
 		}		
+	}
+
+	public function update() {
+		$this->load->helper('url');
+		$id = $this->input->post('id');
+		$name = $this->input->post('name');
+		$phone = $this->input->post('phone');		
+
+		/*
+		if ($this->Member_Model->existsName($name)) {
+			//var_dump($r);
+			$this->json_with_code_msg('500', '会员已存在!');
+		} else if ($this->Member_Model->existsPhone($phone)) {
+			$this->json_with_code_msg('500', '电话已被注册');
+		} else  {*/
+			//var_dump($r);
+			$this->load->model('Member_Model');
+			$r = $this->Member_Model->updateMember($id, $name, $phone);
+			if (!empty($r)) {
+				$this->json_with_data(200, '更新会员成功', array('time' => $r));
+			} else {
+				$this->json_with_code_msg(500, '会员更新失败');
+			}
+		// }	
 	}
 
 	public function init() {

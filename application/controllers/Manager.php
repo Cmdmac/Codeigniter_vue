@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Manager extends MY_Controller {
+class Manager extends Auth_Controller {
 
 	public function add() {
 		$this->load->helper('url');

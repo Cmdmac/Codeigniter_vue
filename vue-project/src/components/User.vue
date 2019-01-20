@@ -1,6 +1,7 @@
 <template>
-	<div>
-		<div><h2>欢迎来到爱我中华自助系统</h2></div>
+	<div align="center">
+		<div align="center"><h2>欢迎来到爱我中华自助平台</h2></div>
+    
 		<table align="center">
 			<tr><td><span>用户名：</span></td><td><el-input v-model="username" placeholder="请输入用户名"></el-input></td></tr>
 			<tr><td><span>密码：</span></td><td><el-input v-model="password" type="password" placeholder="请输入密码"></el-input></td></tr>
@@ -137,6 +138,6 @@ export default {
 
 <style type="text/css" scoped>
 td {
-		margin: 10px;
+		margin: '10px';
 	}
 </style>

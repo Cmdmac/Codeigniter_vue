@@ -69,7 +69,7 @@
 		  </div>
 		</el-dialog>
 
-	  <el-dialog ref="modifyDialog" title="修改管理信息" :visible.sync="dialogFormVisible">
+	  <el-dialog ref="modifyDialog" title="修改管理信息" :visible.sync="dialogFormVisible" width="90%">
 		  <el-form ref="form" :model="form" :rules="rules">
 		    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
 		      <el-input v-model="form.username" autocomplete="off"></el-input>
@@ -225,8 +225,8 @@
       doEdit() {
 		let that = this;
 	    let instance = axios.create({
-	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-	  				withCredentials: true});
+			headers: { 'content-type': 'application/x-www-form-urlencoded' },
+			withCredentials: true});
 		instance.post(this.Server.api.manager.edit,
 		  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password }))
 		.then(function (response) {

@@ -56,6 +56,18 @@ class Member_Model extends CI_Model {
 		
 	}
 
+	public function updateMember($id, $name, $phone) {
+		$member = $this->getMemberById($id);
+		if (isset($member)) {
+			$data = array('id' => $id, 'name' => $name, 'phone' => $phone, 'recommend' => $member->recommend, 'time' => date('Y-m-d H:i:s', time()));
+			if ($this->db->replace('member', $data)) {
+				return $data['time'];
+			}
+		} else {
+			return '';
+		}
+	}
+
 /*
 	private function checkRecommend($recommend) {
 		if ($this->existsName($recommend)) {}
@@ -76,6 +88,11 @@ class Member_Model extends CI_Model {
 
 	private function getMember($name) {
 		$q = $this->db->get_where('member', array('name' => $name));
+		return $q->row();
+	}
+
+	private function getMemberById($id) {
+		$q = $this->db->get_where('member', array('id' => $id));
 		return $q->row();
 	}
 

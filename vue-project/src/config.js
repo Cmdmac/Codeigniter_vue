@@ -1,30 +1,32 @@
+var host = "http://192.168.31.8"
 var config = {
-    host : "http://hgx830330.applinzi.com/#/",
+    host : host + "/#/",//http://192.168.0.115/#/",
     api: {
         user: {
-            register: 'http://hgx830330.applinzi.com/index.php/user/register',
-            login: 'http://hgx830330.applinzi.com/index.php/user/login',
-            logout: 'http://hgx830330.applinzi.com/index.php/user/logout'
+            register: host + '/index.php/user/register',
+            login: host + '/index.php/user/login',
+            logout: host + '/index.php/user/logout'
         },
         member: {
-            init: "http://hgx830330.applinzi.com/index.php/member/init",
-            register: "http://hgx830330.applinzi.com/index.php/member/register",
-            getChildren: "http://hgx830330.applinzi.com/index.php/member/getChildren?recommend=",
-            getMemberCount: "http://hgx830330.applinzi.com/index.php/member/getMemberCount"
+            init:  host+ "/index.php/member/init",
+            register: host + "/index.php/member/register",
+            update: host + "/index.php/member/update",
+            getChildren: host + "/index.php/member/getChildren?recommend=",
+            getMemberCount: host + "/index.php/member/getMemberCount"
         },
         manager: {
-            list: "http://hgx830330.applinzi.com/index.php/manager/list",
-            active: "http://hgx830330.applinzi.com/index.php/manager/active",
-            disable: "http://hgx830330.applinzi.com/index.php/manager/disable",
-            edit: "http://hgx830330.applinzi.com/index.php/manager/edit",
-            add: "http://hgx830330.applinzi.com/index.php/manager/add"
+            list: host + "/index.php/manager/list",
+            active: host + "/index.php/manager/active",
+            disable: host + "/index.php/manager/disable",
+            edit: host + "/index.php/manager/edit",
+            add: host + "/index.php/manager/add"
         },
     },
     page: {
         manager: {
-            member: "http://hgx830330.applinzi.com/#/manager_page?page=MemberManage&title=会员管理",
-            system: "http://hgx830330.applinzi.com/#/manager_page?page=SystemManage&title=系统管理",
-            statics: "http://hgx830330.applinzi.com/#/manager_page?page=StaticsManage&title=统计管理"
+            member: host + "/#/manager_page?page=MemberManage&title=会员管理",
+            system: host + "/#/manager_page?page=SystemManage&title=系统管理",
+            statics: host + "/#/manager_page?page=StaticsManage&title=统计管理"
         }
     }
 }

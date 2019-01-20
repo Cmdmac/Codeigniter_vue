@@ -45,6 +45,8 @@ import {FormItem} from 'element-ui'
 import {Table} from 'element-ui'
 import {TableColumn} from 'element-ui'
 import {Dialog} from 'element-ui'
+import {Radio} from 'element-ui'
+import {RadioGroup} from 'element-ui'
 
 Vue.use(Button);
 Vue.use(Input);
@@ -56,6 +58,8 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Table);
 Vue.use(Dialog);
+Vue.use(Radio);
+Vue.use(RadioGroup);
 
 import {config} from "./config";
 Vue.prototype.Server = config;
@@ -91,13 +95,28 @@ Vue.use(VueRouter); //挂载属性
 let r = [
         //一个个对象 
         // { path: '/', component: HelloWorld },
-        { path: '/', component: User },
-        { path: '/user', component: User },
+        { path: '/', component: User, meta: { title: '爱我中华自助平台' }},
+        { path: '/user', component: User, meta: { title: 'User' } },
         { path: '/manager', component: Manager },
         { path: '/manager_page', component: ManagerPage}
     ];
 let router = new VueRouter({
     routes: r
+});
+
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面meta */
+  if(to.meta.content){
+    let head = document.getElementsByTagName('head');
+    let meta = document.createElement('meta');
+    meta.content = to.meta.content;
+    head[0].appendChild(meta)
+  }
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next()
 });
 
 //new Vue 启动
