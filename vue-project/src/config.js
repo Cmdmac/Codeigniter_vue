@@ -1,5 +1,6 @@
-var host = "http://192.168.31.8"
+var host = "http://hgx830330.applinzi.com"
 var config = {
+    base: host,
     host : host + "/#/",//http://192.168.0.115/#/",
     api: {
         user: {

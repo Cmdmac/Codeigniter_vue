@@ -7,7 +7,7 @@ class Manager extends Auth_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->username == 'admin' && $this->session->type == 0) {
+			if ($this->session->type == 0) {
 				// supper manager
 				$username = $this->input->post('username');
 				$password = $this->input->post('password');
@@ -29,7 +29,7 @@ class Manager extends Auth_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->username == 'admin' && $this->session->type == 0) {
+			if ($this->session->type == 0) {
 				$username = $this->input->post('username');
 				$this->load->model('User_Model');
 				if ($this->User_Model->active($username)) {
@@ -49,7 +49,7 @@ class Manager extends Auth_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->username == 'admin' && $this->session->type == 0) {
+			if ($this->session->type == 0) {
 				$username = $this->input->post('username');
 				$this->load->model('User_Model');
 				if ($this->User_Model->disable($username)) {
@@ -69,7 +69,7 @@ class Manager extends Auth_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->username == 'admin' && $this->session->type == 0) {
+			if ($this->session->type == 0) {
 				$id = $this->input->post('id');
 				$username = $this->input->post('username');
 				$password = $this->input->post('password');
@@ -91,7 +91,7 @@ class Manager extends Auth_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->username == 'admin' && $this->session->type == 0) {
+			if ($this->session->type == 0) {
 				$this->load->model('User_Model');
 				$list = $this->User_Model->list();
 				//var_dump($list);

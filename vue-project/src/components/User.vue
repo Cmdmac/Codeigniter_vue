@@ -9,7 +9,7 @@
 			<tr><td></td><td align="right"><el-button type="primary" v-if="!needEnsure" @click="onLogin">{{loginButtonText}}</el-button><el-button type="primary" v-if="needEnsure" @click="doRegister">{{registerButtonText}}</el-button></td></tr>
 			<tr><td></td><td align="right"><el-button v-if="needEnsure" type="text" @click="showLogin">{{loginButtonText}}</el-button><el-button v-if="!needEnsure" type="text" @click="onRegister">{{registerButtonText}}</el-button><el-button type="text" @click="onForgetPassword">忘记密码</el-button></td></tr>
 		</table>
-		
+		<div class="foot" align="center"><el-button type="text" @click="onDownloadApp">下载App</el-button></div>
 	</div>
 </template>
 
@@ -108,6 +108,10 @@ export default {
 
   	onForgetPassword() {
   		alert('请联系管理员！');
+  	}, 
+
+  	onDownloadApp() {
+  		window.location = this.Server.base + "/app-release.apk"
   	}
   },
 
@@ -120,5 +124,12 @@ export default {
 <style type="text/css" scoped>
 td {
 		margin: '10px';
+	}
+	.foot {
+		width: 100%;
+	    position: fixed;
+	    bottom: 0;
+	    overflow: hidden;
+	    text-align: center;
 	}
 </style>
