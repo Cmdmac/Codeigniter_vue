@@ -27,14 +27,32 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <BottomBar :tabs="tabs" v-on:onTabItemClick="onTabItemClick"/>
   </div>
 </template>
 
 <script>
+
+  import BottomBar from '@/components/BottomBar'
 export default {
   name: 'HelloWorld',
+  components: {BottomBar},
   props: {
     msg: String
+  },
+  data() {
+    return {
+      tabs: [{title: '首页', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548858922438&di=f4e09c3cd7299d315809bd1420c40c53&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01f6d058d9d6c0a801219c77562fcf.png%401280w_1l_2o_100sh.png'},
+            {title: '站内信', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1549457318&di=67bc402aaae6cd3688ff11a4903a6a34&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.25pp.com%2Fuploadfile%2Fapp%2Ficon%2F20160420%2F1461149412855957.jpg'}, 
+       {title: '申请升级', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1549457318&di=67bc402aaae6cd3688ff11a4903a6a34&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.25pp.com%2Fuploadfile%2Fapp%2Ficon%2F20160420%2F1461149412855957.jpg'}, 
+       {title: '审核状况', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548858922438&di=f4e09c3cd7299d315809bd1420c40c53&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01f6d058d9d6c0a801219c77562fcf.png%401280w_1l_2o_100sh.png'}]
+    }
+  },
+
+  methods: {
+    onTabItemClick(index) {
+      alert(index);
+    }
   }
 }
 </script>
@@ -50,7 +68,6 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
 }
 a {
   color: #42b983;
