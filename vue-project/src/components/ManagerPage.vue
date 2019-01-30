@@ -32,7 +32,7 @@
   			let t = new Date().getTime();
   			console.log('login d = ' + (t - time));
   			if (t != undefined && t - time > 3600 * 3 * 1000) {
-  				window.location = this.Server.host + 'user';
+  				window.location = this.Server.base;
   			} else if (type == 0) {
   				if (window.android != undefined) {
   				     android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent(this.Server.page.manager.member + "," + this.Server.page.manager.system + "," + this.Server.page.manager.statics));

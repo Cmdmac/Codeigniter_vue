@@ -25,6 +25,7 @@ var config = {
     },
     page: {
         manager: {
+            index: host + "/#/manager",
             member: host + "/#/manager_page?page=MemberManage&title=会员管理",
             system: host + "/#/manager_page?page=SystemManage&title=系统管理",
             statics: host + "/#/manager_page?page=StaticsManage&title=统计管理"

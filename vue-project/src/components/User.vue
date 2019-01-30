@@ -39,6 +39,7 @@ export default {
 			 // window.android.navigateTo("local://navigator/manager?tabs=" + encodeURIComponent("http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager,http://172.18.12.197:8080/#/manager"));
 		  // }
   		//alert('ddd')
+  		let that = this;
       this.ajax().post(this.Server.api.user.login, { username: this.username, password: this.password })
       .ok(function (data) {        
           //alert(response.data.msg);
@@ -55,9 +56,13 @@ export default {
               }
               console.log("login time=" + t);
               android.onLogin(data.username, data.type, "" + t);
-              window.location = window.location.origin + '/#/manager_page?page=MemberManage';
+              console.log(that.Server.page.manager.member);
+              window.location = that.Server.page.manager.member;//window.location.origin + '/#/manager_page?page=MemberManage';
+              // console.log(window.location);
             } else {
-              window.location = window.location.origin + '/#/manager';
+            	console.log(that.Server.page.manager.index);
+              window.location = that.Server.page.manager.index;//window.location.origin + '/#/manager';
+              // console.log(window.location);
             } 
           }).notOk(function(data) {
             Message({
