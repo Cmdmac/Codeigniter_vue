@@ -47,6 +47,7 @@ import {TableColumn} from 'element-ui'
 import {Dialog} from 'element-ui'
 import {Radio} from 'element-ui'
 import {RadioGroup} from 'element-ui'
+import {Loading} from 'element-ui'
 
 Vue.use(Button);
 Vue.use(Input);
@@ -60,6 +61,7 @@ Vue.use(Table);
 Vue.use(Dialog);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(Loading);
 
 import {config} from "./config";
 Vue.prototype.Server = config;
@@ -107,7 +109,7 @@ let r = [
         { path: '/user', component: User, meta: { title: 'User' } },
         { path: '/manager', component: Manager },
         { path: '/manager_page', component: ManagerPage},
-        { path: '/bottom', component: Main}
+        { path: '/main', component: Main}
     ];
 let router = new VueRouter({
     routes: r

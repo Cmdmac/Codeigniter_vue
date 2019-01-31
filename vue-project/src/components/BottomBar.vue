@@ -49,6 +49,7 @@
 		background: #AAA;
 		-webkit-box-flex: 1;
     	-webkit-flex: 1;
+    	font-size: 10pt;
 	}
 
 	.item:active {
@@ -66,6 +67,7 @@
 		background: #888;
 		-webkit-box-flex: 1;
     	-webkit-flex: 1;
+    	font-size: 10pt;
 	}
 
 	.item-img {

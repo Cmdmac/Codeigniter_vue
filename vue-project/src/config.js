@@ -1,11 +1,12 @@
-var host = "http://hgx830330.applinzi.com"
+var host = "http://172.18.10.240"
 var config = {
     base: host,
-    host : host + "/#/",//http://192.168.0.115/#/",
+    host : host + ":8080/#/",//http://192.168.0.115/#/",
     api: {
         user: {
             register: host + '/index.php/user/register',
             login: host + '/index.php/user/login',
+            loginByToken: host + '/index.php/user/loginByToken',
             logout: host + '/index.php/user/logout'
         },
         member: {
@@ -29,6 +30,10 @@ var config = {
             member: host + "/#/manager_page?page=MemberManage&title=会员管理",
             system: host + "/#/manager_page?page=SystemManage&title=系统管理",
             statics: host + "/#/manager_page?page=StaticsManage&title=统计管理"
+        },
+
+        main: {
+            index: host + ':8080/#/main'
         }
     }
 }

@@ -41,10 +41,10 @@ class User extends MY_Controller {
 					} elseif ($user->state > 2) {
 						return $this->json_with_code_msg('500', '未知状态');
 					}
-					$data = array('username' => $username, 'last_login_time' => time(), 'type' => $user->type);
+					$data = array('username' => $username, 'token' => time(), 'type' => $user->type);
 					$this->session->set_userdata($data);
 					 $this->input->set_cookie("username", $username, 3600);
-					$r = array('code' => '200', 'msg' => $username.' login success', 'username' => $user->username, 'type' => $user->type, 'last_login_time' => $data['last_login_time'], 'has_session' => $this->session->has_userdata('username'));
+					$r = array('code' => '200', 'msg' => $username.' login success', 'username' => $user->username, 'type' => $user->type, 'token' => $data['token'], 'has_session' => $this->session->has_userdata('username'));
 					//$this->json();	
 					$this->json($r);
 				} else {
@@ -54,16 +54,32 @@ class User extends MY_Controller {
 		}
 	}
 
+	public function loginByToken() {
+		$username = $this->input->post('username');
+		$token = $this->input->post('token');
+
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') && $this->session->username == $username) {
+			if ($this->session->has_userdata('token') && (time() - $this->session->token > 3600)) {
+				$this->json_with_code_msg(401, '登录过期');
+			} else {
+				$this->json_with_code_msg(200, '已登录');
+			}
+		} else {
+			$this->json_with_code_msg(401, '未登录');
+		}
+	}
+
 	public function logout() {
 		$username = $this->input->post('username');
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->username == $username) {
 			$this->session->unset_userdata('username');
-			$this->session->unset_userdata('last_login_time');
+			$this->session->unset_userdata('token');
 			$this->session->unset_userdata('type');
 			$this->json_with_code_msg(200, '已退出');
 		} else {
-			$this->json_with_code_msg(200, '未登录');
+			$this->json_with_code_msg(401, '未登录'.$username);
 		}
 	}
 

@@ -57,7 +57,7 @@
 			  				//退出，清除登录数据，回到登录
 			  				window.localStorage.removeItem('username');
 			  				window.localStorage.removeItem('type');
-			  				window.localStorage.removeItem('time');
+			  				window.localStorage.removeItem('token');
 			  				window.location = that.Server.host;
 			  			} else {
 			  				//alert(response.data.msg);
@@ -79,9 +79,9 @@
 	    mounted() {
 	    	let username = window.localStorage.getItem('username');
 	    	let type = window.localStorage.getItem('type');
-	    	let time = window.localStorage.getItem('time');
+	    	let token = window.localStorage.getItem('token');
 	    	//console.log(this.$route);
-	    	if (new Date().getTime() - time > 6 * 3600 * 1000) {
+	    	if (new Date().getTime() - token > 6 * 3600 * 1000) {
 	    		window.location = window.location.origin + '/#/user';
 	    		return;
 	    	}
