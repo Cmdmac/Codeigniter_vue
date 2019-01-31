@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-01-19 10:30:10
+-- Generation Time: 2019-01-31 14:31:42
 -- 服务器版本： 10.1.10-MariaDB
 -- PHP Version: 7.0.2
 
@@ -20,6 +20,14 @@ SET time_zone = "+00:00";
 -- Database: `custom`
 --
 
+DELIMITER $$
+--
+-- 函数
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `CountLayer` (`p_node_id` INT) RETURNS INT(11) return 0$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -28,13 +36,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `member` (
   `id` int(11) NOT NULL,
-  `line` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `recommend` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `line` int(11) NOT NULL,
+  `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(11) NOT NULL,
+  `recommend` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `recommend_id` int(11) NOT NULL,
   `level` int(11) NOT NULL,
+  `state` int(11) NOT NULL,
+  `leaf` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -44,19 +56,22 @@ CREATE TABLE `member` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(4) NOT NULL DEFAULT '1',
+  `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `type` int(11) NOT NULL,
   `state` int(4) NOT NULL DEFAULT '1',
-  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `level` int(11) NOT NULL,
+  `wx` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `alipay` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `type`, `state`, `time`) VALUES
-(1, 'admin', 'admin', 0, 2, '2019-01-19 11:29:16');
+INSERT INTO `user` (`id`, `username`, `password`, `type`, `state`, `level`, `wx`, `alipay`, `time`) VALUES
+(1, 'admin', 'admin', 0, 2, 1, '', '', '2019-01-09 05:17:54');
 
 --
 -- Indexes for dumped tables
@@ -67,7 +82,8 @@ INSERT INTO `user` (`id`, `username`, `password`, `type`, `state`, `time`) VALUE
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `name` (`username`),
   ADD UNIQUE KEY `phone` (`phone`);
 
 --
@@ -75,7 +91,7 @@ ALTER TABLE `member`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -85,21 +101,12 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-CREATE TABLE IF NOT EXISTS `ci_sessions` (
-        `id` varchar(40) NOT NULL,
-        `ip_address` varchar(45) NOT NULL,
-        `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
-        `data` blob NOT NULL,
-        PRIMARY KEY (id),
-        KEY `ci_sessions_timestamp` (`timestamp`)
-);
