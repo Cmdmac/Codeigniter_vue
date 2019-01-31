@@ -23,7 +23,7 @@ export default {
 
 body {
 	margin: 0px;
-	background: #555;
+	/*background: #555;*/
 }
 
 .el-input__inner {

@@ -96,7 +96,19 @@ const Main = resovle => {
   require.ensure(['@/components/Main'], () => {
     resovle(require('@/components/Main'))
   })
-}
+};
+
+const ModifyProfile = resovle => {
+  require.ensure(['@/components/ModifyProfile'], () => {
+    resovle(require('@/components/ModifyProfile'))
+  })
+};
+
+const RegisterMember = resovle => {
+  require.ensure(['@/components/RegisterMember'], () => {
+    resovle(require('@/components/RegisterMember'))
+  })
+};
 
 //安装插件
 Vue.use(VueRouter); //挂载属性
@@ -109,7 +121,9 @@ let r = [
         { path: '/user', component: User, meta: { title: 'User' } },
         { path: '/manager', component: Manager },
         { path: '/manager_page', component: ManagerPage},
-        { path: '/main', component: Main}
+        { path: '/main', component: Main},
+        { path: '/modifyProfile', component: ModifyProfile},
+        { path: '/registeMember', component: RegisterMember }
     ];
 let router = new VueRouter({
     routes: r

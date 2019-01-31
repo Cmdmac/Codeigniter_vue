@@ -6,6 +6,7 @@ var config = {
         user: {
             register: host + '/index.php/user/register',
             login: host + '/index.php/user/login',
+            get: host + '/index.php/user/get',
             loginByToken: host + '/index.php/user/loginByToken',
             logout: host + '/index.php/user/logout'
         },
@@ -33,8 +34,11 @@ var config = {
         },
 
         main: {
-            index: host + ':8080/#/main'
-        }
+            index: host + ':8080/#/main',
+            registeMember: host + ':8080/#/registeMember',
+            modifyProfile: host + ':8080/#/modifyProfile'
+        },
+
     }
 }
 

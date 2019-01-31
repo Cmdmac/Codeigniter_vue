@@ -24,8 +24,8 @@ class User extends MY_Controller {
 
 		$isValideParams = $this->checkParams($username, $password);
 		if ($isValideParams) {
-			$this->load->library('session');
-			if ($this->session->has_userdata('username') && $this->session->username == $username) {
+			
+			if ($this->hasLogin($username)) {
 				$username = $this->session->username;
 				$type = $this->session->type;
 				//$this->json();
@@ -52,6 +52,11 @@ class User extends MY_Controller {
 				}		
 			}
 		}
+	}
+
+	private function hasLogin($username) {
+		$this->load->library('session');
+		return $this->session->has_userdata('username') && $this->session->username == $username && (time() - $this->session->token < 3600);
 	}
 
 	public function loginByToken() {
@@ -90,6 +95,19 @@ class User extends MY_Controller {
 			return false;
 		}
 		return true;
+	}
+
+	public function get() {
+		$username = $this->input->get('username');
+		if ($this->hasLogin($username)) {
+			$this->load->model('User_Model');
+			$user = $this->User_Model->get($username);
+			if (isset($user)) {
+				$this->json_with_data(200, 'ok', $user);
+			} else {
+				$this->json_with_code_msg(500, '没有这个用户');
+			}
+		}
 	}
 
 

@@ -12,9 +12,17 @@ class User_Model extends CI_Model {
 		return $query->row();
 	}
 
-	function register($username, $password) {
+	function get($username) {
 		$this->load->database();
-		if ($this->login($username, $password)) {
+		$query = $this->db->get_where('user', array('username' => $username));
+		//$result = $query->result();
+		return $query->row();
+	}
+
+	function register($username, $password, $phone, $wx, $alipay) {
+		$this->load->database();
+		if (isset($this->get($username)) {
+			// 已存在，不插入
 			return false;
 		} else {
 			/**
@@ -22,8 +30,8 @@ class User_Model extends CI_Model {
 				2	-	已审核 
 				4	-	其他状态
 			**/
-			$this->db->insert('user', array('username' => $username, 'password' => $password, 'type' => 1));
-			return true;
+			return $this->db->insert('user', array('username' => $username, 'password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay, 'type' => 1));
+			//return true;
 		}
 	}
 

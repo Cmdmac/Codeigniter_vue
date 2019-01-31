@@ -1,16 +1,35 @@
 <template>
-	<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules" align="center" style="width: 80%; max-width: 500px; margin-top: 30px">
-		  <el-form-item label="姓名" prop="name">
+	<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
+		 <el-form-item label="推荐人" prop="name">
+		    <el-input :disabled="true" v-model="model.recommend" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="接点人" prop="name">
+		    <el-input :disabled="true" v-model="model.contact" ></el-input>
+		  </el-form-item>
+		 <el-form-item label="姓名" prop="name">
 		    <el-input v-model="model.name" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="密码" prop="pwd">
+		    <el-input v-model="model.pwd" ></el-input>
 		  </el-form-item>
 		  <el-form-item label="电话" prop="phone">
 		    <el-input v-model="model.phone" ></el-input>
 		  </el-form-item>
-		  <el-form-item label="推荐人" prop="name">
-		    <el-input v-model="model.recommend" ></el-input>
+		  <el-form-item label="微信" prop="wx">
+		    <el-input v-model="model.wx" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="支付宝" prop="alipay">
+		    <el-input v-model="model.alipay" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="业务方向" prop="leaf" >
+		     <el-radio-group v-model="model.leaf">
+			    <el-radio :label="0">1区</el-radio>
+			    <el-radio :label="1">2区</el-radio>
+			  </el-radio-group>
 		  </el-form-item>
 		  <el-form-item >
         	<el-button type="primary" @click="submitForm('model')">{{buttonLabel}}</el-button>
+        	<el-button @click="resetForm('model')">重置</el-button>
       		</el-form-item>
 		</el-form>
 </template>
@@ -57,13 +76,20 @@
 	        buttonLabel: '注册会员',
 	        model: {
 	          name: '',
+	          pwd: '',
 	          phone: '',
-	          recommend: '',
+	          wx: '',
+	          alipay: '',
+	          recommend: window.user.username,
+	          contact: window.user.username,
+	          leaf: 0,
 			},
 	        rules: {
 	        	name: [{ required: true, trigger: 'blur', validator: validName }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+	        	pwd: [{ required: true, trigger: 'blur', message: '请输入密码' }],
 	        	phone: [{ required: true, trigger: 'blur', validator: validPhone }],
-
+				wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
+				alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
 	        }
 	      }
 	    },
@@ -78,7 +104,7 @@
 		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		  				withCredentials: true});
 			  		instance.post(this.Server.api.member.register,
-			  			qs.stringify({ name: this.model.name, phone: this.model.phone, recommend: this.model.recommend }))
+			  			qs.stringify({ username: this.model.name, password: model.pwd, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay, recommend: this.model.recommend, contact: this.model.contact, leaf: this.mode.left }))
 			  		.then(function (response) {
 			  			if (response.data.code == 200) {
 			  				//alert(response.data.msg);
@@ -121,7 +147,30 @@
 		            return false;
 		          }
 	        	});
-	      	}
+	      	},
+
+	      	resetForm(formName) {
+				this.$refs[formName].resetFields();
+			}
 	    }
 	}
 </script>
+
+<style type="text/css" scoped>
+	.form {
+		align: center;
+		max-width: 500px; 
+		margin-top: 30px;
+		margin-right: 20px;
+	}
+
+	.el-form-item {
+		margin-bottom: 18px;
+	}
+
+	.leaf {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+</style>

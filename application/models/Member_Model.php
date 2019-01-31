@@ -21,39 +21,8 @@ class Member_Model extends CI_Model {
 		return isset($row);
 	}
 
-	public function addMember($name, $phone, $recommend) {
-		//$this->load->library('treedatabase');
-		//$this->treedatabase->init('member');
-		
-		// 先看推荐人是否在已有列表中，如果存在才可以注册
-		$row = $this->getMember($recommend);
-		//var_dump($row->line);
-		if (isset($row)) {	
-			// 看推荐人已经推荐过几个了，最多推荐2个
-			$q = $this->db->get_where('member', array('recommend' => $recommend));
-			if ($q->num_rows() >= 2) {
-				// 推荐人满2人了
-				return array('code' => 100, 'msg' => '推荐人已推荐满2个了');
-			} else {
-				$node = array('name' => $name, 'phone' => $phone, 'recommend' => $recommend);
-				
-				if ($this->db->insert('member', $node)) {
-					return array('code' => 200, 'msg' => '推荐成功');;
-				} else {
-					return array('code' => 501, 'msg' => '推荐人失败');;
-				}
-				
-			}
-		} else {
-			if ($this->getMembersCount() == 0) {
-				$node = array('name' => $name, 'phone' => $phone, 'recommend' => 'root', 'level' => 1, 'line' => 1);
-				if ($this->db->insert('member', $node)) {
-					return array('code' => 100, 'msg' => '推荐成功，是第一个会员');;
-				}
-			}
-			return array('code' => 502, 'msg' => '推荐失败，不存在的推荐人');;
-		}
-		
+	public function addMember($node) {
+		return $this->db->insert('member', $node);
 	}
 
 	public function updateMember($id, $name, $phone) {
@@ -86,9 +55,19 @@ class Member_Model extends CI_Model {
 		return $q->row()->c;
 	}
 
-	private function getMember($name) {
+	public function getRecommendLeafCount($recommend, $leaf) {
+		$q = $this->db->get_where('member', array('recommend' => $recommend, 'leaf' => $leaf));
+		return $q->num_rows();
+	}
+
+	public function getMember($name) {
 		$q = $this->db->get_where('member', array('name' => $name));
 		return $q->row();
+	}
+
+	public function getRecommendCount($recommend) {
+		$q = $this->db->get_where('member', array('recommend' => $recommend));
+		return $q->num_rows();
 	}
 
 	private function getMemberById($id) {

@@ -167,6 +167,7 @@ export default {
     }
     this.ajax().post(this.Server.api.user.loginByToken, {username: username, token: token})
     .ok(function(data) {
+      that.$set(that, 'loading', false);
       that.goToMain();
     }).notOk(function(data) {
       // Message({
@@ -175,7 +176,9 @@ export default {
       //   type: 'error',
       //   duration: 2000
       // });          
-      that.$set(this, 'loading', false);
+      that.$set(that, 'loading', false);
+    }).catch(function(error) {
+      that.$set(that, 'loading', false);
     }).start();
   },
 
@@ -191,6 +194,7 @@ export default {
 <style type="text/css" scoped>
 .container {
   color: #FEFEFE;
+  background: #555;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -199,6 +203,7 @@ export default {
 
 .container2 {
   width: 80%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
