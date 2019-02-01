@@ -21,7 +21,8 @@ class User_Model extends CI_Model {
 
 	function register($username, $password, $phone, $wx, $alipay) {
 		$this->load->database();
-		if (isset($this->get($username)) {
+		$user = $this->get($username);
+		if (isset($user)) {
 			// 已存在，不插入
 			return false;
 		} else {

@@ -163,6 +163,7 @@ export default {
     let token = window.localStorage.getItem('token');
     if (username == undefined) {
       this.$set(this, 'loading', false);
+      //console.log("return");
       return;
     }
     this.ajax().post(this.Server.api.user.loginByToken, {username: username, token: token})
@@ -179,6 +180,7 @@ export default {
       that.$set(that, 'loading', false);
     }).catch(function(error) {
       that.$set(that, 'loading', false);
+      console.log(error);
     }).start();
   },
 

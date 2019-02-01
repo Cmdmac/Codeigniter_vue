@@ -1,4 +1,4 @@
-var host = "http://172.18.10.240"
+var host = "http://172.18.12.178"
 var config = {
     base: host,
     host : host + ":8080/#/",//http://192.168.0.115/#/",

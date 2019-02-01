@@ -10,8 +10,8 @@ class Member_Model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function existsName($name) {
-		$row = $this->getMember($name);
+	public function existsName($username) {
+		$row = $this->getMember($username);
 		return isset($row);
 	}
 
@@ -25,10 +25,10 @@ class Member_Model extends CI_Model {
 		return $this->db->insert('member', $node);
 	}
 
-	public function updateMember($id, $name, $phone) {
+	public function updateMember($id, $username, $phone) {
 		$member = $this->getMemberById($id);
 		if (isset($member)) {
-			$data = array('id' => $id, 'name' => $name, 'phone' => $phone, 'recommend' => $member->recommend, 'time' => date('Y-m-d H:i:s', time()));
+			$data = array('id' => $id, 'username' => $name, 'phone' => $phone, 'recommend' => $member->recommend, 'time' => date('Y-m-d H:i:s', time()));
 			if ($this->db->replace('member', $data)) {
 				return $data['time'];
 			}
@@ -61,7 +61,7 @@ class Member_Model extends CI_Model {
 	}
 
 	public function getMember($name) {
-		$q = $this->db->get_where('member', array('name' => $name));
+		$q = $this->db->get_where('member', array('username' => $name));
 		return $q->row();
 	}
 

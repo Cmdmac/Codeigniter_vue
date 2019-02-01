@@ -104,7 +104,7 @@
 		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		  				withCredentials: true});
 			  		instance.post(this.Server.api.member.register,
-			  			qs.stringify({ username: this.model.name, password: model.pwd, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay, recommend: this.model.recommend, contact: this.model.contact, leaf: this.mode.left }))
+			  			qs.stringify({ username: this.model.name, password: this.model.pwd, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay, recommend: this.model.recommend, contact: this.model.contact, leaf: this.model.leaf }))
 			  		.then(function (response) {
 			  			if (response.data.code == 200) {
 			  				//alert(response.data.msg);
@@ -116,10 +116,10 @@
 			  					type: 'success',
 			  					duration: 1000
 			  				});
-			  				that.model.name = '';
-			  				that.model.phone = '';
-			  				that.model.recommend = '';
-			  				that.$set(that, 'model', that.model);
+			  				//that.model.name = '';
+			  				//that.model.phone = '';
+			  				//that.model.recommend = '';
+			  				//that.$set(that, 'model', that.model);
 			  			} else {
 			  				//alert(response.data.msg);
 			  				Message({
