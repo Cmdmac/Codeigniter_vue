@@ -110,6 +110,23 @@ const RegisterMember = resovle => {
   })
 };
 
+const RequestUpdate = resovle => {
+  require.ensure(['@/components/RequestUpdate'], () => {
+    resovle(require('@/components/RequestUpdate'))
+  })
+};
+
+const UpdateRecorders = resovle => {
+  require.ensure(['@/components/UpdateRecorders'], () => {
+    resovle(require('@/components/UpdateRecorders'))
+  })
+};
+
+const ReviewRecorders = resovle => {
+  require.ensure(['@/components/ReviewRecorders'], () => {
+    resovle(require('@/components/ReviewRecorders'))
+  })
+};
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -123,7 +140,10 @@ let r = [
         { path: '/manager_page', component: ManagerPage},
         { path: '/main', component: Main},
         { path: '/modifyProfile', component: ModifyProfile},
-        { path: '/registeMember', component: RegisterMember }
+        { path: '/registeMember', component: RegisterMember },
+        { path: '/requestUpdate', component: RequestUpdate },
+        { path: '/updateRecorders', component: UpdateRecorders },
+        { path: '/reviewRecorders', component: ReviewRecorders }
     ];
 let router = new VueRouter({
     routes: r

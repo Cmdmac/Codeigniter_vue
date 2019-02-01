@@ -4,7 +4,7 @@ import qs from 'qs';
 function ajax() {
 	var o = {
 		url: '',
-		params: {},
+		params: undefined,
 		okCallback: function(data) {
 		},
 
@@ -18,6 +18,11 @@ function ajax() {
 		post: function(url, params) {
 			this.url = url;
 			this.params = params;
+			return this;
+		},
+
+		get: function(url) {
+			this.url = url;
 			return this;
 		},
 
@@ -42,9 +47,14 @@ function ajax() {
 		  			headers: { 'content-type': 'application/x-www-form-urlencoded' },
 		  			withCredentials: true 
 		  		});
-			instance.post(this.url,
-				qs.stringify(this.params))
-			.then(function (response) {
+
+			let r = undefined;
+			if (this.params == undefined) {
+				r = instance.get(this.url);
+			} else {
+				r = instance.post(this.url,	qs.stringify(this.params));
+			}			
+			r.then(function (response) {
 				if (response.data.code == 200) {
 					that.okCallback(response.data);
 				} else {

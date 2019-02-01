@@ -36,11 +36,13 @@ class User extends MY_Controller {
 				$user = $this->User_Model->login($username, $password);
 				if (isset($user)) {
 					//var_dump($user);
+					/*
 					if ($user->state == 1) {
 						return $this->json_with_code_msg('500', '未审核状态');
 					} elseif ($user->state > 2) {
 						return $this->json_with_code_msg('500', '未知状态');
 					}
+					*/
 					$data = array('username' => $username, 'token' => time(), 'type' => $user->type);
 					$this->session->set_userdata($data);
 					 $this->input->set_cookie("username", $username, 3600);

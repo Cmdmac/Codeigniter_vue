@@ -37,6 +37,31 @@ class Member_Model extends CI_Model {
 		}
 	}
 
+
+	public function findFirstContact($username) {
+		//$username = $this->input->get('username');
+		//$this->load->model('Member_Model');
+		$member = $this->getMember($username);
+		if (!isset($member)) {
+			// $this->json_with_code_msg(500, '会员不存在');
+			return null;
+		} else {
+			//$this->load->model('User_Member_Model');
+			$contactMember = $this->getMember($member->contact);
+			if (isset($contactMember)) {
+				$contactLevel = $contactMember->level;
+				if ($contactLevel <= $member->level) {
+					//如果当前接点人的级别小于自己,往上查找符合条件的接点人
+					$this->findFirstContact($contactMember->contact);
+				} else {
+					//$this->json_with_data(200, 'ok', $contactMember);
+					return $contactMember;
+				}
+			} else {
+				return null;
+			}			
+		}
+	}
 /*
 	private function checkRecommend($recommend) {
 		if ($this->existsName($recommend)) {}
@@ -83,6 +108,6 @@ class Member_Model extends CI_Model {
 	public function list($start, $end) {
 		$q = $this->db->get_where('member', array('time>=' => $start, 'time<=' => $end));
 		return $q->result_array();
-	}
+	}	
 }
 ?>

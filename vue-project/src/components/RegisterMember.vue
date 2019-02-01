@@ -23,8 +23,8 @@
 		  </el-form-item>
 		  <el-form-item label="业务方向" prop="leaf" >
 		     <el-radio-group v-model="model.leaf">
-			    <el-radio :label="0">1区</el-radio>
-			    <el-radio :label="1">2区</el-radio>
+			    <el-radio :label="1">1区</el-radio>
+			    <el-radio :label="2">2区</el-radio>
 			  </el-radio-group>
 		  </el-form-item>
 		  <el-form-item >
@@ -44,7 +44,7 @@
 	}
 
 	function isValidName(str) {
-		const nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
+		const nameReg = /^[\u4E00-\u9FA5, 1-9]{2,4}$/;
 		return nameReg.test(str);
 	}
 
@@ -62,7 +62,7 @@
 		if (!value){
           	callback(new Error('请输入姓名'))
       	} else  if (!isValidName(value)){
-      	  	callback(new Error('请输入长度为2~4的中文姓名'))
+      	  	callback(new Error('请输入中文或中文加数字的名字'))
       	} else {
           	callback()
       	}
@@ -82,7 +82,7 @@
 	          alipay: '',
 	          recommend: window.user.username,
 	          contact: window.user.username,
-	          leaf: 0,
+	          leaf: 1,
 			},
 	        rules: {
 	        	name: [{ required: true, trigger: 'blur', validator: validName }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,

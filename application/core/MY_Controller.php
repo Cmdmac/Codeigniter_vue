@@ -12,7 +12,7 @@ class MY_Controller extends CI_Controller {
 		header('Access-Control-Allow-Credentials: true');
 		header("Access-Control-Allow-Origin: http://172.18.12.178:8080"); 
 		header('Content-Type: application/json');
-		echo json_encode($data);
+		exit(json_encode($data));
 	}
 
 	protected function json_with_code_msg($code, $msg) {
@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller {
 		header('Access-Control-Allow-Credentials: true');
 		header("Access-Control-Allow-Origin: http://172.18.12.178:8080"); 
 		header('Content-Type: application/json');
-		echo json_encode($data);
+		exit(json_encode($data));
 	}
 
 	protected function json_with_data($code, $msg, $data) {
@@ -28,7 +28,7 @@ class MY_Controller extends CI_Controller {
 		header('Access-Control-Allow-Credentials: true');
 		header("Access-Control-Allow-Origin: http://172.18.12.178:8080"); 
 		header('Content-Type: application/json');
-		echo json_encode($data);
+		exit(json_encode($data));
 	}
 }
 

@@ -7,10 +7,11 @@ class Member extends Auth_Controller
 {	
 	public function __construct() {
 		parent::__construct();
+		$this->load->helper('url');
 	}
 
 	public function register() {
-		$this->load->helper('url');
+		
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$phone = $this->input->post('phone');
@@ -21,6 +22,18 @@ class Member extends Auth_Controller
 		$leaf = $this->input->post('leaf');
 
 		$this->doRegister($username, $password, $phone, $wx, $alipay, $recommend, $contact, $leaf);
+	}
+
+	public function get() {
+		$username = $this->input->get('username');
+		$this->load->model("User_Member_Model");
+		$member = $this->User_Member_Model->get($username);
+		// echo $member;
+		if (isset($member)) {
+			$this->json_with_data(200, 'ok', $member);
+		} else {
+			$this->json_with_code_msg(500, '没有这个会员', $member);
+		}
 	}
 
 	private function doRegister($username, $password, $phone, $wx, $alipay, $recommend, $contact, $leaf) {
@@ -192,6 +205,24 @@ class Member extends Auth_Controller
 		$list = $this->Member_Model->list($start, $end);
 		$this->json_with_data('200', 'ok', $list);
 	}
+
+	public function findContact() {
+		$username = $this->input->get('username');
+		$contact = $this->findFirstContact($username);
+		if ($contact != null) {
+			$this->json_with_data(200, 'ok', $contact);
+		} else {
+			$this->json_with_code_msg(500, '没有符合条件的接点人');
+		}
+	}
+	/**
+		查询第一个符合条件的接点人
+	**/
+	private function findFirstContact($username) {
+		$this->load->model('Member_Model');
+		return $this->Member_Model->findFirstContact($username);
+	}
+
 
 	public function init_test() {
 		

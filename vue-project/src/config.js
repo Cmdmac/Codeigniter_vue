@@ -11,11 +11,13 @@ var config = {
             logout: host + '/index.php/user/logout'
         },
         member: {
+            get: host + "/index.php/member/get?username=",
             init:  host+ "/index.php/member/init",
             register: host + "/index.php/member/register",
             update: host + "/index.php/member/update",
             getChildren: host + "/index.php/member/getChildren?recommend=",
-            getMemberCount: host + "/index.php/member/getMemberCount"
+            getMemberCount: host + "/index.php/member/getMemberCount",
+            findContact: host + "/index.php/member/findContact?username="
         },
         manager: {
             list: host + "/index.php/manager/list",
@@ -24,6 +26,12 @@ var config = {
             edit: host + "/index.php/manager/edit",
             add: host + "/index.php/manager/add"
         },
+
+        update: {
+            add: host + "/index.php/update/add",
+            getUpdateRecords: host + "/index.php/update/getUpdateRecords?username=",
+            getReviewRecords: host + "/index.php/update/getReviewRecords?username="
+        }
     },
     page: {
         manager: {
@@ -36,7 +44,10 @@ var config = {
         main: {
             index: host + ':8080/#/main',
             registeMember: host + ':8080/#/registeMember',
-            modifyProfile: host + ':8080/#/modifyProfile'
+            modifyProfile: host + ':8080/#/modifyProfile',
+            requestUpdate: host + ':8080/#/requestUpdate',
+            updateRecorders: host + ':8080/#/updateRecorders',
+            reviewRecorders: host + ':8080/#/reviewRecorders'
         },
 
     }
