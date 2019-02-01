@@ -15,7 +15,7 @@ class Update_Model extends CI_Model {
 	}
 
 	public function getValideUpdates($username) {
-		$r = $this->db->query('select * from tbl_update where state = 0 AND (username = "'.$username.'" OR contact = "'.$username.'" )');
+		$r = $this->db->query('select * from tbl_update where state = 1 AND (username = "'.$username.'" OR contact = "'.$username.'" )');
 		return $r->result_array();
 	}
 
@@ -33,7 +33,11 @@ class Update_Model extends CI_Model {
 			$member->contact = $contact;
 
 			if ($this->db->replace('member', $member)) {
-				return true;
+				$this->load->model('User_Model');
+				if ($this->User_Model->updateLevelAndState($username, $member->level, 2)) {
+					$this->db->update('tbl_update', array('state' => 1), array('username' => $username, 'contact' => $contact));
+					return true;
+				}
 			}
 		} 
 

@@ -135,15 +135,15 @@ let r = [
         //一个个对象 
         // { path: '/', component: HelloWorld },
         { path: '/', component: User, meta: { title: '爱我中华自助平台' }},
-        { path: '/user', component: User, meta: { title: 'User' } },
-        { path: '/manager', component: Manager },
-        { path: '/manager_page', component: ManagerPage},
-        { path: '/main', component: Main},
-        { path: '/modifyProfile', component: ModifyProfile},
-        { path: '/registeMember', component: RegisterMember },
-        { path: '/requestUpdate', component: RequestUpdate },
-        { path: '/updateRecorders', component: UpdateRecorders },
-        { path: '/reviewRecorders', component: ReviewRecorders }
+        { name: 'user', path: '/user', component: User, meta: { title: 'User' } },
+        { name: 'manager', path: '/manager', component: Manager },
+        { name: 'manager_page', path: '/manager_page', component: ManagerPage},
+        { name: 'main', path: '/main', component: Main},
+        { name: 'modifyProfile', path: '/modifyProfile', component: ModifyProfile},
+        { name: 'registeMember', path: '/registeMember', component: RegisterMember },
+        { name: 'requestUpdate', path: '/requestUpdate', component: RequestUpdate },
+        { name: 'updateRecorders', path: '/updateRecorders', component: UpdateRecorders},
+        { name: 'reviewRecorders', path: '/reviewRecorders', component: ReviewRecorders}
     ];
 let router = new VueRouter({
     routes: r

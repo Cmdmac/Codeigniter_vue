@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div class="nodata" v-if="records.length == 0">没有数据</div>
-		<ul>
-			<li v-for="(item, index) in records" :key="index">
-				<div>{{item.username}}向{{item.contact}}申请升级</div>
-			</li>
-		</ul>
+		<div class="list">
+			<div class="listItem" v-for="(item, index) in records" :key="index">
+				<div style="font-size: 12pt;">{{item.username}}向{{item.contact}}申请升级</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -41,5 +41,24 @@
 <style type="text/css" scoped>
 	.nodata {
 		margin-top: 200px;
+	}
+
+	.list {
+		margin: 10px;
+	}
+
+	.listItem {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: center;
+		width: 100%;
+		height: 50px;
+		border-bottom: 1px solid #DDD;
+
+	}
+
+	.title {
+
 	}
 </style>

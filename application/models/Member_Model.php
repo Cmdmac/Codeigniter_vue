@@ -52,12 +52,25 @@ class Member_Model extends CI_Model {
 				$contactLevel = $contactMember->level;
 				if ($contactLevel <= $member->level) {
 					//如果当前接点人的级别小于自己,往上查找符合条件的接点人
-					$this->findFirstContact($contactMember->contact);
+					if ($contactMember->contact == $contactMember->username) {
+						//一般是管理员数据才会这样
+						return $contactMember;
+					}
+					return $this->findFirstContact($contactMember->contact);
 				} else {
 					//$this->json_with_data(200, 'ok', $contactMember);
 					return $contactMember;
 				}
 			} else {
+				// 会员表里找不到，看是否是管理员，管理员可以注册会员
+				/*$this->load->model('User_Model');
+				$user = $this->User_Model->get($member->contact);
+				//var_dump($user);
+				if (isset($user) && $user->type == 0) {
+					//管理员
+					//var_dump($user);
+					return array('username', $user->username, 'contact' => $user->username);
+				}*/
 				return null;
 			}			
 		}

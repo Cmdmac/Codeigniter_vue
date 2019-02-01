@@ -21,7 +21,13 @@
 		methods: {
 			onReview(index) {
 				let item = this.records[index];
-				alert(item.username);
+				alert(this.Server.api.update.review);
+				this.ajax().post(this.Server.api.update.review, {username: item.username, contact: item.contact})
+				.ok(function(data) {
+
+				}).notOk(function(data) {
+
+				}).start();
 			}
 
 		},

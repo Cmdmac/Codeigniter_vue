@@ -1,4 +1,4 @@
-var host = "http://172.18.12.178"
+var host = "http://192.168.31.8"
 var config = {
     base: host,
     host : host + ":8080/#/",//http://192.168.0.115/#/",
@@ -30,7 +30,8 @@ var config = {
         update: {
             add: host + "/index.php/update/add",
             getUpdateRecords: host + "/index.php/update/getUpdateRecords?username=",
-            getReviewRecords: host + "/index.php/update/getReviewRecords?username="
+            getReviewRecords: host + "/index.php/update/getReviewRecords?username=",
+            review: host + '/index.php/update/review'
         }
     },
     page: {

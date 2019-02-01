@@ -1,8 +1,8 @@
 <template>
 	<div class="container">
 		<div>
-			<div class="level">你当前的级别是:<span class="currentLevel">{{member.level}}</span>，下一个级别是<span class="nextLevel">{{parseInt(member.level) < 8 ? parseInt(member.level) + 1 : "已经是最高级别了"}}</span></div>
-			<div v-if="contact != undefined">需要上层会员：<span class="nextLevel"><span v-if="contact.level - member.level >= 2">[超越升级]</span>{{contact.username}}</span>，交升级款</div>
+			<div class="level">你当前的级别是:<span class="currentLevel">{{parseInt(user.level)}}</span>，下一个级别是<span class="nextLevel">{{parseInt(user.level) < 8 ? parseInt(user.level) + 1 : "已经是最高级别了"}}</span></div>
+			<div v-if="contact != undefined">需要上层会员：<span class="nextLevel"><span v-if="contact.level - parseInt(user.level) >= 2">[超越升级]</span>{{contact.username}}</span>，交升级款</div>
 			<div v-if="contact != undefined" class="item">
 					<div>上层会员信息：</div>
 			 		<div >姓名：<span>{{contact.username}}</span></div>
@@ -33,13 +33,13 @@
 				showContact: false,
 				isOver: false,
 				contact: undefined,
-				member: {}
+				user: undefined
 			}
 		},
 		methods: {
 			onUpdate() {
 				let that = this;
-				this.ajax().post(this.Server.api.update.add, {username: this.member.username, contact: this.contact.username})
+				this.ajax().post(this.Server.api.update.add, {username: this.user.username, contact: this.contact.username})
 				.ok(function(data) {
 					Message({
 	  					showClose: true,
@@ -66,7 +66,8 @@
 			onRequestUpdate() {
 				//console.log(this.ajax());
 				let that = this;
-				this.ajax().get(this.Server.api.member.findContact + window.user.username)
+				//console.log(this.member);
+				this.ajax().get(this.Server.api.member.findContact + this.user.username)
 				.ok(function(data) {
 					that.contact = data.data;
 					that.$set(that, 'contact', that.contact);
@@ -76,18 +77,29 @@
 			}
 		}, 
 
+		created() {
+			//this.member = JSON.parse(JSON.stringify(this.$route.params));
+			this.user = this.$route.params;
+			//this.$set(this, 'member', this.member);
+			//console.log(this.member);
+			//console.log('created');
+		}, 
+
 		mounted() {
-			if (window.member == undefined && window.user != undefined) {
+			//this.member = this.$route.params;
+			//this.$set(this, 'member', this.member);
+			//console.log(this.$router.query);
+			if (this.globalUser != undefined) {
 				let that = this;
-				this.ajax().get(this.Server.api.member.get + window.user.username)
+				this.ajax().get(this.Server.api.user.get + this.globalUser.username)
 				.ok(function(data) {
-					window.member = data.data;
+					Vue.prototype.globalUser = data.data;
 					that.$set(that, 'member', data.data);
 				}).notOk(function(data) {
 
 				}).start();
 			} else {
-				this.$set(this, 'member', window.member);
+				//this.$set(this, 'member', this.globalUser);
 			}
 		}
 

@@ -71,10 +71,9 @@ class Update extends MY_Controller {
 	public function review() {
 		$username = $this->input->post('username');
 		$contact = $this->input->post('contact');
-		$username = $this->input->post('username');
 		$this->load->model('Member_Model');
 		$contactFind = $this->Member_Model->findFirstContact($username);
-		if ($contact != $contactFind) {
+		if ($contact != $contactFind->username) {
 			$this->json_with_code_msg(500, '你不是'.$username."的审核人");
 		} else {
 			//审核

@@ -102,8 +102,8 @@ class User extends MY_Controller {
 	public function get() {
 		$username = $this->input->get('username');
 		if ($this->hasLogin($username)) {
-			$this->load->model('User_Model');
-			$user = $this->User_Model->get($username);
+			$this->load->model('User_Member_Model');
+			$user = $this->User_Member_Model->get($username);
 			if (isset($user)) {
 				$this->json_with_data(200, 'ok', $user);
 			} else {

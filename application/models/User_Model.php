@@ -88,4 +88,9 @@ class User_Model extends CI_Model {
 		//return $this->treedatabase->getChildrenCount(7, 2);
 		return $this->treedatabase->insertNode($id = 1, $node);
 	}
+
+	public function updateLevelAndState($username, $level, $state) {
+		$this->load->database();
+		return $this->db->update('user', array('level' => $level, 'state' => $state), array('username' => $username));
+	}
 }
