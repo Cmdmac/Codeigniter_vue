@@ -51,7 +51,7 @@
 		data() {
 			return {
 				stateColor: {color: '#FEFEFE'},
-				user: {id: 123456, username: "魏群春", state: "正式会员", level: 1},
+				user: {id: 123456, username: "", state: "", level: 1},
 				items: [], 				
 				tabs: [{title: '首页', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548858922438&di=f4e09c3cd7299d315809bd1420c40c53&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01f6d058d9d6c0a801219c77562fcf.png%401280w_1l_2o_100sh.png'},
             		{title: '站内信', image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1549457318&di=67bc402aaae6cd3688ff11a4903a6a34&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.25pp.com%2Fuploadfile%2Fapp%2Ficon%2F20160420%2F1461149412855957.jpg'}, 
@@ -138,7 +138,7 @@
 
 			initItems() {
 				let items = [
-						[{title: "联盟公告", icon: "1184611.png", level: 1, name: "http://www.baidu.com"}, {title: "团队结构", icon: "1184619.png", level: 2, name: "http://172.18.10.240:8080/#/manager"}, {title: "问题解答", icon: "1184675.png", level: 1}], 
+						[{title: "联盟公告", icon: "1184611.png", level: 1, name: "http://www.baidu.com"}, {title: "团队结构", icon: "1184619.png", level: 2, name: "TeamManager"}, {title: "问题解答", icon: "1184675.png", level: 1}], 
 						[{title: "游戏规则", icon: "1187084.png", level: 1,}, {title: "金币转账", icon: "1187096.png", level: 2}, {title: "升级记录", icon: "1187101.png", level: 1, name: 'updateRecorders'}],
 						[{title: "会员管理", icon: "1187113.png", level: 2}, {title: "修改资料", icon: "1187116.png", level: 1, name: 'modifyProfile' }, {title: "我的账号", icon: "1187148.png", level: 2, name: 'registeMember'}]
 					];
@@ -151,35 +151,30 @@
 		mounted() {
 			let that = this;
 			let username = window.localStorage.getItem('username');
-			let instance = axios.create({
-		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		  				withCredentials: true});
-			  		instance.get(this.Server.api.user.get + "?username=" + username)
-			  		.then(function (response) {
-			  			if (response.data.code == 200) {
-			  				//保存为全局对象
-			  				//that.Vue.prototype.globalUser = response.data.data;
-			  				that.$set(that, 'user', response.data.data);
-			  				if (that.user.level == 0) {
-			  					that.stateColor.color = 'red';
-			  					that.$set(that, 'stateColor', that.stateColor);
-			  				} else {
-			  					that.stateColor.color = '#FEFEFE';
-			  					that.$set(that, 'stateColor', that.stateColor);
-			  				}
+			this.ajax().get(this.Server.api.user.get + "?username=" + username)
+		  		.ok(function (data) {			  			
+	  				//保存为全局对象
+	  				//that.Vue.prototype.globalUser = response.data.data;
+	  				that.$set(that, 'user', data.data);
+	  				if (that.user.level == 0) {
+	  					that.stateColor.color = 'red';
+	  					that.$set(that, 'stateColor', that.stateColor);
+	  				} else {
+	  					that.stateColor.color = '#FEFEFE';
+	  					that.$set(that, 'stateColor', that.stateColor);
+	  				}
 
-			  				that.initItems();
-			  			} else {
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'error',
-			  					duration: 1000
-			  				});
-			  			}
-			  		}).catch(function(error) {
-			  			console.log(error);
-			  		})
+	  				that.initItems();			  			
+		  		}).notOk(function(data) {
+		  			Message({
+	  					showClose: true,
+	  					message: response.data.msg, 
+	  					type: 'error',
+	  					duration: 1000
+	  				});
+		  		}).catch(function(error) {
+		  			console.log(error);
+		  		}).start();
 		}
 
 	}

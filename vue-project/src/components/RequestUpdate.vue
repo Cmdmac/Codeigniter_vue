@@ -10,7 +10,7 @@
 			 		<div >支付宝：<span>{{contact.alipay}}</span></div>
 			 </div>
 		</div>
-		<el-button v-if="contact == undefined" type="primary" style="margin: 10px;width: 80%; max-width: 500px" @click="onRequestUpdate">申请升级</el-button>
+		<el-button v-if="showRequestButton" type="primary" style="margin: 10px;width: 80%; max-width: 500px" @click="onRequestUpdate">申请升级</el-button>
 		<el-button v-if="contact != undefined" type="primary" style="margin: 10px;width: 80%; max-width: 500px" @click="onUpdate">确认升级</el-button>
 
 		 <el-dialog ref="contactDialog" title="接点人信息" :visible.sync="showContact" width="80%">
@@ -33,7 +33,8 @@
 				showContact: false,
 				isOver: false,
 				contact: undefined,
-				user: undefined
+				user: undefined,
+				showRequestButton: false
 			}
 		},
 		methods: {
@@ -93,8 +94,11 @@
 				let that = this;
 				this.ajax().get(this.Server.api.user.get + this.globalUser.username)
 				.ok(function(data) {
-					Vue.prototype.globalUser = data.data;
+					//Vue.prototype.globalUser = data.data;
 					that.$set(that, 'member', data.data);
+					if (data.data.level < 8) {
+						that.$set(that, 'showRequestButton', true);
+					}					
 				}).notOk(function(data) {
 
 				}).start();

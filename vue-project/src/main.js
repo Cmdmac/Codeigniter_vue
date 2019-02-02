@@ -127,6 +127,13 @@ const ReviewRecorders = resovle => {
     resovle(require('@/components/ReviewRecorders'))
   })
 };
+
+const TeamManager = resovle => {
+  require.ensure(['@/components/TeamManager'], () => {
+    resovle(require('@/components/TeamManager'))
+  })
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -137,7 +144,7 @@ let r = [
         { path: '/', component: User, meta: { title: '爱我中华自助平台' }},
         { name: 'user', path: '/user', component: User, meta: { title: 'User' } },
         { name: 'manager', path: '/manager', component: Manager },
-        { name: 'manager_page', path: '/manager_page', component: ManagerPage},
+        { name: 'TeamManager', path: '/teamManager', component: TeamManager},
         { name: 'main', path: '/main', component: Main},
         { name: 'modifyProfile', path: '/modifyProfile', component: ModifyProfile},
         { name: 'registeMember', path: '/registeMember', component: RegisterMember },

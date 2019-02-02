@@ -152,15 +152,15 @@ class Member extends Auth_Controller
 		if ($node == null) {
 			return array();
 		}
-		$children = $this->Member_Model->getChildren($node['name']);
+		$children = $this->Member_Model->getChildren($node['username']);
 		//var_dump($children);
-		$arr = array('name' => $node['name']);
+		$arr = array('name' => $node['username']);
 		if ($level == $totalLevel) {
 			return $arr;
 		}
 		foreach ($children as $item) {
 			# code...
-			$r = $this->encode_children($item, $level + 1);
+			$r = $this->encode_children($item, $level + 1, $totalLevel);
 			$arr['children'][] = $r;
 		}
 		return $arr;
