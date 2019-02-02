@@ -103,6 +103,47 @@ export default {
       }
     },
 
+    /**
+    构造level层的数据，从服务端拉下数据后，将不存在的位置补充上空数据以达到每层都是满的树叶的树
+    **/
+    buildTree(data, current, level) {
+      if (current == level) {
+        return;
+      }
+      if (data == undefined) {
+        data = { name : '空位' + current, children: []};
+        this.buildTree(data, current + 1, level);
+      } else {
+        let children = data.children;
+        if (children == undefined) {
+          data.children = [];
+          let left = { name : '空位' + (current + 1), children: []};
+          let right = { name : '空位' + (current + 1), children: []};
+          data.children.push(left);
+          data.children.push(right);
+          this.buildTree(left, current + 1, level);
+          this.buildTree(right, current + 1, level);
+        } else {
+          if (children.length == 2) {
+            this.buildTree(children[0], current + 1, level);
+            this.buildTree(children[1], current + 1, level);
+          } else if (children.length == 1) {
+            this.buildTree(children[0], current + 1, level);
+            let new_child = { name : '空位' + (current + 1), children: []};
+            children.push(new_child);
+            this.buildTree(new_child, current + 1, level);
+          } else {
+            let left = { name : '空位' + (current + 1), children: []};
+            let right = { name : '空位' + (current + 1), children: []};
+            data.children.push(left);
+            data.children.push(right);
+            this.buildTree(left, current + 1, level);
+            this.buildTree(right, current + 1, level);
+          }          
+        }
+      }
+    },
+
     loadTree() {
       let that = this;
       let instance = axios.create({
@@ -112,7 +153,9 @@ export default {
           .then(function (response) {
             if (response.data.code == 200) {
               //console.log(response.data);
-              that.$set(that, 'tree', response.data.data);
+              let tree = response.data.data;
+              that.buildTree(tree, 1, 7);
+              that.$set(that, 'tree', tree);
             } else {
               //alert(response.data.msg);
               Message({
