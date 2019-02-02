@@ -5,7 +5,7 @@
 			<div class="No">
 				<div>
 					<div>会员编员</div>
-					<div>{{user.id}}</div>
+					<div>{{user.uid}}</div>
 				</div>
 				<div>
 					<div>注册币</div>
@@ -113,7 +113,7 @@
 
 			onItemClick(i, j) {
 				if (this.canNavigate(i, j)) {
-					this.$router.push({ name: this.items[i][j].name, params: this.user});
+					this.$router.replace({ name: this.items[i][j].name, params: this.user});
 					//window.location = this.items[i][j].target;
 				}
 			},
