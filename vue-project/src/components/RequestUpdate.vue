@@ -72,6 +72,7 @@
 				.ok(function(data) {
 					that.contact = data.data;
 					that.$set(that, 'contact', that.contact);
+					that.$set(that, 'showRequestButton', false);
 				}).notOk(function(data) {
 
 				}).start();
@@ -90,21 +91,12 @@
 			//this.member = this.$route.params;
 			//this.$set(this, 'member', this.member);
 			//console.log(this.$router.query);
-			if (this.globalUser != undefined) {
-				let that = this;
-				this.ajax().get(this.Server.api.user.get + this.globalUser.username)
-				.ok(function(data) {
-					//Vue.prototype.globalUser = data.data;
-					that.$set(that, 'member', data.data);
-					if (data.data.level < 8) {
-						that.$set(that, 'showRequestButton', true);
-					}					
-				}).notOk(function(data) {
-
-				}).start();
-			} else {
-				//this.$set(this, 'member', this.globalUser);
-			}
+			
+			if (this.user.level < 8) {
+				this.$set(this, 'showRequestButton', true);
+			}					
+			
+			
 		}
 
 	}

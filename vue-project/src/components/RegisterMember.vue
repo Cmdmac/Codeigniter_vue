@@ -1,5 +1,6 @@
 <template>
-	<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
+	<div class="container">
+		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
 		 <el-form-item label="推荐人" prop="name">
 		    <el-input :disabled="true" v-model="model.recommend" ></el-input>
 		  </el-form-item>
@@ -32,6 +33,7 @@
         	<el-button @click="resetForm('model')">重置</el-button>
       		</el-form-item>
 		</el-form>
+	</div>
 </template>
 <script type="text/javascript">
 	import axios from "axios";
@@ -120,6 +122,7 @@
 			  				//that.model.phone = '';
 			  				//that.model.recommend = '';
 			  				//that.$set(that, 'model', that.model);
+			  				that.$router.go(1);
 			  			} else {
 			  				//alert(response.data.msg);
 			  				Message({
@@ -157,8 +160,15 @@
 </script>
 
 <style type="text/css" scoped>
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 	.form {
 		align: center;
+		width: 100%;
 		max-width: 500px; 
 		margin-top: 30px;
 		margin-right: 20px;

@@ -185,10 +185,18 @@ class Member extends Auth_Controller
 			$this->json_with_code_msg(500, '没有这个会员');
 			return;
 		}
+		//var_dump($member->recommend);
 		$root = $this->Member_Model->getChildren($member->recommend);
 		//var_dump($root);
-		$r = $this->encode_children(current($root), 1, $level);
-		$this->json_with_data(200, 'ok', $r);
+		foreach ($root as $row) {
+			//var_dump($row);
+			if ($row['username'] == $username) {
+				$r = $this->encode_children($row, 1, $level);
+				$this->json_with_data(200, 'ok', $r);
+				break;
+			}
+		}
+		
 	}
 
 	private function encode_children($node, $level, $totalLevel) {

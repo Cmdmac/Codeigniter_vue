@@ -43,7 +43,11 @@ export default {
     clickNode: function(node){
       // eslint-disable-next-line
       //console.log(node)
-      this.getChildren(node.name);
+      //this.getChildren(node.name);
+      //console.log(node);
+      if (node.register == true) {
+        this.$router.push({ name: 'registeMember', params: this.user});
+      }
     },
 
     onClickHandler: function(e) {
@@ -120,6 +124,10 @@ export default {
           data.children = [];
           let left = { name : '空位' + (current + 1), children: []};
           let right = { name : '空位' + (current + 1), children: []};
+          if (data.name == this.user.username) {
+              left.register = true;
+              right.register = true;
+          }
           data.children.push(left);
           data.children.push(right);
           this.buildTree(left, current + 1, level);
@@ -162,7 +170,7 @@ export default {
             if (response.data.code == 200) {
               //console.log(response.data);
               let tree = response.data.data;
-              that.buildTree(tree, 1, 7);
+              that.buildTree(tree, 1, 3);
               that.$set(that, 'tree', tree);
             } else {
               //alert(response.data.msg);
