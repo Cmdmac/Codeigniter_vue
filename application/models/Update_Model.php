@@ -10,8 +10,15 @@ class Update_Model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function add($username, $contact) {
-		return $this->db->insert('tbl_update', array('username' => $username, 'contact' => $contact));
+	public function add($username, $level_from, $level_to, $contact) {
+		return $this->db->insert('tbl_update', array('username' => $username, 'level_from' => $level_from, 'level_to' => $level_to, 'contact' => $contact));
+	}
+
+	public function hasAdd($username, $level_from, $level_to, $contact) {
+		$r = $this->db->get_where('tbl_update', array('username' => $username, 'level_from' => $level_from, 'level_to' => $level_to, 'contact' => $contact));
+		//var_dump($r->result());
+		$arr = $r->result();
+		return count($arr) > 0;
 	}
 
 	public function getValideUpdates($username) {
@@ -29,6 +36,10 @@ class Update_Model extends CI_Model {
 		$this->load->model('Member_Model');
 		$member = $this->Member_Model->getMember($username);
 		if (isset($member)) {
+			if ($this->hasReviewed($username, $member->level, $member->level + 1, $contact)) {
+				return false;
+			}
+
 			$member->level = $member->level + 1;
 			$member->contact = $contact;
 
@@ -40,8 +51,17 @@ class Update_Model extends CI_Model {
 				}
 			}
 		} 
-
 		return false;
-		
 	}
+
+	public function hasReviewed($username, $level_from, $level_to, $contact) {
+		$r = $this->db->get_where('tbl_update', array('username' => $username, 'level_from' => $level_from, 'level_to' => $level_to, 'contact' => $contact));
+		$row = $r->row();
+		if (isset($row) && $row->state == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

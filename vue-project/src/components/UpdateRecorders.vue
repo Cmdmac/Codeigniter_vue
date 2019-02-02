@@ -26,7 +26,7 @@
 		mounted() {
 
 			let that = this;
-			this.ajax().get(this.Server.api.update.getUpdateRecords + window.user.username)
+			this.ajax().get(this.Server.api.update.getUpdateRecords + this.$route.params.username)
 			.ok(function(data){
 
 				that.$set(that, 'records', data.data);

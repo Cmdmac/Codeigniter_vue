@@ -40,14 +40,15 @@ class Member_Model extends CI_Model {
 
 	public function findFirstContact($username) {
 		//$username = $this->input->get('username');
-		//$this->load->model('Member_Model');
-		$member = $this->getMember($username);
+		$this->load->model('User_Member_Model');
+		$member = $this->User_Member_Model->get($username);
 		if (!isset($member)) {
 			// $this->json_with_code_msg(500, '会员不存在');
 			return null;
 		} else {
 			//$this->load->model('User_Member_Model');
-			$contactMember = $this->getMember($member->contact);
+			$contactMember = $this->User_Member_Model->get($member->contact);
+			//var_dump($contactMember);
 			if (isset($contactMember)) {
 				$contactLevel = $contactMember->level;
 				if ($contactLevel <= $member->level) {

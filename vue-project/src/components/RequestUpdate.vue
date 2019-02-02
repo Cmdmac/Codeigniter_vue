@@ -44,7 +44,7 @@
 					Message({
 	  					showClose: true,
 	  					message: data.msg, 
-	  					type: 'error',
+	  					type: 'success',
 	  					duration: 1000
 	  				});
 	  				window.location = that.Server.page.main.index;

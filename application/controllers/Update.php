@@ -32,14 +32,24 @@ class Update extends MY_Controller {
 			//$this->json_with_data(200, 'ok', $contact);
 			//var_dump($contact);
 			$this->load->model('Update_Model');
-			if ($this->Update_Model->add($username, $contact->username)) {
+			$member = $this->Member_Model->getMember($username);
+			if (!isset($member)) {
+				$this->json_with_code_msg(500, '申请失败，没有这个会员');
+				return;
+			}
+
+			if ($this->Update_Model->hasAdd($member->username, $member->level, $member->level + 1, $contact->username)) {
+				$this->json_with_code_msg(500, '已申请过');
+				return;
+			}
+			if ($this->Update_Model->add($member->username, $member->level, $member->level + 1, $contact->username)) {
 				$this->json_with_code_msg(200, '申请成功');
 			} else {
 				$this->json_with_code_msg(500, '申请失败');
 			}
 		} else {
 			//$this->json_with_code_msg(500, '没有符合条件的接点人');
-			$this->json_with_code_msg(200, '申请失败，没有符合条件的接点人');
+			$this->json_with_code_msg(500, '申请失败，没有符合条件的接点人');
 		}
 	}
 
@@ -82,7 +92,7 @@ class Update extends MY_Controller {
 			if ($this->Update_Model->review($username, $contact)) {
 				$this->json_with_code_msg(200, "审核通过");
 			} else {
-				$this->json_with_code_msg(500, "审核失败");
+				$this->json_with_code_msg(500, "审核失败，已审核过或者没有这个升级记录");
 			}
 			// 修改账号等级
 		}
