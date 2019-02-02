@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div align="left"><span style="font-weight: bold; font-size: 13pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员 </span><el-button type="text" @click="loadTree">刷新</el-button></div>
-    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
+<!--     <div align="left"><span style="font-weight: bold; font-size: 13pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员 </span><el-button type="text" @click="loadTree">刷新</el-button></div>
+ -->    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
     <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1">
     </div>
@@ -204,15 +204,15 @@ export default {
                     //alert('error');
             });
 
-          instance.get(this.Server.api.member.getMemberCount)
-          .then(function(response) {
-            if (response.data.code == 200) {
-              that.totalMemberCount = response.data.data;
-              that.$set(that, 'totalMemberCount', that.totalMemberCount);
-            }
-          }).catch(function(error) {
+          // instance.get(this.Server.api.member.getMemberCount)
+          // .then(function(response) {
+          //   if (response.data.code == 200) {
+          //     that.totalMemberCount = response.data.data;
+          //     that.$set(that, 'totalMemberCount', that.totalMemberCount);
+          //   }
+          // }).catch(function(error) {
 
-          });
+          // });
     }
   },
 
@@ -231,6 +231,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 20px;
 }
 #app .avat{border-radius: 2em;border-width:2px;}
 #app .name{font-weight:700;}
