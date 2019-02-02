@@ -7,13 +7,18 @@
               <div v-if="false" class="avat">
                 <img :src="treeData.image_url" />
               </div>
-              <div class="name">{{treeData.name}}</div>
+              <div v-if="treeData.register == undefined"  class="name">{{treeData.name}}</div>
+              <div class="content">
+                <div v-if="treeData.register" class="register">注册</div>
+              </div>
             </div>
+            <!--
             <div class="person" v-if="false" @click="$emit('click-node', treeData.mate)">
               <div class="avat">
                 <img :src="treeData.mate.image_url" />
               </div>
               <div class="name">{{treeData.mate.name}}</div>
+            -->
             </div>
           </div>
           <div class="extend_handle" v-if="!treeData.leaf" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
@@ -87,13 +92,26 @@ transform: rotateZ(135deg);transform-origin: 50% 50% 0;transition: transform eas
 .childLevel:last-child:after{right:50%;height:15px; border:2px solid;border-color:#ccc #ccc transparent transparent;border-radius: 0 6px 0 0;transform: translate3d(-1px,0,0)}
 .childLevel:first-child.childLevel:last-child::after{left:auto;border-radius: 0;border-color:transparent #ccc transparent transparent;transform: translate3d(1px,0,0)}
 
-.node{position: relative; display: inline-block;width: 5em; height: 5em; box-sizing: border-box; text-align: center; border-style: solid; border-width: 1px; border-color: #AAA;}
-.node .person{font-size: 10pt; position: relative; display: inline-block;z-index: 2;width: 3em; overflow: hidden;}
+.node{position: relative; display: inline-block; width: 5em; height: 5em; box-sizing: border-box; text-align: center; border-style: solid; border-width: 1px; border-color: #AAA;}
+.node .person{font-size: 8pt; position: relative; display: inline-block;z-index: 2;width: 3em; overflow: hidden;}
 .node .person .avat{display: none;width:4em;height: 4em;margin:auto;overflow:hidden; background:#fff;border:1px solid #ccc;box-sizing: border-box;}
 .node .person .avat img{width:100%;height: 100%;}
 .node .person .name{height:2em;line-height: 2em;overflow: hidden;width:100%; /*font-weight: bold;*/}
 .node.hasMate::after{content: "";position: absolute;left:2em;right:2em;top:2em;border-top:2px solid #ccc;z-index: 1;}
 .node.hasMate .person:last-child{margin-left:1em;}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 4em;
+}
+
+.register {
+  font-size: 9pt;
+  font-weight: bold;
+}
 
 .landscape{transform: rotate(-90deg); padding:0 4em;}
 .landscape .node{text-align: left;height: 8em;width:8em;}

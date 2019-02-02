@@ -10,6 +10,16 @@ class Member extends Auth_Controller
 		$this->load->helper('url');
 	}
 
+	private function isManager() {
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
+			if ($this->session->type == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function register() {
 		
 		$username = $this->input->post('username');
@@ -138,12 +148,46 @@ class Member extends Auth_Controller
 		// }	
 	}
 
+	/**
+		所有团队结构，只有管理员有权限
+	**/
 	public function init() {
 		//$this->load->helper('url');
+		if ($this->isManager()) {
+			$this->json_with_code_msg(200, '你没有权限查看');
+			return;
+		}
 		$this->load->model('Member_Model');
 		$root = $this->Member_Model->getChildren('root');
 		//var_dump($root);
 		$r = $this->encode_children(current($root), 1, 3);
+		$this->json_with_data(200, 'ok', $r);
+	}
+
+	public function getMemberTree() {
+		$this->load->helper('url');
+		$username = $this->input->get('username');
+		$level = $this->input->get('level');
+		if (empty($username)) {
+			$this->json_with_code_msg(500, '参数不正确');
+			return;
+		}
+
+		if (empty($level)) {
+			$level = 3;
+		} else if ($level > 7) {
+			$level = 7;
+		}
+		// $password = $this->input-get('password');
+		$this->load->model('Member_Model');
+		$member = $this->Member_Model->getMember($username);
+		if (!isset($member)) {
+			$this->json_with_code_msg(500, '没有这个会员');
+			return;
+		}
+		$root = $this->Member_Model->getChildren($member->recommend);
+		//var_dump($root);
+		$r = $this->encode_children(current($root), 1, $level);
 		$this->json_with_data(200, 'ok', $r);
 	}
 

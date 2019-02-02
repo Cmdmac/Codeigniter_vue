@@ -28,7 +28,8 @@ export default {
       totalMemberCount: 0,
       landscape: [],
       tree: {
-      }
+      },
+      user: {}
     }
   },
   methods: {
@@ -130,11 +131,18 @@ export default {
           } else if (children.length == 1) {
             this.buildTree(children[0], current + 1, level);
             let new_child = { name : '空位' + (current + 1), children: []};
+            if (data.name == this.user.username) {
+              new_child.register = true;
+            }
             children.push(new_child);
             this.buildTree(new_child, current + 1, level);
           } else {
             let left = { name : '空位' + (current + 1), children: []};
             let right = { name : '空位' + (current + 1), children: []};
+            if (data.name == this.user.username) {
+              left.register = true;
+              right.register = true;
+            }
             data.children.push(left);
             data.children.push(right);
             this.buildTree(left, current + 1, level);
@@ -149,7 +157,7 @@ export default {
       let instance = axios.create({
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             withCredentials: true});
-          instance.get(this.Server.api.member.init)
+          instance.get(this.Server.api.member.getMemberTree + this.user.username)
           .then(function (response) {
             if (response.data.code == 200) {
               //console.log(response.data);
@@ -185,6 +193,7 @@ export default {
 
   mounted() {
     //this.getChildren('root');
+    this.$set(this, 'user', this.$route.params);
     this.loadTree();
   }
 }

@@ -17,7 +17,8 @@ var config = {
             update: host + "/index.php/member/update",
             getChildren: host + "/index.php/member/getChildren?recommend=",
             getMemberCount: host + "/index.php/member/getMemberCount",
-            findContact: host + "/index.php/member/findContact?username="
+            findContact: host + "/index.php/member/findContact?username=",
+            getMemberTree: host + "/index.php/member/getMemberTree?username="
         },
         manager: {
             list: host + "/index.php/manager/list",
