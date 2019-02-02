@@ -80,8 +80,8 @@
 	          phone: '',
 	          wx: '',
 	          alipay: '',
-	          recommend: window.user.username,
-	          contact: window.user.username,
+	          recommend: this.$route.params.username,
+	          contact: this.$route.params.username,
 	          leaf: 1,
 			},
 	        rules: {

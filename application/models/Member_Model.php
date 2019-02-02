@@ -53,7 +53,7 @@ class Member_Model extends CI_Model {
 				$contactLevel = $contactMember->level;
 				if ($contactLevel <= $member->level) {
 					//如果当前接点人的级别小于自己,往上查找符合条件的接点人
-					if ($contactMember->contact == $contactMember->username) {
+					if ($contactMember->contact == 'root'/*$contactMember->username*/) {
 						//一般是管理员数据才会这样
 						return $contactMember;
 					}
