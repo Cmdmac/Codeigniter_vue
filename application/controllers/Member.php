@@ -206,7 +206,7 @@ class Member extends Auth_Controller
 		}
 		$children = $this->Member_Model->getChildren($node['username']);
 		//var_dump($children);
-		$arr = array('name' => $node['username']);
+		$arr = array('name' => $node['username'], 'leaf' => $node['leaf']);
 		if ($level == $totalLevel) {
 			return $arr;
 		}

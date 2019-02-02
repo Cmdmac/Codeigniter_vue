@@ -51,7 +51,7 @@ export default {
     },
 
     goToMain() {
-        console.log(this.Server.page.main.index);
+        // console.log(this.Server.page.main.index);
         window.location = this.Server.page.main.index;//window.location.origin + '/#/manager';
     },
 
@@ -140,7 +140,7 @@ export default {
   	},
 
     changeFixed(clientHeight){                        //动态修改样式
-        console.log(clientHeight);
+        // console.log(clientHeight);
         this.$refs.homePage.style.height = clientHeight+'px';
     }
   },

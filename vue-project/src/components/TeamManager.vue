@@ -46,7 +46,7 @@ export default {
       //this.getChildren(node.name);
       //console.log(node);
       if (node.register == true) {
-        this.$router.push({ name: 'registeMember', params: this.user});
+        this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
       }
     },
 
@@ -122,8 +122,8 @@ export default {
         let children = data.children;
         if (children == undefined) {
           data.children = [];
-          let left = { name : '空位' + (current + 1), children: []};
-          let right = { name : '空位' + (current + 1), children: []};
+          let left = { name : '空位' + (current + 1), children: [], leaf: 1};
+          let right = { name : '空位' + (current + 1), children: [], leaf: 2};
           if (data.name == this.user.username) {
               left.register = true;
               right.register = true;
@@ -134,19 +134,36 @@ export default {
           this.buildTree(right, current + 1, level);
         } else {
           if (children.length == 2) {
+            if (children[0].leaf != 1 && children[1].leaf != 2) {
+              //exchange
+              let t = children[0];
+              children[0] = children[1];
+              children[1] = t;
+            }
             this.buildTree(children[0], current + 1, level);
             this.buildTree(children[1], current + 1, level);
-          } else if (children.length == 1) {
-            this.buildTree(children[0], current + 1, level);
-            let new_child = { name : '空位' + (current + 1), children: []};
-            if (data.name == this.user.username) {
-              new_child.register = true;
+          } else if (children.length == 1) {            
+            let node = children[0];
+            if (node.leaf == 1) {
+              let right = { name : '空位' + (current + 1), children: [], leaf: 2};
+              if (data.name == this.user.username) {
+                right.register = true;
+              }
+              children[1] = right;
+            } else {
+              let left = { name : '空位' + (current + 1), children: [], leaf: 1};
+              if (data.name == this.user.username) {
+                left.register = true;
+              }
+              // let t = node;
+              children[0] = left;
+              children[1] = node;
             }
-            children.push(new_child);
-            this.buildTree(new_child, current + 1, level);
+            this.buildTree(children[0], current + 1, level);
+            this.buildTree(children[1], current + 1, level);
           } else {
-            let left = { name : '空位' + (current + 1), children: []};
-            let right = { name : '空位' + (current + 1), children: []};
+            let left = { name : '空位' + (current + 1), children: [], leaf: 1};
+            let right = { name : '空位' + (current + 1), children: [], leaf: 2};
             if (data.name == this.user.username) {
               left.register = true;
               right.register = true;

@@ -156,6 +156,11 @@
 	      	resetForm(formName) {
 				this.$refs[formName].resetFields();
 			}
+	    },
+
+	    mounted() {
+	    	//alert(this.$route.params.leaf);
+	    	this.$set(this.model, 'leaf', this.$route.params.leaf);
 	    }
 	}
 </script>
