@@ -13,10 +13,11 @@
       title="会员信息"
       :visible.sync="dialogVisible"
       width="80%">
-      <table>
+      <table cellspacing="10px">
         <tr><td class="infoHeader">姓名:</td><td class="info">{{member.username}}</td></tr>
         <tr><td class="infoHeader">级别:</td><td class="info">{{member.level}}</td></tr>
         <tr><td class="infoHeader">方向:</td><td class="info">{{member.leaf}}区 </td></tr>
+        <tr><td class="infoHeader">电话:</td><td class="info">{{member.phone}}</td></tr>
         <tr><td class="infoHeader">微信:</td><td class="info">{{member.wx}}</td></tr>
         <tr><td class="infoHeader">支付宝:</td><td class="info">{{member.alipay}}</td></tr>
       </table>
@@ -295,7 +296,8 @@ export default {
   text-align: right;
 }
 .info {
-  width: 100px;
+  width: 80px;
   font-weight: bold;
+  text-align: left;
 }
 </style>
