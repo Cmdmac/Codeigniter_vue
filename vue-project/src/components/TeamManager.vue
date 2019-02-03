@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-<!--     <div align="left"><span style="font-weight: bold; font-size: 13pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员 </span><el-button type="text" @click="loadTree">刷新</el-button></div>
- -->    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
+    <div align="left">
+      <span style="margin-left: 10px; font-weight: bold; font-size: 12pt">共有<span style="color: red; font-size: 15pt">{{totalMemberCount}}</span>个注册会员 </span>
+      <!-- <el-button type="text" @click="loadTree">刷新</el-button> -->
+    </div>
+    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
     <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1"></div>
     </footer>
@@ -176,6 +179,7 @@ export default {
           this.buildTree(right, current + 1, level);
         } else {
           if (children.length == 2) {
+            this.totalMemberCount += 2;
             if (children[0].leaf != 1 && children[1].leaf != 2) {
               //exchange
               let t = children[0];
@@ -184,7 +188,8 @@ export default {
             }
             this.buildTree(children[0], current + 1, level);
             this.buildTree(children[1], current + 1, level);
-          } else if (children.length == 1) {            
+          } else if (children.length == 1) {          
+            this.totalMemberCount += 1;  
             let node = children[0];
             if (node.leaf == 1) {
               let right = { name : '空位' + (current + 1), children: [], leaf: 2};
@@ -230,6 +235,7 @@ export default {
               //console.log(response.data);
               let tree = response.data.data;
               that.buildTree(tree, 1, 3);
+              that.$set(that, 'totalMemberCount', that.totalMemberCount);
               that.$set(that, 'tree', tree);
             } else {
               //alert(response.data.msg);
