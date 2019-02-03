@@ -58,6 +58,7 @@ class User extends MY_Controller {
 
 	private function hasLogin($username) {
 		$this->load->library('session');
+		//var_dump($this->session->has_userdata('username') && $this->session->username == $username && (time() - $this->session->token < 3600));
 		return $this->session->has_userdata('username') && $this->session->username == $username && (time() - $this->session->token < 3600);
 	}
 
@@ -109,6 +110,8 @@ class User extends MY_Controller {
 			} else {
 				$this->json_with_code_msg(500, '没有这个用户');
 			}
+		} else {
+			$this->json_with_code_msg(401, '未登录 ');
 		}
 	}
 

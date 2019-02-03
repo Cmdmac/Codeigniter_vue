@@ -3,12 +3,28 @@
 <!--     <div align="left"><span style="font-weight: bold; font-size: 13pt">总有<span style="color: red; font-size: 18pt">{{totalMemberCount}}</span>个注册会员 </span><el-button type="text" @click="loadTree">刷新</el-button></div>
  -->    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
     <footer class="foot" v-if="false">
-        <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1">
-    </div>
+        <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1"></div>
+    </footer>
+
     <!--
     <el-button type="primary" @click="onFind">查找</el-button>
   -->
-    </footer>
+    <el-dialog
+      title="会员信息"
+      :visible.sync="dialogVisible"
+      width="80%">
+      <table>
+        <tr><td class="infoHeader">姓名:</td><td class="info">{{member.username}}</td></tr>
+        <tr><td class="infoHeader">级别:</td><td class="info">{{member.level}}</td></tr>
+        <tr><td class="infoHeader">方向:</td><td class="info">{{member.leaf}}区 </td></tr>
+        <tr><td class="infoHeader">微信:</td><td class="info">{{member.wx}}</td></tr>
+        <tr><td class="infoHeader">支付宝:</td><td class="info">{{member.alipay}}</td></tr>
+      </table>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false" >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -25,11 +41,13 @@ export default {
   },
   data() {
     return {
+      dialogVisible: false,
       totalMemberCount: 0,
       landscape: [],
       tree: {
       },
-      user: {}
+      user: {},
+      member: {}
     }
   },
   methods: {
@@ -40,6 +58,24 @@ export default {
       }
     },
 
+    showMemberInfo(node) {
+        let that = this;
+        this.ajax().get(this.Server.api.member.get + node.name)
+        .ok(function(data) {
+          that.$set(that, 'member', data.data);
+          that.$set(that, 'dialogVisible', true);          
+        }).notOk(function(data) {
+          Message({
+              showClose: true,
+              message: data.msg, 
+              type: 'error',
+              duration: 1000
+            });
+        }).catch(function(error){
+          console.log(error);
+        }).start();
+    },
+
     clickNode: function(node){
       // eslint-disable-next-line
       //console.log(node)
@@ -47,6 +83,9 @@ export default {
       //console.log(node);
       if (node.register == true) {
         this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
+      } else if (node.register == undefined || node.register == false) {
+        // get member info
+        this.showMemberInfo(node);
       }
     },
 
@@ -220,6 +259,10 @@ export default {
     //this.getChildren('root');
     this.$set(this, 'user', this.$route.params);
     this.loadTree();
+  },
+
+  beforeDestroy() {
+    that.$set(that, 'dialogVisible', false);    
   }
 }
 </script>
@@ -248,4 +291,13 @@ export default {
     text-align: center;
 }
 .foot a{color:#fff; margin:0 .5em}
+
+.infoHeader {
+  width: 50px;
+  text-align: right;
+}
+.info {
+  width: 100px;
+  font-weight: bold;
+}
 </style>
