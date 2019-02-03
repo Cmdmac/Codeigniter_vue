@@ -85,7 +85,9 @@ export default {
         this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
       } else if (node.register == undefined || node.register == false) {
         // get member info
-        this.showMemberInfo(node);
+        if (node.name.indexOf('空位') == -1) {
+          this.showMemberInfo(node);
+        }        
       }
     },
 
@@ -259,10 +261,6 @@ export default {
     //this.getChildren('root');
     this.$set(this, 'user', this.$route.params);
     this.loadTree();
-  },
-
-  beforeDestroy() {
-    that.$set(that, 'dialogVisible', false);    
   }
 }
 </script>
