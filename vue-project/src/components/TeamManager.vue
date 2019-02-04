@@ -54,6 +54,7 @@
   import qs from 'qs';
   import {Message} from 'element-ui';
   import TreeChart from "@/components/TreeChart";
+  // import TitleBar from "@/components/TitleBar";
 
 export default {
   name: 'TeamManager',

@@ -166,7 +166,7 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let username = window.localStorage.getItem('username');
   let token = window.localStorage.getItem('token');
-  if (to.fullPath != from.fullPath && username != undefined && token != undefined && (new Date().getTime() / 1000 - token > 3600)) {
+  if (to.fullpath != '/user' && to.fullPath != from.fullPath && username != undefined && token != undefined && (new Date().getTime() / 1000 - token > 3600)) {
     next({path: '/user'});
   } else {
     /* 路由发生变化修改页面meta */

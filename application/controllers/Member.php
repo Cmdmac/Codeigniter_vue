@@ -214,6 +214,11 @@ class Member extends Auth_Controller
 			$this->json_with_code_msg(500, '没有这个会员');
 			return;
 		}
+		/*
+		if ($level > $member->level) {
+			$level = $member->level + 1;
+		}
+		*/
 		//var_dump($member->recommend);
 		$root = $this->Member_Model->getChildren($member->recommend);
 		//var_dump($root);

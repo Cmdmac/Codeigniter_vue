@@ -1,14 +1,17 @@
 <template>
 
   <div id="app">
+    <!-- <TitleBar /> -->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   
+import TitleBar from "@/components/TitleBar"
 export default {
-  name: 'app'  
+  name: 'app',
+  components: {TitleBar}
 }
 </script>
 
