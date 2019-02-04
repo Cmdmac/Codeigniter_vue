@@ -1,7 +1,7 @@
-var host = "http://127.0.0.1"
+var host = "http://hgx830330.applinzi.com"
 var config = {
     base: host,
-    host : host + ":8080/#/",//http://192.168.0.115/#/",
+    host : host + "/#/",//http://192.168.0.115/#/",
     api: {
         user: {
             register: host + '/index.php/user/register',
@@ -44,17 +44,18 @@ var config = {
         },
 
         main: {
-            index: host + ':8080/#/main',
-            registeMember: host + ':8080/#/registeMember',
-            modifyProfile: host + ':8080/#/modifyProfile',
-            requestUpdate: host + ':8080/#/requestUpdate',
-            updateRecorders: host + ':8080/#/updateRecorders',
-            reviewRecorders: host + ':8080/#/reviewRecorders'
+            index: host + '/#/main',
+            registeMember: host + '/#/registeMember',
+            modifyProfile: host + '/#/modifyProfile',
+            requestUpdate: host + '/#/requestUpdate',
+            updateRecorders: host + '/#/updateRecorders',
+            reviewRecorders: host + '/#/reviewRecorders'
         },
 
     }
 }
 
+// 18038001193, 830330
 export {
     config
 }
