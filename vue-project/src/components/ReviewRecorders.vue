@@ -9,8 +9,7 @@
 		<el-dialog
 			title="提示"
 			:visible.sync="dialogVisible"
-			width="80%"
-			:before-close="handleClose">
+			width="80%">
 			<span>确认已从<span class="warning">{{item.username}}</span>收到升级款并将其从级别<span class="warning">{{item.level_from}}</span>升级到级别<span class="warning">{{item.level_to}}</span>吗?</span>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible = false">取 消</el-button>

@@ -10,7 +10,7 @@ class MY_Controller extends CI_Controller {
 	
 	protected function json($data) {
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://127.0.0.1:8080"); 
 		header('Content-Type: application/json');
 		exit(json_encode($data));
 	}
@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller {
 	protected function json_with_code_msg($code, $msg) {
 		$data = array('code' => $code, 'msg' => $msg);
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://127.0.0.1:8080"); 
 		header('Content-Type: application/json');
 		exit(json_encode($data));
 	}
@@ -26,7 +26,7 @@ class MY_Controller extends CI_Controller {
 	protected function json_with_data($code, $msg, $data) {
 		$data = array('code' => $code, 'msg' => $msg, 'data' => $data);
 		header('Access-Control-Allow-Credentials: true');
-		header("Access-Control-Allow-Origin: http://192.168.31.8:8080"); 
+		header("Access-Control-Allow-Origin: http://127.0.0.1:8080"); 
 		header('Content-Type: application/json');
 		exit(json_encode($data));
 	}
@@ -45,8 +45,8 @@ class Auth_Controller extends MY_Controller {
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') &&  $this->session->has_userdata('token')) {
 			$distance = time() - $this->session->token;
-			if ($distance >= 12 * 3600 * 1000) {
-				$this->json_with_code_msg('500', '登录已超时');
+			if ($distance >= 3600) {
+				$this->json_with_code_msg('401', '登录已超时');
 				exit();
 			}
 		} else {

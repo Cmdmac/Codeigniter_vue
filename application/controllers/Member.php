@@ -126,10 +126,36 @@ class Member extends Auth_Controller
 
 	public function update() {
 		$this->load->helper('url');
-		$id = $this->input->post('id');
-		$name = $this->input->post('name');
+		$old_username = $this->input->post('old_username');
+		$password = $this->input->post('password');
+		$username = $this->input->post('username');
 		$phone = $this->input->post('phone');		
+		$wx = $this->input->post('wx');
+		$alipay = $this->input->post('alipay');
 
+		//更新会员，先检查有没权限，再查找当前位置的会员信息，然后赋值给新会员，在更新时，检查是否是新会员，如果是新会员要先注册账号,更新推荐人和接点人
+		// has login
+		$this->load->model('Member_Model');
+		$member = $this->Member_Model->getMember($old_username);
+		//var_dump($member);
+		// 检查是不是当前会员的推荐人
+		if ($member->recommend == $this->session->username) {
+			// 检查会员是不是新会员
+			$this->load->model('User_Model');
+			$user = $this->User_Model->get($username);
+			if (!isset($user)) {
+				//没有注册过，注册
+				$this->User_Model->register($username, $password, $phone, $wx, $alipay);
+			}
+			if ($this->Member_Model->updateMember($old_username, $username, $phone)) {
+				$this->json_with_code_msg(200, '更新成功');
+			} else {
+				$this->json_with_code_msg(500, '更新失败');
+			}
+		} else {
+			$this->json_with_code_msg(500, '会员更新失败，你不是这个会员的推荐人');				
+		}
+		
 		/*
 		if ($this->Member_Model->existsName($name)) {
 			//var_dump($r);
@@ -138,13 +164,13 @@ class Member extends Auth_Controller
 			$this->json_with_code_msg('500', '电话已被注册');
 		} else  {*/
 			//var_dump($r);
-			$this->load->model('Member_Model');
-			$r = $this->Member_Model->updateMember($id, $name, $phone);
-			if (!empty($r)) {
-				$this->json_with_data(200, '更新会员成功', array('time' => $r));
-			} else {
-				$this->json_with_code_msg(500, '会员更新失败');
-			}
+			// $this->load->model('Member_Model');
+			// $r = $this->Member_Model->updateMember($id, $name, $phone);
+			// if (!empty($r)) {
+			// 	$this->json_with_data(200, '更新会员成功', array('time' => $r));
+			// } else {
+			// 	$this->json_with_code_msg(500, '会员更新失败');
+			// }
 		// }	
 	}
 

@@ -3,22 +3,15 @@
       <tr>
         <td :colspan="treeData.children ? treeData.children.length * 2 : 1" :class="{parentLevel: treeData.children, extend: treeData.children && treeData.extend}">
           <div :class="{node: true, hasMate: treeData.mate}">
-            <div class="person" @click="$emit('click-node', treeData)">
+            <div class="person" >
               <div v-if="false" class="avat">
                 <img :src="treeData.image_url" />
               </div>
-              <div v-if="treeData.register == undefined"  class="name">{{treeData.name}}</div>
+              <div v-if="treeData.register == undefined"  class="name" @click="onClickName(treeData)">{{treeData.name}}</div>
               <div class="content">
-                <div v-if="treeData.register" class="register">注册</div>
+                <div v-if="treeData.register" class="register" @click="$emit('click-register', treeData)">注册</div>
+                <div v-if="treeData.update" class="register" @click="onUpdate(treeData)">更新</div>
               </div>
-            </div>
-            <!--
-            <div class="person" v-if="false" @click="$emit('click-node', treeData.mate)">
-              <div class="avat">
-                <img :src="treeData.mate.image_url" />
-              </div>
-              <div class="name">{{treeData.mate.name}}</div>
-            -->
             </div>
           </div>
           <div class="extend_handle" v-if="!treeData.leaf" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
@@ -26,7 +19,7 @@
       </tr>
       <tr v-if="treeData.children && treeData.extend">
         <td v-for="(children, index) in treeData.children" :key="index" colspan="2" class="childLevel">
-          <TreeChart :json="children" @click-node="$emit('click-node', $event)"/>
+          <TreeChart :json="children" @click-node="$emit('click-node', $event)" @click-register="$emit('click-register', $event)" @click-update="$emit('click-update', $event)"/>
         </td>
       </tr>
     </table>
@@ -61,6 +54,14 @@ export default {
     }
   },
   methods: {
+    onClickName: function(treeData) {
+      this.$emit('click-node', treeData);
+    },
+
+    onUpdate: function(treeData) {
+      console.log('test');
+      this.$emit('click-update', treeData);
+    },
     onHandlerClick: function(treeData) {      
       this.toggleExtend(treeData);
       //this.$emit('onHandleClick', treeData);

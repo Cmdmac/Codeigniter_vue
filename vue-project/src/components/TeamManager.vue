@@ -4,7 +4,11 @@
       <span style="margin-left: 10px; font-weight: bold; font-size: 12pt">共有<span style="color: red; font-size: 15pt">{{totalMemberCount}}</span>个注册会员 </span>
       <!-- <el-button type="text" @click="loadTree">刷新</el-button> -->
     </div>
-    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" v-on:onHandleClick="onClickHandler" @click-node="clickNode" />
+    <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" 
+      v-on:onHandleClick="onClickHandler" 
+      v-on:click-node="clickNode" 
+      v-on:click-register="clickRegister" 
+      v-on:click-update="clickUpdate"></TreeChart>
     <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1"></div>
     </footer>
@@ -80,19 +84,25 @@ export default {
         }).start();
     },
 
+    clickRegister: function(node) {
+        this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
+    },
+
+    clickUpdate: function(node) {
+      // alert(node);
+        this.$router.replace({ name: 'UpdateMember', params: { username: node.name }});
+    },
+
     clickNode: function(node){
       // eslint-disable-next-line
       //console.log(node)
       //this.getChildren(node.name);
       //console.log(node);
-      if (node.register == true) {
-        this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
-      } else if (node.register == undefined || node.register == false) {
         // get member info
         if (node.name.indexOf('空位') == -1) {
           this.showMemberInfo(node);
         }        
-      }
+      
     },
 
     onClickHandler: function(e) {
@@ -186,11 +196,18 @@ export default {
               children[0] = children[1];
               children[1] = t;
             }
+            if (data.name == this.user.username) {
+              children[0].update = true;
+              children[1].update = true;
+            }
             this.buildTree(children[0], current + 1, level);
             this.buildTree(children[1], current + 1, level);
           } else if (children.length == 1) {          
             this.totalMemberCount += 1;  
             let node = children[0];
+            if (data.name == this.user.username) {
+              node.update = true;
+            }
             if (node.leaf == 1) {
               let right = { name : '空位' + (current + 1), children: [], leaf: 2};
               if (data.name == this.user.username) {
