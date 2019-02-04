@@ -233,7 +233,12 @@ export default {
           this.buildTree(right, current + 1, level);
         } else {
           if (children.length == 2) {
-            this.totalMemberCount += 2;
+            for (let i = 0; i < children.length; i++) {
+              let child = children[i];
+              if (child.name.indexOf('空位') == -1) {
+                this.totalMemberCount++;
+              }
+            }
             if (children[0].leaf != 1 && children[1].leaf != 2) {
               //exchange
               let t = children[0];
@@ -295,6 +300,7 @@ export default {
             if (response.data.code == 200) {
               //console.log(response.data);
               let tree = response.data.data;
+              that.totalMemberCount = 0;
               that.buildTree(tree, 1, that.level);
               that.$set(that, 'totalMemberCount', that.totalMemberCount);
               that.$set(that, 'tree', tree);
