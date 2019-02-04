@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-02-04 13:00:27
+-- Generation Time: 2019-02-04 13:14:21
 -- 服务器版本： 10.1.10-MariaDB
 -- PHP Version: 7.0.2
 
