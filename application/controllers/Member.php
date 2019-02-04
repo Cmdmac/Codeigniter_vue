@@ -31,6 +31,8 @@ class Member extends Auth_Controller
 		$contact = $this->input->post('contact');
 		$leaf = $this->input->post('leaf');
 
+		$username = trim($username);
+
 		$this->doRegister($username, $password, $phone, $wx, $alipay, $recommend, $contact, $leaf);
 	}
 
@@ -133,6 +135,7 @@ class Member extends Auth_Controller
 		$wx = $this->input->post('wx');
 		$alipay = $this->input->post('alipay');
 
+		$username = trim($username);
 		//更新会员，先检查有没权限，再查找当前位置的会员信息，然后赋值给新会员，在更新时，检查是否是新会员，如果是新会员要先注册账号,更新推荐人和接点人
 		// has login
 		$this->load->model('Member_Model');

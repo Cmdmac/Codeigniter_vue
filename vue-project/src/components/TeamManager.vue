@@ -1,8 +1,21 @@
 <template>
   <div id="app">
     <div align="left">
-      <span style="margin-left: 10px; font-weight: bold; font-size: 12pt">共有<span style="color: red; font-size: 15pt">{{totalMemberCount}}</span>个注册会员 </span>
+      <span style="font-weight: bold; font-size: 12pt">共有<span style="color: red; font-size: 15pt">{{totalMemberCount}}</span>个注册会员 </span>
       <!-- <el-button type="text" @click="loadTree">刷新</el-button> -->
+    </div>
+    <div class="header">
+      <input class="input" v-model="query" placeholder="输入会员名查询"></input><button @click="onQuery">查询</button>
+      <span style="font-size: 10pt">显示:</span>
+      <select class="select" v-model="level" @change="getLevel">
+        <!-- <option value="1">1层</option> -->
+        <!-- <option value="2">2层</option> -->
+        <option value="3">3层</option>
+        <option value="4">4层</option>
+        <option value="5">5层</option>
+        <option value="6">6层</option>
+        <option value="7">7层</option>
+      </select>
     </div>
     <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" 
       v-on:onHandleClick="onClickHandler" 
@@ -49,6 +62,8 @@ export default {
   },
   data() {
     return {
+      query: '',
+      level: 3,
       dialogVisible: false,
       totalMemberCount: 0,
       landscape: [],
@@ -59,6 +74,35 @@ export default {
     }
   },
   methods: {
+    onQuery() {
+      if (this.query == '') {
+        return;
+      }
+
+      //this.showMemberInfo(this.query);
+      let q = this.query.replace(/(^\s*)|(\s*$)/g, "");
+      let r = this.findNode(this.tree, q);
+      if (r == undefined) {
+        Message({
+              showClose: true,
+              message: '没找到', 
+              type: 'error',
+              duration: 1000
+            });
+      } else {
+        // console.log(r);
+        this.showMemberInfo(r.name);
+      }
+      //alert(r);
+    },
+
+    getLevel: function (ele) {
+      //var optionTxt = $(ele.target).find("option:selected").text();
+      var optionVal = ele.target.value;
+      //alert(optionVal);
+      this.loadTree();
+    },
+
     onFind() {
       let r = this.findNode(this.tree, 'grandchild3');
       if (r != undefined) {
@@ -66,9 +110,9 @@ export default {
       }
     },
 
-    showMemberInfo(node) {
+    showMemberInfo(username) {
         let that = this;
-        this.ajax().get(this.Server.api.member.get + node.name)
+        this.ajax().get(this.Server.api.member.get + username)
         .ok(function(data) {
           that.$set(that, 'member', data.data);
           that.$set(that, 'dialogVisible', true);          
@@ -100,7 +144,7 @@ export default {
       //console.log(node);
         // get member info
         if (node.name.indexOf('空位') == -1) {
-          this.showMemberInfo(node);
+          this.showMemberInfo(node.name);
         }        
       
     },
@@ -251,7 +295,7 @@ export default {
             if (response.data.code == 200) {
               //console.log(response.data);
               let tree = response.data.data;
-              that.buildTree(tree, 1, 3);
+              that.buildTree(tree, 1, that.level);
               that.$set(that, 'totalMemberCount', that.totalMemberCount);
               that.$set(that, 'tree', tree);
             } else {
@@ -297,9 +341,51 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 20px;
+  margin-left: 10px;
 }
 #app .avat{border-radius: 2em;border-width:2px;}
 #app .name{font-weight:700;}
+
+.header {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  align-items: center;
+}
+
+.input {
+  width: 100px;
+  height: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #DDD;
+  font-size: 10pt;
+}
+
+.select
+{
+   width                    : 50px;
+   height                   : 20px;
+   line-height              : 20px;
+   padding-right            : 10px;
+   text-indent              : 4px;
+   text-align               : left;
+   vertical-align           : middle;
+   border                   : 1px solid #94c1e7;
+   -moz-border-radius       : 6px;
+   -webkit-border-radius    : 6px;
+   border-radius            : 6px;
+   -webkit-appearance       : none;
+   -moz-appearance          : none;
+   appearance               : none;
+   font-family              : SimHei;
+   font-size                : 10pt;
+   font-weight              : 500;
+   color                    : RGBA(50,50,50,0.7);
+   cursor                   : pointer;
+   outline                  : none;
+}
+
 .foot {
     position: fixed;
     left: 0;
