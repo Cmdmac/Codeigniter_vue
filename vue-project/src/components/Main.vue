@@ -35,7 +35,7 @@
 			</table>
 		</div>
 		<div style="height: 200px;">空白</div>
-		<BottomBar :user="user" v-on:onTabItemClick="onTabItemClick"/>
+		<BottomBar :user="user" />
 	</div>
 </template>
 

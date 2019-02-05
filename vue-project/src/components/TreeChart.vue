@@ -14,7 +14,7 @@
               </div>
             </div>
           </div>
-          <div class="extend_handle" v-if="!treeData.leaf" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
+          <div class="extend_handle" v-if="treeData.children" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
         </td>
       </tr>
       <tr v-if="treeData.children && treeData.extend">
@@ -79,7 +79,7 @@ export default {
 table{border-collapse: separate!important;border-spacing: 0!important;}
 td{position: relative; vertical-align: top;padding:0 0 40px 0;text-align: center; }
 
-.extend_handle{position: absolute;left:50%;bottom:20px; width:10px;height: 10px;padding:10px;transform: translate3d(-15px,0,0);cursor: pointer;}
+.extend_handle{position: absolute;left:50%;bottom:15px; width:10px;height: 10px;padding: 10px; transform: translate3d(-15px,0,0);cursor: pointer;}
 .extend_handle:before{content:""; display: block; width:100%;height: 100%;box-sizing: border-box; border:2px solid;border-color:#ccc #ccc transparent transparent;
 transform: rotateZ(135deg);transform-origin: 50% 50% 0;transition: transform ease 300ms;}
 .extend_handle:hover:before{border-color:#333 #333 transparent transparent;}
