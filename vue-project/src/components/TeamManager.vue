@@ -303,7 +303,7 @@ export default {
       let instance = axios.create({
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             withCredentials: true});
-          instance.get(this.Server.api.member.getMemberTree + this.user.username)
+          instance.get(this.Server.api.member.getMemberTree + this.user.username + "&level=" + this.level)
           .then(function (response) {
             if (response.data.code == 200) {
               //console.log(response.data);
