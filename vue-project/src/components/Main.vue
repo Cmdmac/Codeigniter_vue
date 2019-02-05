@@ -101,7 +101,7 @@
 
 			onItemClick(i, j) {
 				if (this.canNavigate(i, j)) {
-					this.$router.replace({ name: this.items[i][j].name, params: this.user});
+					this.$router.push({ name: this.items[i][j].name, params: this.user});
 					//window.location = this.items[i][j].target;
 				}
 			},
@@ -126,9 +126,9 @@
 
 			initItems() {
 				let items = [
-						[{title: "联盟公告", icon: "images/1184611.png", level: 1, name: "http://www.baidu.com"}, {title: "团队结构", icon: "images/1184619.png", level: 1, name: "TeamManager"}, {title: "问题解答", icon: "images/1184675.png", level: 1}], 
-						[{title: "游戏规则", icon: "images/1187084.png", level: 1,}, {title: "金币转账", icon: "images/1187096.png", level: 2}, {title: "升级记录", icon: "images/1187101.png", level: 1, name: 'updateRecorders'}],
-						[{title: "会员管理", icon: "images/1187113.png", level: 2}, {title: "修改资料", icon: "images/1187116.png", level: 1, name: 'ModifyProfile' }, {title: "我的账号", icon: "images/1187148.png", level: 1}]
+						[{title: "联盟公告", icon: "images/bell.png", level: 1, name: "http://www.baidu.com"}, {title: "团队结构", icon: "images/team.png", level: 1, name: "TeamManager"}, {title: "问题解答", icon: "images/comment.png", level: 1}], 
+						[{title: "游戏规则", icon: "images/info.png", level: 1,}, {title: "金币转账", icon: "images/coin.png", level: 2}, {title: "升级记录", icon: "images/table.png", level: 1, name: 'updateRecorders'}],
+						[{title: "会员管理", icon: "images/calendar.png", level: 2}, {title: "修改资料", icon: "images/info.png", level: 1, name: 'ModifyProfile' }, {title: "我的账号", icon: "images/user.png", level: 1}]
 					];
 
 				
@@ -248,8 +248,8 @@
 	}
 
 	img {
-		width: 60px;
-		height: 60px;
+		width: 48px;
+		height: 48px;
 	}
 
 	.button {
