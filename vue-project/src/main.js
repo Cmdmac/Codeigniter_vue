@@ -140,6 +140,12 @@ const TeamManager = resovle => {
   })
 };
 
+const UpdateProfile = resovle => {
+  require.ensure(['@/components/UpdateProfile'], () => {
+    resovle(require('@/components/UpdateProfile'))
+  })
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -152,12 +158,13 @@ let r = [
         { name: 'manager', path: '/manager', component: Manager },
         { name: 'TeamManager', path: '/teamManager', component: TeamManager},
         { name: 'main', path: '/main', component: Main},
-        { name: 'modifyProfile', path: '/modifyProfile', component: ModifyProfile},
+        { name: 'ModifyProfile', path: '/modifyProfile', component: ModifyProfile},
         { name: 'registeMember', path: '/registeMember', component: RegisterMember },
         { name: 'UpdateMember', path: '/UpdateMember', component: UpdateMember },
         { name: 'requestUpdate', path: '/requestUpdate', component: RequestUpdate },
         { name: 'updateRecorders', path: '/updateRecorders', component: UpdateRecorders},
-        { name: 'reviewRecorders', path: '/reviewRecorders', component: ReviewRecorders}
+        { name: 'reviewRecorders', path: '/reviewRecorders', component: ReviewRecorders},
+        { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile}
     ];
 let router = new VueRouter({
     routes: r
@@ -166,7 +173,7 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let username = window.localStorage.getItem('username');
   let token = window.localStorage.getItem('token');
-  if (to.fullpath != '/user' && to.fullPath != from.fullPath && username != undefined && token != undefined && (new Date().getTime() / 1000 - token > 3600)) {
+  if (to.fullPath != '/user' && to.fullPath != from.fullPath && username != undefined && token != undefined && (new Date().getTime() / 1000 - token > 3600)) {
     next({path: '/user'});
   } else {
     /* 路由发生变化修改页面meta */

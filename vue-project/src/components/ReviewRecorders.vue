@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div class="nodata" v-if="records.length == 0">没有数据</div>
-		<ul>
-			<li v-for="(item, index) in records" :key="index" @click="onReview(index)">
-				<div>{{item.username}}向{{item.contact}}申请升级</div>
-			</li>
-		</ul>
+		<div class="list">
+			<div class="listItem" v-for="(item, index) in records" :key="index" @click="onReview(index)">
+				<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12pt; width: 100%"><span align="left">{{index + 1}}.<span style="color: red;">{{item.username}}</span>向<span style="color: red;">{{item.contact}}</span>申请升级</span><span align="right" style="margin-left: 5px;font-size: 10pt; color: #DDD">{{item.time}}</span></div>
+			</div>
+		</div>
 		<el-dialog
 			title="提示"
 			:visible.sync="dialogVisible"
@@ -34,19 +34,21 @@
 
 		methods: {
 			confirmReview() {
+				let that = this;
 				this.$set(this, 'dialogVisible', false);
 				this.ajax().post(this.Server.api.update.review, {username: this.item.username, contact: this.item.contact})
 				.ok(function(data) {
 					Message({
 	  					showClose: true,
-	  					message: data.data.msg, 
+	  					message: data.msg, 
 	  					type: 'success',
 	  					duration: 1000
 	  				});
+					that.refesh();
 				}).notOk(function(data) {
 					Message({
 	  					showClose: true,
-	  					message: data.data.msg, 
+	  					message: data.msg, 
 	  					type: 'error',
 	  					duration: 1000
 	  				});
@@ -60,21 +62,25 @@
 				//let message = '确认已从' + item.username + '收到升级款并将其从级别' + item.level_from +'升级到级别' + item.level_to + '吗?';
 				this.$set(this, 'item', item);
 				this.$set(this, 'dialogVisible', true);
+			},
+
+			refesh() {
+				let that = this;
+				this.ajax().get(this.Server.api.update.getReviewRecords + this.$route.params.username)
+				.ok(function(data){
+
+					that.$set(that, 'records', data.data);
+
+				}).notOk(function(data) {
+
+				}).start();
 			}
 
 		},
 
 		mounted() {
 
-			let that = this;
-			this.ajax().get(this.Server.api.update.getReviewRecords + this.$route.params.username)
-			.ok(function(data){
-
-				that.$set(that, 'records', data.data);
-
-			}).notOk(function(data) {
-
-			}).start();
+			this.refesh();
 		}
 	}
 </script>
@@ -87,4 +93,20 @@
 		color: red;
 		font-weight: bold;
 	}
+
+	.list {
+		margin: 10px;
+	}
+
+	.listItem {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: center;
+		width: 100%;
+		height: 50px;
+		border-bottom: 1px solid #DDD;
+
+	}
+
 </style>

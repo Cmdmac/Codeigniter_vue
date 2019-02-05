@@ -36,6 +36,11 @@ class User_Model extends CI_Model {
 		}
 	}
 
+	public function update($username, $password, $phone, $wx, $alipay) {
+		$this->load->database();
+		return $this->db->update('user', array('password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay), array('username' => $username));
+	}
+
 	public function active($username) {
 		$this->load->database();
 		$query = $this->db->get_where('user', array('username' => $username));
