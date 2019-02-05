@@ -165,23 +165,27 @@ export default {
       this.$set(this, 'loading', false);
       //console.log("return");
       return;
+    } else if (new Date().getTime() / 1000 - token < 3600) {
+      this.goToMain();
+    } else {
+      this.ajax().post(this.Server.api.user.loginByToken, {username: username, token: token})
+      .ok(function(data) {
+        that.$set(that, 'loading', false);
+        that.goToMain();
+      }).notOk(function(data) {
+        // Message({
+        //   showClose: true,
+        //   message: data.msg, 
+        //   type: 'error',
+        //   duration: 2000
+        // });          
+        that.$set(that, 'loading', false);
+      }).catch(function(error) {
+        that.$set(that, 'loading', false);
+        console.log(error);
+      }).start();
     }
-    this.ajax().post(this.Server.api.user.loginByToken, {username: username, token: token})
-    .ok(function(data) {
-      that.$set(that, 'loading', false);
-      that.goToMain();
-    }).notOk(function(data) {
-      // Message({
-      //   showClose: true,
-      //   message: data.msg, 
-      //   type: 'error',
-      //   duration: 2000
-      // });          
-      that.$set(that, 'loading', false);
-    }).catch(function(error) {
-      that.$set(that, 'loading', false);
-      console.log(error);
-    }).start();
+    
   },
 
   watch: {

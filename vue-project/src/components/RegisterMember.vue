@@ -122,8 +122,8 @@
 			  				//that.model.phone = '';
 			  				//that.model.recommend = '';
 			  				//that.$set(that, 'model', that.model);
-			  				//that.$router.replace({ name: 'main', params: that.user});
-			  				that.$router.go(-2);
+			  				that.$router.replace({ name: 'main' });
+			  				//that.$router.go(-2);
 			  			} else {
 			  				//alert(response.data.msg);
 			  				Message({

@@ -1,7 +1,7 @@
-var host = "http://hgx830330.applinzi.com"
+var host = "http://127.0.0.1"
 var config = {
     base: host,
-    host : host + "/#/",//http://192.168.0.115/#/",
+    host : host + ":8080/#/",//http://192.168.0.115/#/",
     api: {
         user: {
             register: host + '/index.php/user/register',
@@ -37,19 +37,19 @@ var config = {
     },
     page: {
         manager: {
-            index: host + "/#/manager",
-            member: host + "/#/manager_page?page=MemberManage&title=会员管理",
-            system: host + "/#/manager_page?page=SystemManage&title=系统管理",
-            statics: host + "/#/manager_page?page=StaticsManage&title=统计管理"
+            index: host + ":8080/#/manager",
+            member: host + ":8080/#/manager_page?page=MemberManage&title=会员管理",
+            system: host + ":8080/#/manager_page?page=SystemManage&title=系统管理",
+            statics: host + ":8080/#/manager_page?page=StaticsManage&title=统计管理"
         },
 
         main: {
-            index: host + '/#/main',
-            registeMember: host + '/#/registeMember',
-            modifyProfile: host + '/#/modifyProfile',
-            requestUpdate: host + '/#/requestUpdate',
-            updateRecorders: host + '/#/updateRecorders',
-            reviewRecorders: host + '/#/reviewRecorders'
+            index: host + ':8080/#/main',
+            registeMember: host + ':8080/#/registeMember',
+            modifyProfile: host + ':8080/#/modifyProfile',
+            requestUpdate: host + ':8080/#/requestUpdate',
+            updateRecorders: host + ':8080/#/updateRecorders',
+            reviewRecorders: host + ':8080/#/reviewRecorders'
         },
 
     }

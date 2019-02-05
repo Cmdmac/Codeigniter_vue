@@ -67,6 +67,7 @@ class Member extends Auth_Controller
 		//$this->treedatabase->init('member');
 		
 			// 先看推荐人是否在已有列表中，如果存在才可以注册
+			//var_dump($recommend);
 			$row = $this->Member_Model->getMember($recommend);
 			//var_dump($row->line);
 			if (isset($row)) {	
