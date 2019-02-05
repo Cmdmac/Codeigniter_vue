@@ -115,6 +115,7 @@ class User extends MY_Controller {
 		}
 	}
 
+	//管理员修改
 	public function update() {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
@@ -127,6 +128,33 @@ class User extends MY_Controller {
 		if (isset($user)) {
 			//$this->json_with_data(200, 'ok', $user);
 			if (!$this->User_Model->update($username, $password, $phone, $wx, $alipay)) {
+				$this->json_with_code_msg(500, '更新失败');
+			} else {
+				$this->json_with_code_msg(200, '更新成功');
+			}
+		} else {
+			$this->json_with_code_msg(500, '没有这个用户');
+		}
+	}
+
+	//自己修改
+	public function modify() {
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$new_password = $this->input->post('new_password');
+		$phone = $this->input->post('phone');
+		$wx = $this->input->post('wx');
+		$alipay = $this->input->post('alipay');
+
+		$this->load->model('User_Model');
+		$user = $this->User_Model->get($username);
+		if (isset($user)) {
+			if ($password != $user->password) {
+				$this->json_with_code_msg(500, '旧密码不正确');
+				return;
+			}
+			//$this->json_with_data(200, 'ok', $user);
+			if (!$this->User_Model->update($username, $new_password, $phone, $wx, $alipay)) {
 				$this->json_with_code_msg(500, '更新失败');
 			} else {
 				$this->json_with_code_msg(200, '更新成功');

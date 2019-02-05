@@ -9,7 +9,8 @@ var config = {
             get: host + '/index.php/user/get',
             loginByToken: host + '/index.php/user/loginByToken',
             logout: host + '/index.php/user/logout',
-            update: host + '/index.php/user/update'
+            update: host + '/index.php/user/update',
+            modify: host + '/index.php/user/modify'
         },
         member: {
             get: host + "/index.php/member/get?username=",

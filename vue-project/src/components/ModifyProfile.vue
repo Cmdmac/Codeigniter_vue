@@ -1,86 +1,236 @@
 <template>
-	<div class="container" :label-width="label_width" :rules="rules">
-		<el-form class="form" ref="modifyForm" :model="form" >
-			<el-form-item label="新密码" :label-width="label_width" prop="newPwd">
-		      <el-input v-model="form.newPwd" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item label="确认新密码" :label-width="label_width" prop="newPwd2">
-		      <el-input v-model="form.newPwd2" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item label="旧密码" :label-width="label_width" prop="oldPwd">
-		      <el-input v-model="form.oldPwd" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item label="手机号" :label-width="label_width" prop="wx">
-		      <el-input v-model="form.phone" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item label="微信" :label-width="label_width" prop="wx">
-		      <el-input v-model="form.wx" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item label="支付宝" :label-width="label_width" prop="alipay">
-		      <el-input v-model="form.alipay" autocomplete="off"></el-input>
-		    </el-form-item>
-		    <el-form-item>
-			    <el-button type="primary" @click="submitForm('modifyForm')">提交</el-button>
-			    <el-button @click="resetForm('modifyForm')">重置</el-button>
-			 </el-form-item>
-		  </el-form>
+	<div class="container">
+		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
+		 <!-- <el-form-item label="推荐人" prop="name">
+		    <el-input :disabled="true" v-model="model.recommend" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="接点人" prop="name">
+		    <el-input :disabled="true" v-model="model.contact" ></el-input>
+		  </el-form-item> -->
+		 <el-form-item label="姓名" prop="username">
+		    <el-input :disabled="true" v-model="model.username" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="新密码" prop="new_password">
+		    <el-input v-model="model.new_password" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="确认密码" prop="new_password2">
+		    <el-input v-model="model.new_password2" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="旧密码" prop="password">
+		    <el-input v-model="model.password" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="电话" prop="phone">
+		    <el-input v-model="model.phone" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="微信" prop="wx">
+		    <el-input v-model="model.wx" ></el-input>
+		  </el-form-item>
+		  <el-form-item label="支付宝" prop="alipay">
+		    <el-input v-model="model.alipay" ></el-input>
+		  </el-form-item>
+		  <!-- <el-form-item label="业务方向" prop="leaf" >
+		     <el-radio-group v-model="model.leaf">
+			    <el-radio :label="1">1区</el-radio>
+			    <el-radio :label="2">2区</el-radio>
+			  </el-radio-group>
+		  </el-form-item> -->
+		  <el-form-item >
+        	<el-button type="primary" @click="submitForm('model')">{{buttonLabel}}</el-button>
+        	<el-button @click="resetForm('model')">重置</el-button>
+      		</el-form-item>
+		</el-form>
 	</div>
 </template>
-
 <script type="text/javascript">
+	import axios from "axios";
+	import qs from 'qs';
+	import {Message} from 'element-ui';
+
+	function isvalidPhone(str) {
+  		const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+  		return reg.test(str)
+	}
+
+	function isValidName(str) {
+		const nameReg = /^[\u4E00-\u9FA5, 1-9]{2,4}$/;
+		return nameReg.test(str);
+	}
+
+	var validPhone=(rule, value,callback)=>{
+      if (!value){
+          callback(new Error('请输入电话号码'))
+      }else  if (!isvalidPhone(value)){
+        callback(new Error('请输入正确的11位手机号码'))
+      }else {
+          callback()
+      }
+  	}
+
+  	var validPassword=(rule, value,callback)=>{
+      if (!value){
+          callback(new Error('请输入密码'))
+      }else  if (!isvalidPhone(value)){
+        callback(new Error('两次密码不一样'))
+      }else {
+          callback()
+      }
+  	}
+
+  	var validName = (rule, value, callback) => {
+		if (!value){
+          	callback(new Error('请输入姓名'))
+      	} else  if (!isValidName(value)){
+      	  	callback(new Error('请输入中文或中文加数字的名字'))
+      	} else {
+          	callback()
+      	}
+  	}
+
 	export default {
 		name: 'ModifyProfile',
-		data() {
-			return {
-				label_width: '100px',
-				form: {
-					newPwd: '',
-					newPwd2: '',
-					oldPwd: '',
-					wx: '',
-					alipay: ''
-				},
-
-				rules: {
-					 newPwd: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
-			          newPwd2: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
-			          oldPwd: [{ required: true, message: '请确认旧密码', trigger: 'blur' }],
-			          phone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
-			          wx: [{ required: true, message: '请输入微信账号', trigger: 'blur' }],
-			          alipay: [{ required: true, message: '请输入支付宝名账号', trigger: 'blur' }]
-				}
-			}
-		},
-
-		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						alert('submit!');
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
+	    data() {
+	      return {
+	        labelPosition: 'right',
+	        buttonLabel: '修 改',
+	        model: {
+	          username: '',
+	          new_password: '',
+	          new_password2: '',
+	          password: '',
+	          phone: '',
+	          wx: '',
+	          alipay: '',
+	          recommend: this.$route.params.username,
+	          contact: this.$route.params.username,
+	          leaf: 1,
 			},
-			resetForm(formName) {
+	        rules: {
+	        	name: [{ required: true, trigger: 'blur', validator: validName }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+	        	password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+	        	new_password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+	        	new_password2: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+	        	phone: [{ required: true, trigger: 'blur', validator: validPhone }],
+				wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
+				alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
+	        }
+	      }
+	    },
+
+	    methods: {
+
+	    	doUpdateProfile() {			
+	    		//alert(this.model.name);
+		            //alert('submit!');//这里就是符合规则，然后去调对应的接口
+		            let that = this;
+		            let instance = axios.create({
+		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
+		  				withCredentials: true});
+			  		instance.post(this.Server.api.user.modify,
+			  			qs.stringify({ username: this.model.username, password: this.model.password, new_password: this.model.new_password, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay }))
+			  		.then(function (response) {
+			  			if (response.data.code == 200) {
+			  				//alert(response.data.msg);
+			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
+			  				//alert(response.data.last_login_time);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'success',
+			  					duration: 1000
+			  				});
+			  				//that.model.name = '';
+			  				//that.model.phone = '';
+			  				//that.model.recommend = '';
+			  				//that.$set(that, 'model', that.model);
+			  				that.$router.replace({ name: 'main' });
+			  				//that.$router.go(-2);
+			  			} else {
+			  				//alert(response.data.msg);
+			  				Message({
+			  					showClose: true,
+			  					message: response.data.msg, 
+			  					type: 'error',
+			  					duration: 1000
+			  				});
+			  			}
+			  		}).catch(function (error) {
+			                //eslint-disable-next-line
+			                console.log(error);
+			                //alert('error');
+			        });
+			          
+	    	},
+
+	    	submitForm(formName) {
+	    		let that = this;
+	        	this.$refs[formName].validate((valid) => {
+		          if (valid) {
+		          	if (that.model.new_password != that.model.new_password2) {
+		          		Message({
+		          			showClose: true,
+		          			message: '两次密码不一样',
+		          			type: 'warning',
+		          			duration: 1000
+		          		});
+		          	} else {
+		          		that.doUpdateProfile();	
+		          	}
+		          	          	
+		          } else {
+		            console.log('error submit!!');
+		            return false;
+		          }
+	        	});
+	      	},
+
+	      	resetForm(formName) {
 				this.$refs[formName].resetFields();
 			}
-		}
+	    },
+
+	    mounted() {
+	    	//alert(this.$route.params.leaf);
+			let that = this;
+	        this.ajax().get(this.Server.api.member.get + this.$route.params.username)
+	        .ok(function(data) {
+	        	data.data.old_username = that.$route.params.username;
+	          that.$set(that, 'model', data.data);
+	          //that.$set(that, 'dialogVisible', true);          
+	        }).notOk(function(data) {
+	          Message({
+	              showClose: true,
+	              message: data.msg, 
+	              type: 'error',
+	              duration: 1000
+	            });
+	        }).catch(function(error){
+	          console.log(error);
+	        }).start();	    }
 	}
 </script>
 
 <style type="text/css" scoped>
+
 	.container {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
 		align-items: center;
-		margin: 10px;
 	}
-
 	.form {
-		width: 90%;
+		align: center;
+		width: 100%;
+		max-width: 500px; 
+		margin-top: 30px;
+		margin-right: 20px;
 	}
 
-	
+	.el-form-item {
+		margin-bottom: 18px;
+	}
+
+	.leaf {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 </style>
