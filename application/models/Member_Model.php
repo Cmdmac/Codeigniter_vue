@@ -25,10 +25,10 @@ class Member_Model extends CI_Model {
 		return $this->db->insert('member', $node);
 	}
 
-	public function updateMember($old_username, $username, $phone) {
+	public function updateMember($old_username, $username/*, $phone*/) {
 		$this->db->update('member', array('recommend' => $username), array('recommend' => $old_username));
 		$this->db->update('member', array('contact' => $username), array('contact' => $old_username));
-		$data = array('username' => $username, 'phone' => $phone);
+		$data = array('username' => $username/*, 'phone' => $phone*/);
 		if ($this->db->update('member', $data, array('username' => $old_username))) {
 			return true;
 		} else {
