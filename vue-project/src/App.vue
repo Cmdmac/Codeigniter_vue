@@ -8,7 +8,7 @@
 
 <script>
   
-import TitleBar from "@/components/TitleBar"
+import TitleBar from "@/components/widgets/TitleBar"
 export default {
   name: 'app',
   components: {TitleBar}

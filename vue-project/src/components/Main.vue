@@ -42,7 +42,7 @@
 <script type="text/javascript">
 	import axios from 'axios';
 	import qs from 'qs';
-  	import BottomBar from '@/components/BottomBar'
+  	import BottomBar from '@/components/widgets/BottomBar'
 	import {Message} from 'element-ui';
 
 	export default {

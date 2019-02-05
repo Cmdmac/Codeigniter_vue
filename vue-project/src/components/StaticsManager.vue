@@ -16,7 +16,7 @@
   import axios from 'axios';
   import qs from 'qs';
   import {Message} from 'element-ui';
-  import TreeChart from "@/components/TreeChart";
+  import TreeChart from "@/components/widgets/TreeChart";
 
 export default {
   name: 'StaticsManager',

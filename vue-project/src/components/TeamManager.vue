@@ -29,7 +29,7 @@
     <!--
     <el-button type="primary" @click="onFind">查找</el-button>
   -->
-  
+
     <el-dialog
       title="会员信息"
       :visible.sync="dialogVisible"
@@ -54,7 +54,7 @@
   import axios from 'axios';
   import qs from 'qs';
   import {Message} from 'element-ui';
-  import TreeChart from "@/components/TreeChart";
+  import TreeChart from "@/components/widgets/TreeChart";
   // import TitleBar from "@/components/TitleBar";
 
 export default {
