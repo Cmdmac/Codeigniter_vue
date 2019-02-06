@@ -3,7 +3,7 @@
 		<div class="nodata" v-if="records.length == 0">没有数据</div>
 		<div class="list">
 			<div class="listItem" v-for="(item, index) in records" :key="index">
-				<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12pt; width: 100%"><span align="left">{{index + 1}}.<span style="color: red;">{{item.username}}</span>向<span style="color: red;">{{item.contact}}</span>申请升级</span><span align="right" style="margin-left: 5px;font-size: 10pt; color: #DDD">{{item.time}}</span></div>
+				<div style="display: flex; justify-content: space-between; align-items: center; font-size: 10pt; width: 100%"><span align="left">{{index + 1}}.<span style="color: red;">{{item.username}}</span>向<span style="color: red;">{{item.contact}}</span>申请升级成功</span><span align="right" style="margin-left: 5px;font-size: 8pt; color: #DDD">{{item.time}}</span></div>
 			</div>
 		</div>
 	</div>
