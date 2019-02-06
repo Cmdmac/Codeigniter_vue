@@ -42,12 +42,12 @@
 <script type="text/javascript">
 	import axios from 'axios';
 	import qs from 'qs';
-  	import BottomBar from '@/components/widgets/BottomBar'
+  	// import BottomBar from '@/components/widgets/BottomBar'
 	import {Message} from 'element-ui';
 
 	export default {
 		name: 'Main',
-		components: {BottomBar, 'ModifyProfile': () => import("@/components/ModifyProfile")},
+		components: {'BottomBar': () => import("@/components/widgets/BottomBar"), 'ModifyProfile': () => import("@/components/ModifyProfile")},
 		data() {
 			return {
 				stateColor: {color: '#FEFEFE'},
