@@ -187,10 +187,15 @@ class Member extends Auth_Controller
 			$this->json_with_code_msg(200, '你没有权限查看');
 			return;
 		}
+		$this->load->helper('url');
+		$level = $this->input->get('level');
+		if (empty($level)) {
+			$level = 3;
+		}
 		$this->load->model('Member_Model');
 		$root = $this->Member_Model->getChildren('root');
 		//var_dump($root);
-		$r = $this->encode_children(current($root), 1, 3);
+		$r = $this->encode_children(current($root), 1, $level);
 		$this->json_with_data(200, 'ok', $r);
 	}
 
