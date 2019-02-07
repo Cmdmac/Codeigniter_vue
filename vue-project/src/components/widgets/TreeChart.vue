@@ -7,19 +7,19 @@
               <div v-if="false" class="avat">
                 <img :src="treeData.image_url" />
               </div>
-              <div v-if="treeData.register == undefined"  class="name" @click="onClickName(treeData)">{{treeData.name}}</div>
+              <div v-if="treeData.register == undefined"  class="name"><span @click="onClickName(treeData)">{{treeData.name}}</span><i v-if="treeData.showRefresh" @click="$emit('click-refresh', treeData)" class="el-icon-refresh" style="margin-left: 1px"></i></div>
               <div class="content">
                 <div v-if="treeData.register" class="register" @click="$emit('click-register', treeData)">注册</div>
                 <div v-if="treeData.update" class="register" @click="onUpdate(treeData)">更新</div>
               </div>
             </div>
           </div>
-          <div class="extend_handle" v-if="treeData.children" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
+          <div class="extend_handle" v-if="(treeData.children && treeData.children.length > 0)|| (treeData.children == undefined && treeData.showChildren != undefined)" @click="onHandlerClick(treeData)"></div> <!-- v-if="treeData.children" -->
         </td>
       </tr>
       <tr v-if="treeData.children && treeData.extend">
         <td v-for="(children, index) in treeData.children" :key="index" colspan="2" class="childLevel">
-          <TreeChart :json="children" @click-node="$emit('click-node', $event)" @click-register="$emit('click-register', $event)" @click-update="$emit('click-update', $event)"/>
+          <TreeChart :json="children" @click-node="$emit('click-node', $event)" @click-register="$emit('click-register', $event)" @click-update="$emit('click-update', $event)" @click-refresh="$emit('click-refresh', $event)" @click-handle="$emit('click-handle', $event)"/>
         </td>
       </tr>
     </table>
@@ -59,12 +59,12 @@ export default {
     },
 
     onUpdate: function(treeData) {
-      console.log('test');
+      //console.log('test');
       this.$emit('click-update', treeData);
     },
     onHandlerClick: function(treeData) {      
       this.toggleExtend(treeData);
-      //this.$emit('onHandleClick', treeData);
+      this.$emit('click-handle', treeData);
     },
 
     toggleExtend: function(treeData){
@@ -94,7 +94,7 @@ transform: rotateZ(135deg);transform-origin: 50% 50% 0;transition: transform eas
 .childLevel:first-child.childLevel:last-child::after{left:auto;border-radius: 0;border-color:transparent #ccc transparent transparent;transform: translate3d(1px,0,0)}
 
 .node{position: relative; display: inline-block; width: 5em; height: 5em; box-sizing: border-box; text-align: center; border-style: solid; border-width: 1px; border-color: #AAA;}
-.node .person{font-size: 8pt; position: relative; display: inline-block;z-index: 2;width: 3em; overflow: hidden;}
+.node .person{font-size: 8pt; position: relative; display: inline-block;z-index: 2;width: 5em; overflow: hidden;}
 .node .person .avat{display: none;width:4em;height: 4em;margin:auto;overflow:hidden; background:#fff;border:1px solid #ccc;box-sizing: border-box;}
 .node .person .avat img{width:100%;height: 100%;}
 .node .person .name{height:2em;line-height: 2em;overflow: hidden;width:100%; /*font-weight: bold;*/}

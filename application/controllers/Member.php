@@ -183,7 +183,7 @@ class Member extends Auth_Controller
 	**/
 	public function init() {
 		//$this->load->helper('url');
-		if ($this->isManager()) {
+		if (!$this->isManager()) {
 			$this->json_with_code_msg(200, '你没有权限查看');
 			return;
 		}

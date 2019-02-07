@@ -128,7 +128,7 @@
 				let items = [
 						[{title: "联盟公告", icon: "images/bell.png", level: 1, name: "http://www.baidu.com"}, {title: "团队结构", icon: "images/team.png", level: 1, name: "TeamManager"}, {title: "问题解答", icon: "images/comment.png", level: 1}], 
 						[{title: "游戏规则", icon: "images/info.png", level: 1,}, {title: "金币转账", icon: "images/coin.png", level: 2}, {title: "升级记录", icon: "images/table.png", level: 1, name: 'updateRecorders'}],
-						[{title: "会员管理", icon: "images/calendar.png", level: 2}, {title: "修改资料", icon: "images/info.png", level: 1, name: 'ModifyProfile' }, {title: "我的账号", icon: "images/user.png", level: 1}]
+						[{title: "会员管理", icon: "images/calendar.png", name: 'StaticsManager', level: 2}, {title: "修改资料", icon: "images/info.png", level: 1, name: 'ModifyProfile' }, {title: "我的账号", icon: "images/user.png", level: 1}]
 					];
 
 				

@@ -223,14 +223,14 @@ export default {
         return;
       }
       if (data == undefined) {
-        data = { name : '空位' + current, children: []};
+        data = { name : '空位' + current, children: current + 1 == level ? undefined : []};
         this.buildTree(data, current + 1, level);
       } else {
         let children = data.children;
         if (children == undefined) {
           data.children = [];
-          let left = { name : '空位' + (current + 1), children: [], leaf: 1};
-          let right = { name : '空位' + (current + 1), children: [], leaf: 2};
+          let left = { name : '空位' + (current + 1), children: current + 1 == level ? undefined : [], leaf: 1};
+          let right = { name : '空位' + (current + 1), children: current  + 1 == level ? undefined : [], leaf: 2};
           if (data.name == this.user.username) {
               left.register = true;
               right.register = true;
@@ -266,13 +266,13 @@ export default {
               node.update = true;
             }
             if (node.leaf == 1) {
-              let right = { name : '空位' + (current + 1), children: [], leaf: 2};
+              let right = { name : '空位' + (current + 1), children: current + 1 == level ? undefined : [], leaf: 2};
               if (data.name == this.user.username) {
                 right.register = true;
               }
               children[1] = right;
             } else {
-              let left = { name : '空位' + (current + 1), children: [], leaf: 1};
+              let left = { name : '空位' + (current + 1), children: current + 1 == level ? undefined : [], leaf: 1};
               if (data.name == this.user.username) {
                 left.register = true;
               }
@@ -283,8 +283,8 @@ export default {
             this.buildTree(children[0], current + 1, level);
             this.buildTree(children[1], current + 1, level);
           } else {
-            let left = { name : '空位' + (current + 1), children: [], leaf: 1};
-            let right = { name : '空位' + (current + 1), children: [], leaf: 2};
+            let left = { name : '空位' + (current + 1), children: current + 1 == level? undefined : [], leaf: 1};
+            let right = { name : '空位' + (current + 1), children: current + 1 == level? undefined : [], leaf: 2};
             if (data.name == this.user.username) {
               left.register = true;
               right.register = true;

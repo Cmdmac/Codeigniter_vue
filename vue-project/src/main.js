@@ -92,6 +92,12 @@ const ManagerPage = resovle => {
 	})
 };
 
+const StaticsManager = resovle => {
+  require.ensure(['@/components/StaticsManager'], () => {
+    resovle(require('@/components/StaticsManager'))
+  })
+};
+
 const Main = resovle => {
   require.ensure(['@/components/Main'], () => {
     resovle(require('@/components/Main'))
@@ -164,7 +170,8 @@ let r = [
         { name: 'requestUpdate', path: '/requestUpdate', component: RequestUpdate },
         { name: 'updateRecorders', path: '/updateRecorders', component: UpdateRecorders},
         { name: 'reviewRecorders', path: '/reviewRecorders', component: ReviewRecorders},
-        { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile}
+        { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile},
+        { name: 'StaticsManager', path: '/StaticsManager', component: StaticsManager }
     ];
 let router = new VueRouter({
     routes: r
