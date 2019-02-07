@@ -190,6 +190,7 @@ export default {
                   let item = node.children[i];
                   // item.showRefresh = true;
                   item.name = item.username;
+                  that.totalMemberCount++;
                 }
 
                 if (node.children.length > 0) {
@@ -199,6 +200,7 @@ export default {
                 
                 //console.log(that.tree);
                 that.$set(that, 'tree', that.tree);
+                that.$set(that, 'totalMemberCount', that.totalMemberCount);
                 that.$refs.tree.toggleExtend(node);
                 // that.$refs.tree.toggleExtend(node);
                 // that.$refs.tree.toggleExtend(node);
@@ -239,6 +241,7 @@ export default {
     },
 
     buildTree(data) {
+      // this.totalMemberCount = 0;
       if (data == undefined) {
         // data.showRefresh = true;
         return;
@@ -248,6 +251,7 @@ export default {
       if (data.children != undefined) {
         for (let i = 0; i < data.children.length; i++) {
           let item = data.children[i];
+          this.totalMemberCount++;
           this.buildTree(item);
         }
       }
@@ -263,9 +267,9 @@ export default {
             if (response.data.code == 200) {
               //console.log(response.data);
               let tree = response.data.data;
-              // that.totalMemberCount = 0;
+              that.totalMemberCount = 0;
               that.buildTree(tree);
-              // that.$set(that, 'totalMemberCount', that.totalMemberCount);
+              that.$set(that, 'totalMemberCount', that.totalMemberCount);
               that.$set(that, 'tree', tree);
             } else {
               //alert(response.data.msg);
