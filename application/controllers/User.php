@@ -6,11 +6,14 @@ class User extends MY_Controller {
 	public function register() {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		$phone = $this->input->post('phone');
+		$wx = $this->input->post('wx');
+		$alipay = $this->input->post('alipay');
 
 		$isValideParams = $this->checkParams($username, $password);
 		if ($isValideParams) {
 			$this->load->model('User_Model');
-			if ($this->User_Model->register($username, $password)) {
+			if ($this->User_Model->register($username, $password, $phone, $wx, $alipay)) {
 				$this->json_with_code_msg(200, '注册成功');
 			} else {
 				$this->json_with_code_msg(1001, '注册失败，用户名已存在');

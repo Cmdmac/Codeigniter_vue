@@ -54,14 +54,23 @@
 	    </el-table-column>
 	  </el-table>
 	  
-	  	  <el-dialog ref="addDialog" title="增加管理员" :visible.sync="addDialogFormVisible" width="80%">
+	  	  <el-dialog ref="addDialog" title="增加管理员" :visible.sync="addDialogFormVisible" width="90%">
 		  <el-form ref="addForm" :model="form" :rules="rules">
 		    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
-		      <el-input v-model="form.username" autocomplete="off"></el-input>
+		    	<el-input v-model="form.username" autocomplete="off"></el-input>
 		    </el-form-item>
 		    <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-		      <el-input v-model="form.password" autocomplete="off"></el-input>
+		    	<el-input v-model="form.password" autocomplete="off"></el-input>
 		    </el-form-item>
+		    <el-form-item label="电话" :label-width="formLabelWidth" prop="phone">
+		   		<el-input v-model="form.phone" ></el-input>
+			</el-form-item>
+			<el-form-item label="微信" :label-width="formLabelWidth" prop="wx">
+				<el-input v-model="form.wx" ></el-input>
+			</el-form-item>
+			<el-form-item label="支付宝" :label-width="formLabelWidth" prop="alipay">
+				<el-input v-model="form.alipay" ></el-input>
+			</el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="addDialogFormVisible = false">取 消</el-button>
@@ -77,6 +86,15 @@
 		    <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
 		      <el-input v-model="form.password" autocomplete="off"></el-input>
 		    </el-form-item>
+		    <el-form-item label="电话" :label-width="formLabelWidth" prop="phone">
+		   		<el-input v-model="form.phone" ></el-input>
+			</el-form-item>
+			<el-form-item label="微信" :label-width="formLabelWidth" prop="wx">
+				<el-input v-model="form.wx" ></el-input>
+			</el-form-item>
+			<el-form-item label="支付宝" :label-width="formLabelWidth" prop="alipay">
+				<el-input v-model="form.alipay" ></el-input>
+			</el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -97,6 +115,7 @@
 		const nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
 		return nameReg.test(str);
 	}
+
 	var validName = (rule, value, callback) => {
 		if (!value){
           	callback(new Error('请输入姓名'))
@@ -105,6 +124,21 @@
       	} else {
           	callback()
       	}
+  	}
+
+	function isvalidPhone(str) {
+  		const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+  		return reg.test(str)
+	}
+
+  	var validPhone=(rule, value,callback)=>{
+      if (!value){
+          callback(new Error('请输入电话号码'))
+      }else  if (!isvalidPhone(value)){
+        callback(new Error('请输入正确的11位手机号码'))
+      }else {
+          callback()
+      }
   	}
 
 	export default {
@@ -219,6 +253,9 @@
       	this.form.id = row.id;
       	this.form.username = row.username;
       	this.form.password = row.password;
+      	this.form.phone = row.phone;
+      	this.form.wx = row.wx;
+      	this.form.alipay = row.alipay;
       	this.$set(this, 'form', this.form);
       },
 
@@ -228,7 +265,7 @@
 			headers: { 'content-type': 'application/x-www-form-urlencoded' },
 			withCredentials: true});
 		instance.post(this.Server.api.manager.edit,
-		  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password }))
+		  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay }))
 		.then(function (response) {
 		  		if (response.data.code == 200) {
 		  			Message({
@@ -270,7 +307,7 @@
 	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 	  				withCredentials: true});
 		instance.post(this.Server.api.manager.add,
-		  			qs.stringify({ username: this.form.username, password: this.form.password }))
+		  			qs.stringify({ username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay }))
 		.then(function (response) {
 		  		if (response.data.code == 200) {
 		  			Message({
@@ -372,6 +409,9 @@
         rules: {
 	        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
 	        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+	        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
+			wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
+			alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
 	    }
       }
     },

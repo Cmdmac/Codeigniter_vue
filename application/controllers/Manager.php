@@ -11,8 +11,12 @@ class Manager extends Auth_Controller {
 				// supper manager
 				$username = $this->input->post('username');
 				$password = $this->input->post('password');
+				$phone = $this->input->post('phone');
+				$wx = $this->input->post('wx');
+				$alipay = $this->input->post('alipay');
+
 				$this->load->model('User_Model');
-				if ($this->User_Model->register($username, $password)) {
+				if ($this->User_Model->registerWithType($username, $password, $phone, $wx, $alipay, 0)) {
 					$this->json_with_code_msg(200, '注册成功');
 				} else {
 					$this->json_with_code_msg(1001, '注册失败，用户名已存在');
@@ -73,8 +77,12 @@ class Manager extends Auth_Controller {
 				$id = $this->input->post('id');
 				$username = $this->input->post('username');
 				$password = $this->input->post('password');
+				$phone = $this->input->post('phone');
+				$wx = $this->input->post('wx');
+				$alipay = $this->input->post('alipay');
+
 				$this->load->model('User_Model');
-				if ($this->User_Model->edit($id, $username, $password)) {
+				if ($this->User_Model->edit($id, $username, $password, $phone, $wx, $alipay)) {
 					$this->json_with_code_msg(200, '编辑成功');
 				} else {
 					$this->json_with_code_msg(500, '编辑失败');
@@ -93,7 +101,7 @@ class Manager extends Auth_Controller {
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
 			if ($this->session->type == 0) {
 				$this->load->model('User_Model');
-				$list = $this->User_Model->list();
+				$list = $this->User_Model->managerLists();
 				//var_dump($list);
 				$this->json_with_data('200', 'ok', $list);
 			}

@@ -36,6 +36,23 @@ class User_Model extends CI_Model {
 		}
 	}
 
+	function registerWithType($username, $password, $phone, $wx, $alipay, $type) {
+		$this->load->database();
+		$user = $this->get($username);
+		if (isset($user)) {
+			// 已存在，不插入
+			return false;
+		} else {
+			/**
+				1	-	未审核
+				2	-	已审核 
+				4	-	其他状态
+			**/
+			return $this->db->insert('user', array('username' => $username, 'password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay, 'type' => $type));
+			//return true;
+		}
+	}
+
 	public function update($username, $password, $phone, $wx, $alipay) {
 		$this->load->database();
 		return $this->db->update('user', array('password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay), array('username' => $username));
@@ -65,20 +82,26 @@ class User_Model extends CI_Model {
 		}
 	}
 
-	public function edit($id, $username, $password) {
+	public function edit($id, $username, $password, $phone, $wx, $alipay) {
 		$this->load->database();
 		$query = $this->db->get_where('user', array('id' => $id));
 		//$result = $query->result();
 		if ($query->num_rows() <= 0) {
 			return false;
 		} else {
-			return $this->db->update('user', array('username' => $username, 'password' => $password), array('id' => $id));
+			return $this->db->update('user', array('username' => $username, 'password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay), array('id' => $id));
 		}
 	}
 
 	public function list() {
 		$this->load->database();
-		$q = $this->db->get_where('user', array('type' => 1));
+		$q = $this->db->get('user');
+		return $q->result_array();
+	}
+
+	public function managerLists() {
+		$this->load->database();
+		$q = $this->db->get_where('user', array('type' => 0));
 		return $q->result_array();
 	}
 

@@ -98,6 +98,12 @@ const StaticsManager = resovle => {
   })
 };
 
+const SystemManage = resovle => {
+  require.ensure(['@/components/SystemManage'], () => {
+    resovle(require('@/components/SystemManage'))
+  })
+};
+
 const Main = resovle => {
   require.ensure(['@/components/Main'], () => {
     resovle(require('@/components/Main'))
@@ -171,7 +177,8 @@ let r = [
         { name: 'updateRecorders', path: '/updateRecorders', component: UpdateRecorders},
         { name: 'reviewRecorders', path: '/reviewRecorders', component: ReviewRecorders},
         { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile},
-        { name: 'StaticsManager', path: '/StaticsManager', component: StaticsManager }
+        { name: 'StaticsManager', path: '/StaticsManager', component: StaticsManager },
+        { name: 'SystemManage', path: '/SystemManage', component: SystemManage },
     ];
 let router = new VueRouter({
     routes: r
@@ -193,6 +200,8 @@ router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
       document.title = to.meta.title;
+    } else {
+      document.title = '爱我中华自助平台';
     }
     next()
   }
