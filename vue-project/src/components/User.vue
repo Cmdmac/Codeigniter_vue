@@ -155,7 +155,6 @@ export default {
         this.clientHeight = `${document.documentElement.clientHeight}`;
       };
 
-
     this.$set(this, 'loading', true);
 
     let that = this;
@@ -185,7 +184,16 @@ export default {
         console.log(error);
       }).start();
     }
-    
+  },
+
+  created() {
+    var that = this;
+    document.onkeydown = function(e) {
+      var key = window.event.keyCode;
+      if (key == 13) {
+        that.onLogin();
+      }
+    }
   },
 
   watch: {
