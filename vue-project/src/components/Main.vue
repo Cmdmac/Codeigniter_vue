@@ -23,8 +23,8 @@
 			<table>
 				<tr v-for="(item, index) in items" :key="index">
 					<td v-for="(subItem, j) in item" :key="j" @click="onItemClick(index, j)">
-						<div class="item">
-							<div><img :src="subItem.icon" /></div>
+						<div class="item" v-if="subItem">
+							<div><img v-if="subItem.icon" class="img" :src="subItem.icon" /><div v-if="subItem.icon == undefined" class="img_none"></div></div>
 							<div>{{subItem.title}}</div>							
 						</div>
 					</td>
@@ -134,12 +134,17 @@
 						{title: "金币转账", icon: "images/coin.png", level: 2}, 
 						{title: "升级记录", icon: "images/table.png", level: 1, name: 'updateRecorders'}],
 
-						[{title: "会员管理", icon: "images/calendar.png", name: 'StaticsManager', level: 8}, 
-						{title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' }, 
-						{title: "系统管理", icon: "images/user.png", level: 8, name: 'SystemManage'}]
+						[{title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' },
+						{},
+						{}]
 					];
 
-				
+				let type = window.localStorage.getItem('type');
+				if (type != undefined && type == 0) {
+					items[2][0] = {title: "会员管理", icon: "images/calendar.png", name: 'StaticsManager', level: 8};
+					items[2][1] = {title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' };
+					items[2][2] = {title: "系统管理", icon: "images/user.png", level: 8, name: 'SystemManage'};
+				}
 				this.$set(this, 'items', items);
 			}
 		},
@@ -252,10 +257,16 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		width: 100%;
 		height: 100%;
 	}
 
-	img {
+	.img {
+		width: 48px;
+		height: 48px;
+	}
+
+	.img_none {
 		width: 48px;
 		height: 48px;
 	}
