@@ -318,7 +318,7 @@ class Member extends Auth_Controller
 	public function checkPassword() {
 		$level = $this->input->post('level');
 		$password = $this->input->post('password');
-		$arr = array('pwd1', 'pwd2', 'pwd3', 'pwd4', 'pwd4', 'pwd5', 'pwd6', 'pwd7', 'pwd8');
+		$arr = array('pwd1', 'pwd2', 'pwd3', 'pwd4', 'pwd5', 'pwd6', 'pwd7', 'pwd8');
 		$this->load->model('Config_Model');
 		// $t = $arr[$level];
 		// var_dump($arr[$level - 1]);
