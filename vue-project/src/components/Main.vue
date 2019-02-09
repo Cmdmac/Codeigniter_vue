@@ -136,7 +136,7 @@
 
 						[{title: "会员管理", icon: "images/calendar.png", name: 'StaticsManager', level: 8}, 
 						{title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' }, 
-						{title: "我的账号", icon: "images/user.png", level: 8, name: 'SystemManage'}]
+						{title: "系统管理", icon: "images/user.png", level: 8, name: 'SystemManage'}]
 					];
 
 				

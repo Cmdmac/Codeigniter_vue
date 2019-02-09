@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div align="right"><el-button type="primary" @click="onRefesh">刷新</el-button><el-button type="primary" @click="onAddManager">增加管理员</el-button></div>
+		<div align="right" style="margin-top:20px;"><el-button type="primary" @click="onRefesh">刷新</el-button><el-button type="primary" @click="onAddManager">增加管理员</el-button><el-button @click="passwordManage" type="primary">密码管理</el-button></div>
 	  <el-table
 	    :data="tableData"
 	    border
@@ -24,7 +24,7 @@
 	      label="类型"
 	      :formatter="formatType"
 	      align="center"
-	      max-width="80"
+	      max-width="100"
 	      min-width="80">
 	    </el-table-column>
 	    <el-table-column
@@ -100,8 +100,40 @@
 		    <el-button @click="dialogFormVisible = false">取 消</el-button>
 		    <el-button type="primary" @click="submitForm('form')">确 定</el-button>
 		  </div>
-		</el-dialog>
+	</el-dialog>
 	
+	<el-dialog ref="passwordDialog" title="密码管理" :visible.sync="passwordDialogVisible" width="90%">
+		<el-form ref="passwordForm" :model="pwds" :rules="rulesPwd">
+		    <el-form-item label="第一级密码" :label-width="formLabelWidth" prop="pwd1">
+		      <el-input v-model="pwds.pwd1" autocomplete="off"></el-input>
+		    </el-form-item>
+		    <el-form-item label="第二级密码" :label-width="formLabelWidth" prop="pwd2">
+		      <el-input v-model="pwds.pwd2" autocomplete="off"></el-input>
+		    </el-form-item>
+		    <el-form-item label="第三级密码" :label-width="formLabelWidth" prop="pwd3">
+		   		<el-input v-model="pwds.pwd3" ></el-input>
+			</el-form-item>
+			<el-form-item label="第四级密码" :label-width="formLabelWidth" prop="pwd4">
+				<el-input v-model="pwds.pwd4" ></el-input>
+			</el-form-item>
+			<el-form-item label="第五级密码" :label-width="formLabelWidth" prop="pwd5">
+				<el-input v-model="pwds.pwd5" ></el-input>
+			</el-form-item>
+			<el-form-item label="第六级密码" :label-width="formLabelWidth" prop="pwd6">
+				<el-input v-model="pwds.pwd6" ></el-input>
+			</el-form-item>
+			<el-form-item label="第七级密码" :label-width="formLabelWidth" prop="pwd7">
+				<el-input v-model="pwds.pwd7" ></el-input>
+			</el-form-item>
+			<el-form-item label="第八级密码" :label-width="formLabelWidth" prop="pwd8">
+				<el-input v-model="pwds.pwd8" ></el-input>
+			</el-form-item>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="passwordDialogVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="submitForm('passwordForm')">确 定</el-button>
+		  </div>
+	</el-dialog>
 
 	</div>
 </template>
@@ -143,6 +175,47 @@
 
 	export default {
     	methods: {
+    		passwordManage() {
+    			let that = this;
+    			this.$set(this, 'passwordDialogVisible', true);
+    			this.ajax().get(this.Server.api.manager.password.get)
+    			.ok(function(data) {
+    				that.$set(that, 'pwds', data.data);
+    				that.$set(that, 'passwordDialogVisible', true);
+    			}).notOk(function(data) {
+					Message({
+		  				showClose: true,
+		  				message: data.msg, 
+		  				type: 'error',
+		  				duration: 2000
+		  			});
+    			}).catch(function(error) {
+
+    			}).start();
+    		},
+
+    		updatePasswords() {
+    			let that = this;
+    			this.ajax().post(this.Server.api.manager.password.update, 
+    				{pwd1: this.pwds.pwd1, pwd2: this.pwds.pwd2, 
+    				pwd3: this.pwds.pwd3, pwd4: this.pwds.pwd4, 
+    				pwd5: this.pwds.pwd5, pwd6: this.pwds.pwd6, 
+    				pwd7: this.pwds.pwd7, pwd8: this.pwds.pwd8})
+    				.ok(function(data) {
+    					that.$set(that, 'passwordDialogVisible', false);
+    					Message({
+			  				showClose: true,
+			  				message: data.msg, 
+			  				type: 'success',
+			  				duration: 2000
+			  			});		
+    				}).notOk(function(data) {
+
+    				}).catch(function(error) {
+
+    				}).start();
+    		},
+
 	    	onRefesh() {
 				let that = this;
 		    	let instance = axios.create({
@@ -380,6 +453,7 @@
       	formLabelWidth: '80px',
       	dialogFormVisible: false,
       	addDialogFormVisible: false,
+      	passwordDialogVisible: false,
         tableData: [/*{
           time: '2016-05-03',
           name: '王小虎1',
@@ -406,12 +480,32 @@
           username: '',
           password: ''
         },
+        pwds: {
+        	pwd1: '',
+        	pwd2: '',
+        	pwd3: '',
+        	pwd4: '',
+        	pwd5: '',
+        	pwd6: '',
+        	pwd7: '',
+        	pwd8: ''
+        },
         rules: {
 	        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
 	        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
 	        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
 			wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
 			alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
+	    },
+	    rulesPwd: {
+	    	pwd1: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd2: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd3: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd4: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd5: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd6: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd7: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd8: [{ required: true, trigger: 'blur', message: '请输入密码'}]
 	    }
       }
     },

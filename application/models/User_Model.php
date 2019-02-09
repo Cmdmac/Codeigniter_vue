@@ -20,20 +20,11 @@ class User_Model extends CI_Model {
 	}
 
 	function register($username, $password, $phone, $wx, $alipay) {
-		$this->load->database();
-		$user = $this->get($username);
-		if (isset($user)) {
-			// 已存在，不插入
-			return false;
-		} else {
-			/**
-				1	-	未审核
-				2	-	已审核 
-				4	-	其他状态
-			**/
-			return $this->db->insert('user', array('username' => $username, 'password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay, 'type' => 1));
-			//return true;
-		}
+		/**
+		0 管理员
+		1 普通会员
+		**/
+		$this->registerWithType($username, $password, $phone, $wx, $alipay, 1);
 	}
 
 	function registerWithType($username, $password, $phone, $wx, $alipay, $type) {
