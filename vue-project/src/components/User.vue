@@ -202,7 +202,7 @@ export default {
         this.changeFixed(this.clientHeight)
       }
     }
-}
+};
 </script>
 
 <style type="text/css" scoped>

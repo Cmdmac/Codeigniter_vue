@@ -315,6 +315,20 @@ class Member extends Auth_Controller
 		return $this->Member_Model->findFirstContact($username);
 	}
 
+	public function checkPassword() {
+		$level = $this->input->post('level');
+		$password = $this->input->post('password');
+		$arr = array('pwd1', 'pwd2', 'pwd3', 'pwd4', 'pwd4', 'pwd5', 'pwd6', 'pwd7', 'pwd8');
+		$this->load->model('Config_Model');
+		// $t = $arr[$level];
+		// var_dump($arr[$level - 1]);
+		if ($this->Config_Model->checkPassword($arr[$level - 1], $password)) {
+			$this->json_with_code_msg(200, '密码正确');
+		} else {
+			$this->json_with_code_msg(400, '密码错误');
+		}
+	}
+
 
 	public function init_test() {
 		

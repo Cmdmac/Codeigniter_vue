@@ -21,4 +21,15 @@ class Config_Model extends CI_Model {
 		$this->db->update('config', array('value' => $pwd7), array('_key' => 'pwd7'));
 		$this->db->update('config', array('value' => $pwd8), array('_key' => 'pwd8'));
 	}
+
+	public function checkPassword($key, $password) {
+		$this->load->database();
+		$q = $this->db->get_where('config', array('_key'=>$key, 'value'=>$password));
+		$r = $q->row();
+		if (isset($r)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

@@ -37,7 +37,7 @@
 				}
 			}
 		}
-	}
+	};
 </script>
 <style type="text/css" scoped>
 	.bottom-bar {

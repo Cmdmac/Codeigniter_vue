@@ -1,10 +1,10 @@
 // var domain = "http://192.168.43.177";
 // http://hgx830330.applinzi.com
-var host = "http://hgx830330.applinzi.com";
-var pageHost = host + ""
+var host = "http://192.168.31.8";
+var pageHost = host + ":8080"
 var config = {
     base: host,
-    host : host + "/#/",//http://192.168.0.115/#/",
+    host : host + ":8080/#/",//http://192.168.0.115/#/",
     api: {
         user: {
             register: host + '/index.php/user/register',
@@ -23,7 +23,8 @@ var config = {
             getChildren: host + "/index.php/member/getChildren?recommend=",
             getMemberCount: host + "/index.php/member/getMemberCount",
             findContact: host + "/index.php/member/findContact?username=",
-            getMemberTree: host + "/index.php/member/getMemberTree?username="
+            getMemberTree: host + "/index.php/member/getMemberTree?username=",
+            checkPassword: host + '/index.php/member/checkPassword'
         },
         manager: {
             list: host + "/index.php/manager/list",

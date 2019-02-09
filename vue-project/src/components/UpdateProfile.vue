@@ -176,7 +176,7 @@
 	        }).catch(function(error){
 	          console.log(error);
 	        }).start();	    }
-	}
+	};
 </script>
 
 <style type="text/css" scoped>

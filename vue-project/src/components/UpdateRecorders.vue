@@ -6,36 +6,45 @@
 				<div style="display: flex; justify-content: space-between; align-items: center; font-size: 10pt; width: 100%"><span align="left">{{index + 1}}.<span style="color: red;">{{item.username}}</span>向<span style="color: red;">{{item.contact}}</span>申请升级成功</span><span align="right" style="margin-left: 5px;font-size: 8pt; color: #DDD">{{item.time}}</span></div>
 			</div>
 		</div>
+		<PasswordChecker :level="this.user.level" @password-valide="passwordValided" />
 	</div>
 </template>
 
 <script type="text/javascript">
 	export default {
 		name: 'UpdateRecords',
+		components: {'PasswordChecker': () => import("@/components/widgets/PasswordChecker")},
 		data() {
 			return {
-				records:[]
+				records:[],
+				user: {}
 			}
 		},
 
 		methods: {
+			passwordValided() {
+				let that = this;
+				this.ajax().get(this.Server.api.update.getUpdateRecords + this.$route.params.username)
+				.ok(function(data){
 
+					that.$set(that, 'records', data.data);
+
+				}).notOk(function(data) {
+
+				}).start();
+			}
 
 		},
 
+		created() {
+			this.user = this.$route.params;
+		}, 
+
 		mounted() {
 
-			let that = this;
-			this.ajax().get(this.Server.api.update.getUpdateRecords + this.$route.params.username)
-			.ok(function(data){
-
-				that.$set(that, 'records', data.data);
-
-			}).notOk(function(data) {
-
-			}).start();
+			
 		}
-	}
+	};
 </script>
 
 <style type="text/css" scoped>

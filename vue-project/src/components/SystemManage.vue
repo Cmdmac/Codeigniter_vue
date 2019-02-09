@@ -515,7 +515,7 @@
     mounted() {
     	this.onRefesh();
     }
-  }
+  };
 </script>
 
 <style type="text/css">

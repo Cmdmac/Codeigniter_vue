@@ -48,6 +48,7 @@
         <el-button v-if="user.type == 0" type="primary" @click="onModify" >修改会员信息</el-button>
       </span>
     </el-dialog>
+    <PasswordChecker :level="this.$route.params.level" @password-valide="passwordValided"/>
   </div>
 </template>
 
@@ -56,12 +57,13 @@
   import qs from 'qs';
   import {Message} from 'element-ui';
   import TreeChart from "@/components/widgets/TreeChart";
+  // import PasswordChecker from "@/components/widgets/PasswordChecker"
   // import TitleBar from "@/components/TitleBar";
 
 export default {
   name: 'TeamManager',
   components: {
-    TreeChart
+    TreeChart, 'PasswordChecker': () => import("@/components/widgets/PasswordChecker")
   },
   data() {
     return {
@@ -336,13 +338,17 @@ export default {
           // }).catch(function(error) {
 
           // });
+    },
+
+    passwordValided() {
+      this.loadTree();
     }
   },
 
-  mounted() {
+  created() {
     //this.getChildren('root');
     this.$set(this, 'user', this.$route.params);
-    this.loadTree();
+    // this.loadTree();
   }
 }
 </script>

@@ -81,6 +81,7 @@
 			  				window.localStorage.removeItem('username');
 			  				window.localStorage.removeItem('type');
 			  				window.localStorage.removeItem('token');
+			  				window.localStorage.removeItem('last_time_input_level' + that.user.level);
 			  				window.location = that.Server.host;
 			  			} else {
 			  				//alert(response.data.msg);

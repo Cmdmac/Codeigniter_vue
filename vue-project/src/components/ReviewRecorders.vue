@@ -16,6 +16,7 @@
 				<el-button type="primary" @click="confirmReview" >确 定</el-button>
 			</span>
 		</el-dialog>
+		<PasswordChecker :level="this.user.level" @password-valide="passwordValided" />
 	</div>
 </template>
 
@@ -23,11 +24,13 @@
 	import {Message} from 'element-ui';
 	export default {
 		name: 'ReviewRecorders',
+		components: {'PasswordChecker': () => import("@/components/widgets/PasswordChecker")},
 		data() {
 			return {
 				records:[],
 				message: '',
 				item: {},
+				user: {},
 				dialogVisible: false
 			}
 		},
@@ -74,15 +77,27 @@
 				}).notOk(function(data) {
 
 				}).start();
-			}
+			},
 
+			passwordValided() {
+				this.refesh();
+			}
 		},
+
+
+		created() {
+			//this.member = JSON.parse(JSON.stringify(this.$route.params));
+			this.user = this.$route.params;
+			//this.$set(this, 'member', this.member);
+			//console.log(this.member);
+			//console.log('created');
+		}, 
 
 		mounted() {
 
-			this.refesh();
+			// this.refesh();
 		}
-	}
+	};
 </script>
 
 <style type="text/css" scoped>

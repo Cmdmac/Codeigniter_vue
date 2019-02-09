@@ -20,6 +20,7 @@
 		 		<div>支付宝：<span>{{contact.alipay}}</span></div>
 		 	</div>
 		</el-dialog>
+		<PasswordChecker :level="this.user.level" @password-valide="passwordValided" />
 	</div>
 </template>
 
@@ -28,6 +29,7 @@
 
 	export default {
 		name: 'RequestUpdate',
+		components: {'PasswordChecker': () => import("@/components/widgets/PasswordChecker")},
 		data() {
 			return {
 				showContact: false,
@@ -76,6 +78,10 @@
 				}).notOk(function(data) {
 
 				}).start();
+			},
+
+			passwordValided() {
+
 			}
 		}, 
 
@@ -99,12 +105,11 @@
 			
 		}
 
-	}
+	};
 </script>
 
 <style type="text/css" scoped>
 	.container {
-		margin: 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

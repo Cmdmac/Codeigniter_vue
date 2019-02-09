@@ -84,7 +84,7 @@
   	}
 
 	export default {
-		name: 'UpdateMember',
+		name: 'UpdateMember', 
 	    data() {
 	      return {
 	      	dialogVisible: false,

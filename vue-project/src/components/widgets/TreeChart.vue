@@ -72,7 +72,7 @@ export default {
       this.$forceUpdate();
     }
   }
-}
+};
 </script>
 
 <style scoped>
