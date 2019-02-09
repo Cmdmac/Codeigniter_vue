@@ -104,7 +104,9 @@ class Manager extends Auth_Controller {
 	public function getPassword() {
 		$this->load->model('Config_Model');
 		$r = $this->Config_Model->getPasswords();
-		return $this->json_with_data(200, 'ok', $r);
+		$arr = array('pwd1' => $r[0]['value'], 'pwd2' => $r[1]['value'], 'pwd3' => $r[2]['value'], 'pwd4' => $r[3]['value'], 
+			'pwd5' => $r[4]['value'], 'pwd6' => $r[5]['value'], 'pwd7' => $r[6]['value'], 'pwd8' => $r[7]['value']);
+		return $this->json_with_data(200, 'ok', $arr);
 	}
 
 	public function updatePassword() {
@@ -118,8 +120,8 @@ class Manager extends Auth_Controller {
 		$pwd8 = $this->input->post('pwd8');
 
 		$this->load->model('Config_Model');
-		$r = $this->Config_Model->updatePasswords($pw1, $pw2, $pwd3, $pwd4, $pwd5, $pwd6, $pwd7, $pwd8);
-		$this->json_with_code_msg(200, 'ok');
+		$r = $this->Config_Model->updatePasswords($pwd1, $pwd2, $pwd3, $pwd4, $pwd5, $pwd6, $pwd7, $pwd8);
+		$this->json_with_code_msg(200, '已更新');
 	}
 }
 ?>

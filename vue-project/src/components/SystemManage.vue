@@ -104,28 +104,28 @@
 	
 	<el-dialog ref="passwordDialog" title="密码管理" :visible.sync="passwordDialogVisible" width="90%">
 		<el-form ref="passwordForm" :model="pwds" :rules="rulesPwd">
-		    <el-form-item label="第一级密码" :label-width="formLabelWidth" prop="pwd1">
+		    <el-form-item label="第一级密码" :label-width="formLabelWidth2" prop="pwd1">
 		      <el-input v-model="pwds.pwd1" autocomplete="off"></el-input>
 		    </el-form-item>
-		    <el-form-item label="第二级密码" :label-width="formLabelWidth" prop="pwd2">
+		    <el-form-item label="第二级密码" :label-width="formLabelWidth2" prop="pwd2">
 		      <el-input v-model="pwds.pwd2" autocomplete="off"></el-input>
 		    </el-form-item>
-		    <el-form-item label="第三级密码" :label-width="formLabelWidth" prop="pwd3">
+		    <el-form-item label="第三级密码" :label-width="formLabelWidth2" prop="pwd3">
 		   		<el-input v-model="pwds.pwd3" ></el-input>
 			</el-form-item>
-			<el-form-item label="第四级密码" :label-width="formLabelWidth" prop="pwd4">
+			<el-form-item label="第四级密码" :label-width="formLabelWidth2" prop="pwd4">
 				<el-input v-model="pwds.pwd4" ></el-input>
 			</el-form-item>
-			<el-form-item label="第五级密码" :label-width="formLabelWidth" prop="pwd5">
+			<el-form-item label="第五级密码" :label-width="formLabelWidth2" prop="pwd5">
 				<el-input v-model="pwds.pwd5" ></el-input>
 			</el-form-item>
-			<el-form-item label="第六级密码" :label-width="formLabelWidth" prop="pwd6">
+			<el-form-item label="第六级密码" :label-width="formLabelWidth2" prop="pwd6">
 				<el-input v-model="pwds.pwd6" ></el-input>
 			</el-form-item>
-			<el-form-item label="第七级密码" :label-width="formLabelWidth" prop="pwd7">
+			<el-form-item label="第七级密码" :label-width="formLabelWidth2" prop="pwd7">
 				<el-input v-model="pwds.pwd7" ></el-input>
 			</el-form-item>
-			<el-form-item label="第八级密码" :label-width="formLabelWidth" prop="pwd8">
+			<el-form-item label="第八级密码" :label-width="formLabelWidth2" prop="pwd8">
 				<el-input v-model="pwds.pwd8" ></el-input>
 			</el-form-item>
 		  </el-form>
@@ -174,12 +174,74 @@
   	}
 
 	export default {
+		data() {
+	      return {
+	      	formLabelWidth: '80px',
+	      	formLabelWidth2: '100px',
+	      	dialogFormVisible: false,
+	      	addDialogFormVisible: false,
+	      	passwordDialogVisible: false,
+	        tableData: [/*{
+	          time: '2016-05-03',
+	          name: '王小虎1',
+	          type: '1',
+	          state: '未激活'
+	        }, {
+	          time: '2016-05-03',
+	          name: '王小虎2',
+	          type: '1',
+	          state: '未激活'
+	        }, {
+	          time: '2016-05-03',
+	          name: '王小虎',
+	          type: '1',
+	          state: '未激活'
+	        }, {
+	          time: '2016-05-03',
+	          name: '王小虎',
+	          type: '1',
+	          state: '未激活'
+	        }*/],
+	        form: {
+	        	id: '',
+	          username: '',
+	          password: ''
+	        },
+	        pwds: {
+	        	pwd1: '',
+	        	pwd2: '',
+	        	pwd3: '',
+	        	pwd4: '',
+	        	pwd5: '',
+	        	pwd6: '',
+	        	pwd7: '',
+	        	pwd8: ''
+	        },
+	        rules: {
+		        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+		        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+		        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
+				wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
+				alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
+		    },
+		    rulesPwd: {
+		    	pwd1: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd2: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd3: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd4: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd5: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd6: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd7: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+		    	pwd8: [{ required: true, trigger: 'blur', message: '请输入密码'}]
+		    }
+	      }
+	    },
     	methods: {
     		passwordManage() {
     			let that = this;
     			this.$set(this, 'passwordDialogVisible', true);
     			this.ajax().get(this.Server.api.manager.password.get)
-    			.ok(function(data) {
+    			.ok(function(data) {    				
     				that.$set(that, 'pwds', data.data);
     				that.$set(that, 'passwordDialogVisible', true);
     			}).notOk(function(data) {
@@ -416,6 +478,8 @@
 	      				that.doEdit();
 	      			} else if (formName == 'addForm') {
 	      				that.addManager();
+	      			} else if (formName == 'passwordForm') {
+	      				that.updatePasswords();
 	      			}
 
 	      			that.$set(that, 'dialogFormVisible', false);
@@ -446,68 +510,6 @@
       		}
     	}
 
-    },
-
-    data() {
-      return {
-      	formLabelWidth: '80px',
-      	dialogFormVisible: false,
-      	addDialogFormVisible: false,
-      	passwordDialogVisible: false,
-        tableData: [/*{
-          time: '2016-05-03',
-          name: '王小虎1',
-          type: '1',
-          state: '未激活'
-        }, {
-          time: '2016-05-03',
-          name: '王小虎2',
-          type: '1',
-          state: '未激活'
-        }, {
-          time: '2016-05-03',
-          name: '王小虎',
-          type: '1',
-          state: '未激活'
-        }, {
-          time: '2016-05-03',
-          name: '王小虎',
-          type: '1',
-          state: '未激活'
-        }*/],
-        form: {
-        	id: '',
-          username: '',
-          password: ''
-        },
-        pwds: {
-        	pwd1: '',
-        	pwd2: '',
-        	pwd3: '',
-        	pwd4: '',
-        	pwd5: '',
-        	pwd6: '',
-        	pwd7: '',
-        	pwd8: ''
-        },
-        rules: {
-	        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
-	        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
-	        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
-			wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
-			alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
-	    },
-	    rulesPwd: {
-	    	pwd1: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd2: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd3: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd4: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd5: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd6: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd7: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-	    	pwd8: [{ required: true, trigger: 'blur', message: '请输入密码'}]
-	    }
-      }
     },
     
     mounted() {
