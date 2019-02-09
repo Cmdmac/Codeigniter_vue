@@ -80,18 +80,6 @@ const User = resovle => {
 	})
 };
 
-const Manager = resovle => {
-	require.ensure(['@/components/Manager'], () => {
-		resovle(require('@/components/Manager'))
-	})
-};
-
-const ManagerPage = resovle => {
-	require.ensure(['@/components/ManagerPage'], () => {
-		resovle(require('@/components/ManagerPage'))
-	})
-};
-
 const StaticsManager = resovle => {
   require.ensure(['@/components/StaticsManager'], () => {
     resovle(require('@/components/StaticsManager'))
@@ -167,7 +155,6 @@ let r = [
         // { path: '/', component: HelloWorld },
         { path: '/', component: User, meta: { title: '爱我中华自助平台' }},
         { name: 'user', path: '/user', component: User, meta: { title: 'User' } },
-        { name: 'manager', path: '/manager', component: Manager },
         { name: 'TeamManager', path: '/teamManager', component: TeamManager},
         { name: 'main', path: '/main', component: Main},
         { name: 'ModifyProfile', path: '/modifyProfile', component: ModifyProfile},
