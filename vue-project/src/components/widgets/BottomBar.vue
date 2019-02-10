@@ -14,10 +14,10 @@
 			return {
 				// tabItems: this.tabs,
 				selected: 0,
-				tabItems: [{title: '首页', image: 'images/home.png'},
-            		{title: '站内信', image: 'images/mail.png'}, 
-       				{title: '申请升级', image: 'images/note.png', target: 'requestUpdate'}, 
-       				{title: '审核状况', image: 'images/check.png', target: 'reviewRecorders'}]
+				tabItems: [{title: '首页', image: 'images/home2.png'},
+            		{title: '站内信', image: 'images/mail2.png'}, 
+       				{title: '申请升级', image: 'images/upload.png', target: 'requestUpdate'}, 
+       				{title: '审核状况', image: 'images/tick.png', target: 'reviewRecorders'}]
 			}
 		},
 
@@ -49,7 +49,7 @@
         bottom: 0px;
         width: 100%;
         
-        background-color: #DDDDDDDD;
+        background-color: #FEFEFE;
     }
 
 	.item {
@@ -60,14 +60,14 @@
 		justify-content: center;
 		height: 100%;
 		flex-grow: 1;
-		background: #AAA;
+		background: #DDD;
 		-webkit-box-flex: 1;
     	-webkit-flex: 1;
     	font-size: 10pt;
 	}
 
 	.item:active {
-		background: #999;
+		background: #CCC;
 	}
 
 	.item-selected {
@@ -78,7 +78,7 @@
 		justify-content: center;
 		height: 100%;
 		flex-grow: 1;
-		background: #888;
+		background: #CCC;
 		-webkit-box-flex: 1;
     	-webkit-flex: 1;
     	font-size: 10pt;

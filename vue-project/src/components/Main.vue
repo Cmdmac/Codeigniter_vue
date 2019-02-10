@@ -34,7 +34,7 @@
 				<tr><td><div>7</div></td><td><div>8</div></td><td><div>9</div></td></tr> -->
 			</table>
 		</div>
-		<div style="height: 200px;">空白</div>
+		<!-- <div style="height: 200px;">空白</div> -->
 		<BottomBar :user="user" />
 	</div>
 </template>
@@ -108,13 +108,13 @@
 
 			initItems() {
 				let items = [
-						[{title: "联盟公告", icon: "images/bell.png", level: 0, name: "http://www.baidu.com"}, 
-						{title: "团队结构", icon: "images/team.png", level: 0, name: "TeamManager"}, 
-						{title: "问题解答", icon: "images/comment.png", level: 0}], 
+						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "http://www.baidu.com"}, 
+						{title: "团队结构", icon: "images/connections.png", level: 0, name: "TeamManager"}, 
+						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
-						[{title: "游戏规则", icon: "images/info.png", level: 0,}, 
-						{title: "金币转账", icon: "images/coin.png", level: 2}, 
-						{title: "升级记录", icon: "images/table.png", level: 1, name: 'updateRecorders'}],
+						[{title: "游戏规则", icon: "images/infomation.png", level: 0,}, 
+						{title: "金币转账", icon: "images/money.png", level: 2}, 
+						{title: "升级记录", icon: "images/interface.png", level: 1, name: 'updateRecorders'}],
 
 						[{title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' },
 						{},
@@ -123,9 +123,9 @@
 
 				let type = window.localStorage.getItem('type');
 				if (type != undefined && type == 0) {
-					items[2][0] = {title: "会员管理", icon: "images/calendar.png", name: 'StaticsManager', level: 8};
-					items[2][1] = {title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' };
-					items[2][2] = {title: "系统管理", icon: "images/user.png", level: 8, name: 'SystemManage'};
+					items[2][0] = {title: "会员管理", icon: "images/agenda.png", name: 'StaticsManager', level: 8};
+					items[2][1] = {title: "修改资料", icon: "images/infomation.png", level: 0, name: 'ModifyProfile' };
+					items[2][2] = {title: "系统管理", icon: "images/barchart.png", level: 8, name: 'SystemManage'};
 				}
 				this.$set(this, 'items', items);
 			}

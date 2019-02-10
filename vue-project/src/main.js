@@ -150,6 +150,12 @@ const UpdateProfile = resovle => {
   })
 };
 
+const Questions = resovle => {
+  require.ensure(['@/components/Questions'], () => {
+    resovle(require('@/components/Questions'))
+  })
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -170,6 +176,7 @@ let r = [
         { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile},
         { name: 'StaticsManager', path: '/StaticsManager', component: StaticsManager },
         { name: 'SystemManage', path: '/SystemManage', component: SystemManage },
+        { name: 'Questions', path: '/Questions', component: Questions }
     ];
 let router = new VueRouter({
     routes: r
