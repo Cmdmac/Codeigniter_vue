@@ -42,8 +42,8 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import axios from "axios";
-	import qs from 'qs';
+	// import axios from "axios";
+	// import qs from 'qs';
 	// import {Message} from 'element-ui';
 
 	import {validPhone, validName, validPassword} from '../utils.js';

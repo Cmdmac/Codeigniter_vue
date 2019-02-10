@@ -40,10 +40,8 @@
 </template>
 
 <script type="text/javascript">
-	import axios from 'axios';
-	import qs from 'qs';
+	
   	// import BottomBar from '@/components/widgets/BottomBar'
-	import {Message} from 'element-ui';
 
 	export default {
 		name: 'Main',
@@ -62,44 +60,25 @@
 
 				let username = window.localStorage.getItem('username');
 	      		let that = this;
-		            let instance = axios.create({
-		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		  				withCredentials: true});
-			  		instance.post(this.Server.api.user.logout, qs.stringify({ username: username}))
-			  		.then(function (response) {
-			  			if (response.data.code == 200) {
-			  				//alert(response.data.msg);
-			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-			  				//alert(response.data.last_login_time);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'success',
-			  					duration: 1000
-			  				});
-			  				//退出，清除登录数据，回到登录
-			  				window.localStorage.removeItem('username');
-			  				window.localStorage.removeItem('type');
-			  				window.localStorage.removeItem('token');
-			  				for (let i = 1; i <= 8; i++) {
-			  					window.localStorage.removeItem('last_time_input_level' + i);
-			  				}			  				
-			  				window.location = that.Server.host;
-			  			} else {
-			  				//alert(response.data.msg);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'error',
-			  					duration: 1000
-			  				});
-			  				window.location = that.Server.host;
-			  			}
-			  		}).catch(function (error) {
-			                //eslint-disable-next-line
-			                console.log(error);
-			                //alert('error');
-			        });
+	            this.ajax().post(this.Server.api.user.logout, { username: username})
+		  		.ok(function (data) {
+			  			
+	  				that.$message({
+	  					showClose: true,
+	  					message: data.msg, 
+	  					type: 'success',
+	  					duration: 1000
+	  				});
+	  				//退出，清除登录数据，回到登录
+	  				window.localStorage.removeItem('username');
+	  				window.localStorage.removeItem('type');
+	  				window.localStorage.removeItem('token');
+	  				for (let i = 1; i <= 8; i++) {
+	  					window.localStorage.removeItem('last_time_input_level' + i);
+	  				}			  				
+	  				window.location = that.Server.host;
+			  			       //alert('error');
+		        }).start();
 			},
 
 			onItemClick(i, j) {
