@@ -116,7 +116,7 @@
 						{title: "金币转账", icon: "images/money.png", level: 2}, 
 						{title: "升级记录", icon: "images/interface.png", level: 1, name: 'updateRecorders'}],
 
-						[{title: "修改资料", icon: "images/info.png", level: 0, name: 'ModifyProfile' },
+						[{title: "修改资料", icon: "images/light.png", level: 0, name: 'ModifyProfile' },
 						{},
 						{}]
 					];
@@ -124,7 +124,7 @@
 				let type = window.localStorage.getItem('type');
 				if (type != undefined && type == 0) {
 					items[2][0] = {title: "会员管理", icon: "images/agenda.png", name: 'StaticsManager', level: 8};
-					items[2][1] = {title: "修改资料", icon: "images/infomation.png", level: 0, name: 'ModifyProfile' };
+					items[2][1] = {title: "修改资料", icon: "images/light.png", level: 0, name: 'ModifyProfile' };
 					items[2][2] = {title: "系统管理", icon: "images/barchart.png", level: 8, name: 'SystemManage'};
 				}
 				this.$set(this, 'items', items);

@@ -2,7 +2,9 @@
 import axios from 'axios';
 import qs from 'qs';
 function ajax() {
+	let p = this;
 	var o = {
+		p: p,
 		url: '',
 		params: undefined,
 		okCallback: function(data) {
@@ -58,7 +60,7 @@ function ajax() {
 				if (response.data.code == 200) {
 					that.okCallback(response.data);
 				} else {
-					that.$message({
+					that.p.$message({
 		              showClose: true,
 		              message: response.data.msg, 
 		              type: 'error',

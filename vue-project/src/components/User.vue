@@ -77,7 +77,7 @@ export default {
 
   	doRegister() {
   		if (this.password != this.ensure_password) {
-    			Message({
+    			this.$message({
   		  			showClose: true,
   		  			message: '两次密码不一致', 
   		  			type: 'error',
