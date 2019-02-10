@@ -52,7 +52,8 @@ export default {
 
     goToMain() {
         // console.log(this.Server.page.main.index);
-        window.location = this.Server.page.main.index;//window.location.origin + '/#/manager';
+        // window.location = this.Server.page.main.index;//window.location.origin + '/#/manager';
+        this.$router.replace({name: 'main'});
     },
 
     onLoginSuccess(data) {

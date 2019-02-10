@@ -12,7 +12,7 @@ import TitleBar from "@/components/widgets/TitleBar"
 export default {
   name: 'app',
   components: {TitleBar}
-}
+};
 </script>
 
 <style>
