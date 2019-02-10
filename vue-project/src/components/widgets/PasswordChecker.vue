@@ -36,14 +36,8 @@
 					// alert(data.msg);
 					that.$set(that, 'error', data.msg);
 					setTimeout(function() {
-						that.$set(that, 'error', '');
-					}, 1000);
-					that.$message({
-	  					showClose: true,
-	  					message: data.msg, 
-	  					type: 'error',
-	  					duration: 1000
-	  				});	  				
+						that.$set(that, 'error', '');  			
+					});	
 				}).start();
 			},
 
