@@ -143,35 +143,8 @@
 	import qs from 'qs';
 	import {Message} from 'element-ui';
 
-	function isValidName(str) {
-		const nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
-		return nameReg.test(str);
-	}
+	import {validPhone, validName, validPassword} from '../utils.js';
 
-	var validName = (rule, value, callback) => {
-		if (!value){
-          	callback(new Error('请输入姓名'))
-      	} else  if (!isValidName(value)){
-      	  	callback(new Error('请输入长度为2~4的中文姓名'))
-      	} else {
-          	callback()
-      	}
-  	}
-
-	function isvalidPhone(str) {
-  		const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-  		return reg.test(str)
-	}
-
-  	var validPhone=(rule, value,callback)=>{
-      if (!value){
-          callback(new Error('请输入电话号码'))
-      }else  if (!isvalidPhone(value)){
-        callback(new Error('请输入正确的11位手机号码'))
-      }else {
-          callback()
-      }
-  	}
 
 	export default {
 		data() {
