@@ -81,7 +81,9 @@
 			  				window.localStorage.removeItem('username');
 			  				window.localStorage.removeItem('type');
 			  				window.localStorage.removeItem('token');
-			  				window.localStorage.removeItem('last_time_input_level' + that.user.level);
+			  				for (let i = 1; i <= 8; i++) {
+			  					window.localStorage.removeItem('last_time_input_level' + i);
+			  				}			  				
 			  				window.location = that.Server.host;
 			  			} else {
 			  				//alert(response.data.msg);

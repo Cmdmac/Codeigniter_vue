@@ -5,7 +5,7 @@
 			<tr><td><el-input placeholder="输入密码" v-model="password"></el-input></td></tr>
 			<tr><td><span style="color: yellow; font-size: 8pt;">{{error}}</span></td></tr>
 			<tr><td><el-button style="width: 100%; margin-top: 15px;" type="primary" @click="checkPassword">登录</el-button></td></tr>
-			<tr><td><el-button style="width: 100%; margin-top: 10px;" type="text" @click="onBack">返回</el-button></td></tr>
+			<tr><td><el-button style="width: 100%; margin-top: 10px; color: #DDDDDD;" type="text" @click="onBack">返回</el-button></td></tr>
 		</table>
 	</div>
 </template>
