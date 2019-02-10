@@ -21,7 +21,7 @@
 </template>
 
 <script type="text/javascript">
-	import {Message} from 'element-ui';
+	// import {Message} from 'element-ui';
 	export default {
 		name: 'ReviewRecorders',
 		components: {'PasswordChecker': () => import("@/components/widgets/PasswordChecker")},
@@ -41,20 +41,13 @@
 				this.$set(this, 'dialogVisible', false);
 				this.ajax().post(this.Server.api.update.review, {username: this.item.username, contact: this.item.contact})
 				.ok(function(data) {
-					Message({
+					that.$message({
 	  					showClose: true,
 	  					message: data.msg, 
 	  					type: 'success',
 	  					duration: 1000
 	  				});
 					that.refesh();
-				}).notOk(function(data) {
-					Message({
-	  					showClose: true,
-	  					message: data.msg, 
-	  					type: 'error',
-	  					duration: 1000
-	  				});
 				}).start();
 
 			},

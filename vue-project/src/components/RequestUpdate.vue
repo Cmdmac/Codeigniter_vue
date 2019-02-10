@@ -25,7 +25,7 @@
 </template>
 
 <script type="text/javascript">
-	import {Message} from 'element-ui';
+	// import {Message} from 'element-ui';
 
 	export default {
 		name: 'RequestUpdate',
@@ -44,7 +44,7 @@
 				let that = this;
 				this.ajax().post(this.Server.api.update.add, {username: this.user.username, contact: this.contact.username})
 				.ok(function(data) {
-					Message({
+					that.$message({
 	  					showClose: true,
 	  					message: data.msg, 
 	  					type: 'success',
@@ -52,13 +52,7 @@
 	  				});
 	  				//window.location = that.Server.page.main.index;
 	  				that.$router.push({name: 'main'});
-				}).notOk(function(data) {
-					Message({
-	  					showClose: true,
-	  					message: data.msg, 
-	  					type: 'error',
-	  					duration: 1000
-	  				});
+				}).notOk(function(data) {					
 	  				if (data.code == 401) {
 
 	  				} else {

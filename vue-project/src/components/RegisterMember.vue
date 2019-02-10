@@ -36,9 +36,9 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import axios from "axios";
-	import qs from 'qs';
-	import {Message} from 'element-ui';
+	// import axios from "axios";
+	// import qs from 'qs';
+	// import {Message} from 'element-ui';
 
 	import {validPhone, validName, validPassword} from '../utils.js';
 
@@ -74,42 +74,28 @@
 	    		//alert(this.model.name);
 		            //alert('submit!');//这里就是符合规则，然后去调对应的接口
 		            let that = this;
-		            let instance = axios.create({
-		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		  				withCredentials: true});
-			  		instance.post(this.Server.api.member.register,
-			  			qs.stringify({ username: this.model.name, password: this.model.pwd, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay, recommend: this.model.recommend, contact: this.model.contact, leaf: this.model.leaf }))
-			  		.then(function (response) {
-			  			if (response.data.code == 200) {
-			  				//alert(response.data.msg);
-			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-			  				//alert(response.data.last_login_time);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'success',
-			  					duration: 1000
-			  				});
-			  				//that.model.name = '';
-			  				//that.model.phone = '';
-			  				//that.model.recommend = '';
-			  				//that.$set(that, 'model', that.model);
-			  				that.$router.replace({ name: 'main' });
-			  				//that.$router.go(-2);
-			  			} else {
-			  				//alert(response.data.msg);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'error',
-			  					duration: 1000
-			  				});
-			  			}
+		            this.ajax().post(this.Server.api.member.register,
+			  			{ username: this.model.name, password: this.model.pwd, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay, recommend: this.model.recommend, contact: this.model.contact, leaf: this.model.leaf })
+			  		.ok(function (data) {
+			  			
+		  				that.$message({
+		  					showClose: true,
+		  					message: data.msg, 
+		  					type: 'success',
+		  					duration: 1000
+		  				});
+		  				//that.model.name = '';
+		  				//that.model.phone = '';
+		  				//that.model.recommend = '';
+		  				//that.$set(that, 'model', that.model);
+		  				that.$router.replace({ name: 'main' });
+		  				//that.$router.go(-2);
+			  			
 			  		}).catch(function (error) {
 			                //eslint-disable-next-line
 			                console.log(error);
 			                //alert('error');
-			        });
+			        }).start();
 			          
 	    	},
 
@@ -134,7 +120,7 @@
 	    	//alert(this.$route.params.leaf);
 	    	this.$set(this.model, 'leaf', this.$route.params.leaf);
 	    }
-	}
+	};
 </script>
 
 <style type="text/css" scoped>

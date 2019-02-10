@@ -36,10 +36,7 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import axios from "axios";
-	import qs from 'qs';
-	import {Message} from 'element-ui';
-
+	
 	import {validPhone, validName, validPassword} from '../utils.js';
 
 
@@ -75,42 +72,22 @@
 	    		//alert(this.model.name);
 		            //alert('submit!');//这里就是符合规则，然后去调对应的接口
 		            let that = this;
-		            let instance = axios.create({
-		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		  				withCredentials: true});
-			  		instance.post(this.Server.api.user.update,
-			  			qs.stringify({ username: this.model.username, password: this.model.password, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay }))
-			  		.then(function (response) {
-			  			if (response.data.code == 200) {
-			  				//alert(response.data.msg);
-			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-			  				//alert(response.data.last_login_time);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'success',
-			  					duration: 1000
-			  				});
-			  				//that.model.name = '';
-			  				//that.model.phone = '';
-			  				//that.model.recommend = '';
-			  				//that.$set(that, 'model', that.model);
-			  				that.$router.replace({ name: 'main' });
-			  				//that.$router.go(-2);
-			  			} else {
-			  				//alert(response.data.msg);
-			  				Message({
-			  					showClose: true,
-			  					message: response.data.msg, 
-			  					type: 'error',
-			  					duration: 1000
-			  				});
-			  			}
-			  		}).catch(function (error) {
-			                //eslint-disable-next-line
-			                console.log(error);
-			                //alert('error');
-			        });
+		            this.ajax().post(this.Server.api.user.update,
+			  			{ username: this.model.username, password: this.model.password, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay })
+			  		.ok(function (data) {
+			  			that.$message({
+		  					showClose: true,
+		  					message: data.msg, 
+		  					type: 'success',
+		  					duration: 1000
+		  				});
+		  				//that.model.name = '';
+		  				//that.model.phone = '';
+		  				//that.model.recommend = '';
+		  				//that.$set(that, 'model', that.model);
+		  				that.$router.replace({ name: 'main' });
+		  				//that.$router.go(-2);
+		  			}).start();
 			          
 	    	},
 
@@ -139,15 +116,6 @@
 	        	data.data.old_username = that.$route.params.username;
 	          that.$set(that, 'model', data.data);
 	          //that.$set(that, 'dialogVisible', true);          
-	        }).notOk(function(data) {
-	          Message({
-	              showClose: true,
-	              message: data.msg, 
-	              type: 'error',
-	              duration: 1000
-	            });
-	        }).catch(function(error){
-	          console.log(error);
 	        }).start();	    }
 	};
 </script>

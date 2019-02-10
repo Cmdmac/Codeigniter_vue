@@ -49,39 +49,7 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import axios from "axios";
-	import qs from 'qs';
-	import {Message} from 'element-ui';
-
-	function isvalidPhone(str) {
-  		const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-  		return reg.test(str)
-	}
-
-	function isValidName(str) {
-		const nameReg = /^[\u4E00-\u9FA5, 1-9]{2,4}$/;
-		return nameReg.test(str);
-	}
-
-	var validPhone=(rule, value,callback)=>{
-      if (!value){
-          callback(new Error('请输入电话号码'))
-      }else  if (!isvalidPhone(value)){
-        callback(new Error('请输入正确的11位手机号码'))
-      }else {
-          callback()
-      }
-  	}
-
-  	var validName = (rule, value, callback) => {
-		if (!value){
-          	callback(new Error('请输入姓名'))
-      	} else  if (!isValidName(value)){
-      	  	callback(new Error('请输入中文或中文加数字的名字'))
-      	} else {
-          	callback()
-      	}
-  	}
+	import {validPhone, validName, validPassword} from '../utils.js';
 
 	export default {
 		name: 'UpdateMember', 
@@ -119,42 +87,23 @@
 	    		//alert(this.model.name);
 	            //alert('submit!');//这里就是符合规则，然后去调对应的接口
 	            let that = this;
-	            let instance = axios.create({
-	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-	  				withCredentials: true});
-		  		instance.post(this.Server.api.member.update,
-		  			qs.stringify({ old_username: this.user.old_username, username: this.user.username, password: this.user.password, phone: this.user.phone, wx: this.user.wx, alipay: this.user.alipay }))
-		  		.then(function (response) {
-		  			if (response.data.code == 200) {
-		  				//alert(response.data.msg);
-		  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-		  				//alert(response.data.last_login_time);
-		  				Message({
-		  					showClose: true,
-		  					message: response.data.msg, 
-		  					type: 'success',
-		  					duration: 1000
-		  				});
-		  				//that.model.name = '';
-		  				//that.model.phone = '';
-		  				//that.model.recommend = '';
-		  				//that.$set(that, 'model', that.model);
-		  				that.$router.replace({ name: 'main' });
-		  				// that.$router.go(-2);
-		  			} else {
-		  				//alert(response.data.msg);
-		  				Message({
-		  					showClose: true,
-		  					message: response.data.msg, 
-		  					type: 'error',
-		  					duration: 1000
-		  				});
-		  			}
-		  		}).catch(function (error) {
-		                //eslint-disable-next-line
-		                console.log(error);
-		                //alert('error');
-		        });
+	            this.ajax().post(this.Server.api.member.update,
+		  			{ old_username: this.user.old_username, username: this.user.username, password: this.user.password, phone: this.user.phone, wx: this.user.wx, alipay: this.user.alipay })
+		  		.ok(function (data) {
+		  			
+	  				that.$message({
+	  					showClose: true,
+	  					message: data.msg, 
+	  					type: 'success',
+	  					duration: 1000
+	  				});
+	  				//that.model.name = '';
+	  				//that.model.phone = '';
+	  				//that.model.recommend = '';
+	  				//that.$set(that, 'model', that.model);
+	  				that.$router.replace({ name: 'main' });
+	  				// that.$router.go(-2);
+	  			}).start();
 			          
 	    	},
 
@@ -184,18 +133,9 @@
 	        	data.data.old_username = that.$route.params.username;
 	          that.$set(that, 'user', data.data);
 	          //that.$set(that, 'dialogVisible', true);          
-	        }).notOk(function(data) {
-	          Message({
-	              showClose: true,
-	              message: data.msg, 
-	              type: 'error',
-	              duration: 1000
-	            });
-	        }).catch(function(error){
-	          console.log(error);
 	        }).start();
 	    }
-	}
+	};
 </script>
 
 <style type="text/css" scoped>

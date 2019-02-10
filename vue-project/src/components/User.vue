@@ -23,7 +23,6 @@
 
 <script>
 
-import {Message} from 'element-ui';
 export default {
   name: 'User',
   data() {
@@ -73,13 +72,6 @@ export default {
       .ok(function (data) {        
           //alert(response.data.msg);
             that.onLoginSuccess(data);
-          }).notOk(function(data) {
-            Message({
-              showClose: true,
-              message: data.msg, 
-              type: 'error',
-              duration: 2000
-            });
           }).start();
   	},
 
@@ -95,7 +87,7 @@ export default {
           let that = this;
     			this.ajax().post(this.Server.api.user.register, { username: this.username, password: this.password })
           .ok(function(data) {
-  	  				Message({
+  	  				that.$message({
   			  			showClose: true,
   			  			message: data.msg, 
   			  			type: 'success',
@@ -103,14 +95,7 @@ export default {
   		  			});
   	  				that.showLogin();
   	  				//alert(response.data.last_login_time);  	  			
-  	  		}).notOk(function(data) {
-              Message({
-                showClose: true,
-                message: data.msg, 
-                type: 'error',
-                duration: 2000
-              });          
-          }).start(); 		
+  	  		}).start(); 		
           
     	}
     },

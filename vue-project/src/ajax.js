@@ -12,7 +12,7 @@ function ajax() {
 		},
 
 		errorCallback: function(error) {
-
+			console.log(error);
 		},
 
 		post: function(url, params) {
@@ -58,6 +58,12 @@ function ajax() {
 				if (response.data.code == 200) {
 					that.okCallback(response.data);
 				} else {
+					that.$message({
+		              showClose: true,
+		              message: response.data.msg, 
+		              type: 'error',
+		              duration: 1000
+		            });
 					that.notOkCallback(response.data);
 				}
 			}).catch(this.errorCallback);		

@@ -48,6 +48,7 @@ import {Dialog} from 'element-ui'
 import {Radio} from 'element-ui'
 import {RadioGroup} from 'element-ui'
 import {Loading} from 'element-ui'
+import {Message} from 'element-ui'
 
 Vue.use(Button);
 Vue.use(Input);
@@ -62,6 +63,9 @@ Vue.use(Dialog);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(Loading);
+// Vue.use(Message);
+
+Vue.prototype.$message = Message;
 
 import {config} from "./config";
 Vue.prototype.Server = config;

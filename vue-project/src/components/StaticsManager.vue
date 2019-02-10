@@ -53,9 +53,9 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import qs from 'qs';
-  import {Message} from 'element-ui';
+  // import axios from 'axios';
+  // import qs from 'qs';
+  // import {Message} from 'element-ui';
   import TreeChart from "@/components/widgets/TreeChart";
   // import TitleBar from "@/components/TitleBar";
 
@@ -125,15 +125,6 @@ export default {
         .ok(function(data) {
           that.$set(that, 'member', data.data);
           that.$set(that, 'dialogVisible', true);          
-        }).notOk(function(data) {
-          Message({
-              showClose: true,
-              message: data.msg, 
-              type: 'error',
-              duration: 1000
-            });
-        }).catch(function(error){
-          console.log(error);
         }).start();
     },
 
@@ -173,53 +164,35 @@ export default {
 
     getChildren(recommend) {
       let that = this;
-      let instance = axios.create({
-              headers: { 'content-type': 'application/x-www-form-urlencoded' },
-              withCredentials: true});
-            instance.get(this.Server.api.member.getChildren + recommend)
-            .then(function (response) {
-              if (response.data.code == 200) {
-                //console.log(response.data);
-                // empty tree
-                let children = response.data.data;
-                let node = that.findNode(that.tree, recommend);
-                //console.log(node);
-                node.children = children;
-                node.showChildren = true;
-                for (let i = 0; i < node.children.length; i++) {
-                  let item = node.children[i];
-                  // item.showRefresh = true;
-                  item.name = item.username;
-                  that.totalMemberCount++;
-                }
+      this.ajax().get(this.Server.api.member.getChildren + recommend)
+      .ok(function (data) {
+       
+        let children = data.data;
+        let node = that.findNode(that.tree, recommend);
+        //console.log(node);
+        node.children = children;
+        node.showChildren = true;
+        for (let i = 0; i < node.children.length; i++) {
+          let item = node.children[i];
+          // item.showRefresh = true;
+          item.name = item.username;
+          that.totalMemberCount++;
+        }
 
-                if (node.children.length > 0) {
-                  node.extend = true;
-                }
-                // node.leaf = node.children.length == 0;
-                
-                //console.log(that.tree);
-                that.$set(that, 'tree', that.tree);
-                that.$set(that, 'totalMemberCount', that.totalMemberCount);
-                that.$refs.tree.toggleExtend(node);
-                // that.$refs.tree.toggleExtend(node);
-                // that.$refs.tree.toggleExtend(node);
-                // that.$refs.tree.toggleExtend(node);
-
-              } else {
-                //alert(response.data.msg);
-                Message({
-                  showClose: true,
-                  message: response.data.msg, 
-                  type: 'error',
-                  duration: 1000
-                });
-              }
-            }).catch(function (error) {
-                      //eslint-disable-next-line
-                console.log(error);
-                      //alert('error');
-              });
+        if (node.children.length > 0) {
+          node.extend = true;
+        }
+        // node.leaf = node.children.length == 0;
+        
+        //console.log(that.tree);
+        that.$set(that, 'tree', that.tree);
+        that.$set(that, 'totalMemberCount', that.totalMemberCount);
+        that.$refs.tree.toggleExtend(node);
+        // that.$refs.tree.toggleExtend(node);
+        // that.$refs.tree.toggleExtend(node);
+        // that.$refs.tree.toggleExtend(node);
+       
+      }).start();
     },
 
     findNode(node, name) {
@@ -259,32 +232,15 @@ export default {
 
     loadTree() {
       let that = this;
-      let instance = axios.create({
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            withCredentials: true});
-          instance.get(this.Server.api.member.init + "?level=" + this.level)
-          .then(function (response) {
-            if (response.data.code == 200) {
-              //console.log(response.data);
-              let tree = response.data.data;
-              that.totalMemberCount = 0;
-              that.buildTree(tree);
-              that.$set(that, 'totalMemberCount', that.totalMemberCount);
-              that.$set(that, 'tree', tree);
-            } else {
-              //alert(response.data.msg);
-              Message({
-                showClose: true,
-                message: response.data.msg, 
-                type: 'error',
-                duration: 1000
-              });
-            }
-          }).catch(function (error) {
-                    //eslint-disable-next-line
-              console.log(error);
-                    //alert('error');
-            });
+      this.ajax().get(this.Server.api.member.init + "?level=" + this.level)
+          .ok(function (data) {
+            //console.log(response.data);
+            let tree = data.data;
+            that.totalMemberCount = 0;
+            that.buildTree(tree);
+            that.$set(that, 'totalMemberCount', that.totalMemberCount);
+            that.$set(that, 'tree', tree);
+          }).start();
 
           // instance.get(this.Server.api.member.getMemberCount)
           // .then(function(response) {
@@ -303,7 +259,7 @@ export default {
     this.$set(this, 'user', this.$route.params);
     this.loadTree();
   }
-}
+};
 </script>
 
 <style scoped>

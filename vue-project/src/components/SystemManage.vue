@@ -139,9 +139,6 @@
 </template>
 
 <script type="text/javascript">
-	import axios from 'axios';
-	import qs from 'qs';
-	import {Message} from 'element-ui';
 
 	import {validPhone, validName, validPassword} from '../utils.js';
 
@@ -217,15 +214,6 @@
     			.ok(function(data) {    				
     				that.$set(that, 'pwds', data.data);
     				that.$set(that, 'passwordDialogVisible', true);
-    			}).notOk(function(data) {
-					Message({
-		  				showClose: true,
-		  				message: data.msg, 
-		  				type: 'error',
-		  				duration: 2000
-		  			});
-    			}).catch(function(error) {
-
     			}).start();
     		},
 
@@ -244,31 +232,17 @@
 			  				type: 'success',
 			  				duration: 2000
 			  			});		
-    				}).notOk(function(data) {
-
-    				}).catch(function(error) {
-
     				}).start();
     		},
 
 	    	onRefesh() {
 				let that = this;
-		    	let instance = axios.create({
-		    		headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		    		withCredentials: true});
-		    	instance.get(this.Server.api.manager.list)
-		    	.then(function (response) {
+		    	this.ajax().get(this.Server.api.manager.list)
+		    	.ok(function (data) {
 
-		    		if (response.data.code == 200) {
-		    			that.$set(that, 'tableData', response.data.data);
-		    		} else {
-					  	
-					}
-				}).catch(function (error) {
-				        //eslint-disable-next-line
-				        console.log(error);
-				        //alert('error');
-				});
+		    		that.$set(that, 'tableData', data.data);
+		    		
+				}).start();
 	    	},
 	    	onAddManager() {
 	    		this.$set(this, 'addDialogFormVisible', true);
@@ -277,40 +251,19 @@
 		        console.log(row);
 		        if (row.state == 1) {
 		        	let that = this;
-				    let instance = axios.create({
-				  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-				  				withCredentials: true});
-					instance.post(this.Server.api.manager.active,
-					  			qs.stringify({ username: row.username }))
-					.then(function (response) {
-					  		if (response.data.code == 200) {
-					  				//alert(response.data.msg);
-					  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-					  				//alert(response.data.last_login_time);
-					  			Message({
-					  				showClose: true,
-					  				message: response.data.msg, 
-					  				type: 'success',
-					  				duration: 2000
-					  			});			  			
-					  			row.state = '2';
-					  			that.$set(that, 'tableData', that.tableData);
-					  		} else {
-					  				//alert(response.data.msg);
-					  			Message({
-					  				showClose: true,
-					  				message: response.data.msg, 
-					  				type: 'error',
-					  				duration: 2000
-					  			});
-					  		}
-					  }).catch(function (error) {
-					                //eslint-disable-next-line
-					        console.log(error);
-					                //alert('error');
-					    });
+				    this.ajax().post(this.Server.api.manager.active, { username: row.username })
+					.ok(function (data) {
+			  			that.$message({
+			  				showClose: true,
+			  				message: data.msg, 
+			  				type: 'success',
+			  				duration: 2000
+			  			});			  			
+			  			row.state = '2';
+			  			that.$set(that, 'tableData', that.tableData);
+					}).start();
 		        } else if (row.state == 2) {
-		        	Message({
+		        	this.$message({
 					  	showClose: true,
 					  	message: '已审核', 
 					  	type: 'success',
@@ -321,39 +274,18 @@
 
       onDisable(row) {
 			let that = this;
-		    let instance = axios.create({
-		  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-		  				withCredentials: true});
-			instance.post(this.Server.api.manager.disable,
-			  			qs.stringify({ username: row.username }))
-			.then(function (response) {
-			  		if (response.data.code == 200) {
-			  				//alert(response.data.msg);
-			  				//window.location = 'http://localhost:8080/#/manager?username=' + that.username
-			  				//alert(response.data.last_login_time);
-			  			Message({
-			  				showClose: true,
-			  				message: response.data.msg, 
-			  				type: 'success',
-			  				duration: 2000
-			  			});
-			  			row.state = '1';
-			  			that.$set(that, 'tableData', that.tableData);
-			  			//window.location.reload();		  			
-			  		} else {
-			  				//alert(response.data.msg);
-			  			Message({
-			  				showClose: true,
-			  				message: response.data.msg, 
-			  				type: 'error',
-			  				duration: 2000
-			  			});
-			  		}
-			  }).catch(function (error) {
-			                //eslint-disable-next-line
-			        console.log(error);
-			                //alert('error');
-			    });
+		    this.ajax().post(this.Server.api.manager.disable, { username: row.username })
+			.ok(function (data) {
+	  			that.$message({
+	  				showClose: true,
+	  				message: data.msg, 
+	  				type: 'success',
+	  				duration: 2000
+	  			});
+	  			row.state = '1';
+	  			that.$set(that, 'tableData', that.tableData);
+	  			//window.location.reload();		  			
+	  		}).start();
       },
 
       onEdit(row) {
@@ -369,78 +301,44 @@
 
       doEdit() {
 		let that = this;
-	    let instance = axios.create({
-			headers: { 'content-type': 'application/x-www-form-urlencoded' },
-			withCredentials: true});
-		instance.post(this.Server.api.manager.edit,
-		  			qs.stringify({ id: this.form.id, username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay }))
-		.then(function (response) {
-		  		if (response.data.code == 200) {
-		  			Message({
-		  				showClose: true,
-		  				message: response.data.msg, 
-		  				type: 'success',
-		  				duration: 2000
-		  			});
-		  			//row.state = '1';
-		  			for (let i = 0; i < that.tableData.length; i++) {
-		  				let row = that.tableData[i];
-		  				if (row.id == that.form.id) {
-		  					row.username = that.form.username;
-		  					row.password = that.form.password;
-		  					break;
-		  				}
-		  			}
-		  			that.$set(that, 'tableData', that.tableData);
-		  			//window.location.reload();		  			
-		  		} else {
-		  				//alert(response.data.msg);
-		  			Message({
-		  				showClose: true,
-		  				message: response.data.msg, 
-		  				type: 'error',
-		  				duration: 2000
-		  			});
-		  		}
-		  }).catch(function (error) {
-	                //eslint-disable-next-line
-	        console.log(error);
-	                //alert('error');
-	    });
+	    this.ajax().post(this.Server.api.manager.edit,
+		  			{ id: this.form.id, username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
+		.ok(function (data) {
+  			that.$message({
+  				showClose: true,
+  				message: data.msg, 
+  				type: 'success',
+  				duration: 2000
+  			});
+  			//row.state = '1';
+  			for (let i = 0; i < that.tableData.length; i++) {
+  				let row = that.tableData[i];
+  				if (row.id == that.form.id) {
+  					row.username = that.form.username;
+  					row.password = that.form.password;
+  					break;
+  				}
+  			}
+  			that.$set(that, 'tableData', that.tableData);
+  			//window.location.reload();		  			
+  		}).start();
       },
 
       addManager() {
 		let that = this;
-	    let instance = axios.create({
-	  				headers: { 'content-type': 'application/x-www-form-urlencoded' },
-	  				withCredentials: true});
-		instance.post(this.Server.api.manager.add,
-		  			qs.stringify({ username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay }))
-		.then(function (response) {
-		  		if (response.data.code == 200) {
-		  			Message({
-		  				showClose: true,
-		  				message: response.data.msg, 
-		  				type: 'success',
-		  				duration: 2000
-		  			});
-		  			//row.state = '1';
-		  			that.$set(that, 'addDialogFormVisible', false);
-		  			that.onRefesh();		  			  			
-		  		} else {
-		  				//alert(response.data.msg);
-		  			Message({
-		  				showClose: true,
-		  				message: response.data.msg, 
-		  				type: 'error',
-		  				duration: 2000
-		  			});
-		  		}
-		  }).catch(function (error) {
-	                //eslint-disable-next-line
-	        console.log(error);
-	                //alert('error');
-	    });
+	    this.ajax().post(this.Server.api.manager.add,
+		  			 {username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
+		.ok(function (data) {
+	  		that.$message({
+	  				showClose: true,
+	  				message: data.msg, 
+	  				type: 'success',
+	  				duration: 2000
+	  			});
+  			//row.state = '1';
+  			that.$set(that, 'addDialogFormVisible', false);
+  			that.onRefesh();		  			  			
+  		}).start();
       },
 
       submitForm(formName) {
