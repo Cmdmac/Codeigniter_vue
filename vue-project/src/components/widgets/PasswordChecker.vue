@@ -11,7 +11,6 @@
 </template>
 
 <script type="text/javascript">
-	import {Message} from 'element-ui';
 	export default {
 		name: 'PasswordChecker',
 		props: { level: String },
@@ -39,14 +38,12 @@
 					setTimeout(function() {
 						that.$set(that, 'error', '');
 					}, 1000);
-					Message({
+					that.$message({
 	  					showClose: true,
 	  					message: data.msg, 
 	  					type: 'error',
 	  					duration: 1000
 	  				});	  				
-				}).catch(function(error) {
-					console.log(error);
 				}).start();
 			},
 
