@@ -32,7 +32,7 @@ class User extends MY_Controller {
 				$username = $this->session->username;
 				$type = $this->session->type;
 				//$this->json();
-				$r = array('code' => '200', 'msg' => $username.' has login', 'username' => $username, 'type' => $type);
+				$r = array('code' => '200', 'msg' => $username.' has login', 'username' => $username, 'type' => $type, 'token' => $this->session->token);
 				$this->json($r);
 			} else {
 				$this->load->model('User_Model');
