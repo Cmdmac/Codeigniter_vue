@@ -106,7 +106,7 @@ export default {
   	},
 
   	onForgetPassword() {
-  		alert('请联系管理员！');
+  		this.$message('请联系管理员！');
   	}, 
 
   	onDownloadApp() {
