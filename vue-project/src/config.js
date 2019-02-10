@@ -4,7 +4,7 @@ var host = "http://192.168.31.8";
 var pageHost = host + ":8080"
 var config = {
     base: host,
-    host : host + ":8080/#/",//http://192.168.0.115/#/",
+    host : pageHost + "/#/",//http://192.168.0.115/#/",
     api: {
         user: {
             register: host + '/index.php/user/register',
@@ -46,24 +46,24 @@ var config = {
             review: host + '/index.php/update/review'
         }
     },
-    page: {
-        manager: {
-            index: pageHost + "/#/manager",
-            member: pageHost + "/#/manager_page?page=MemberManage&title=会员管理",
-            system: pageHost + "/#/manager_page?page=SystemManage&title=系统管理",
-            statics: pageHost + "/#/manager_page?page=StaticsManage&title=统计管理"
-        },
+    // page: {
+    //     manager: {
+    //         index: pageHost + "/#/manager",
+    //         member: pageHost + "/#/manager_page?page=MemberManage&title=会员管理",
+    //         system: pageHost + "/#/manager_page?page=SystemManage&title=系统管理",
+    //         statics: pageHost + "/#/manager_page?page=StaticsManage&title=统计管理"
+    //     },
 
-        main: {
-            index: pageHost + '/#/main',
-            registeMember: pageHost + '/#/registeMember',
-            modifyProfile: pageHost + '/#/modifyProfile',
-            requestUpdate: pageHost + '/#/requestUpdate',
-            updateRecorders: pageHost + '/#/updateRecorders',
-            reviewRecorders: pageHost + '/#/reviewRecorders'
-        },
+    //     main: {
+    //         index: pageHost + '/#/main',
+    //         registeMember: pageHost + '/#/registeMember',
+    //         modifyProfile: pageHost + '/#/modifyProfile',
+    //         requestUpdate: pageHost + '/#/requestUpdate',
+    //         updateRecorders: pageHost + '/#/updateRecorders',
+    //         reviewRecorders: pageHost + '/#/reviewRecorders'
+    //     },
 
-    }
+    // }
 }
 
 // 18038001193, 830330

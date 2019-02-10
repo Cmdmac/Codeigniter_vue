@@ -50,7 +50,8 @@
 	  					type: 'success',
 	  					duration: 1000
 	  				});
-	  				window.location = that.Server.page.main.index;
+	  				//window.location = that.Server.page.main.index;
+	  				that.$router.push({name: 'main'});
 				}).notOk(function(data) {
 					Message({
 	  					showClose: true,
@@ -61,7 +62,8 @@
 	  				if (data.code == 401) {
 
 	  				} else {
-	  					window.location = that.Server.page.main.index;
+	  					//window.location = that.Server.page.main.index;
+	  					that.$router.push({name: 'main'});
 	  				}
 				}).start();
 			},

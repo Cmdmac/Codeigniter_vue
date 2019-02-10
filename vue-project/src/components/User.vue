@@ -58,21 +58,9 @@ export default {
 
     onLoginSuccess(data) {
       this.saveToken(data);
-      if (window.android != undefined) {
-        if (data.type == 0) {
-          let url = "local://navigator/manager?tabs=" + encodeURIComponent(that.Server.page.manager.member + "," + that.Server.page.manager.system + "," + that.Server.page.manager.statics);
-          console.log(url);
-          android.navigateTo(url);
-        }
-        console.log("login token=" + data.token);
-        android.onLogin(data.username, data.type, "" + data.token);
-        console.log(that.Server.page.manager.member);
-        window.location = that.Server.page.manager.member;//window.location.origin + '/#/manager_page?page=MemberManage';
-              // console.log(window.location);
-      } else {
-        this.goToMain();
+      this.goToMain();
         // console.log(window.location);
-      } 
+
     },
 
   	onLogin() {

@@ -182,7 +182,7 @@
 		  		}).start();
 		}
 
-	}
+	};
 </script>
 
 <style type="text/css" scoped>
