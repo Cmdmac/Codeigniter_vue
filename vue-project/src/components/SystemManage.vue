@@ -140,208 +140,210 @@
 
 <script type="text/javascript">
 
-	import {validPhone, validName, validPassword} from '../utils.js';
+import {validPhone, validName, validPassword} from '../utils.js';
 
 
-	export default {
-		data() {
-	      return {
-	      	formLabelWidth: '80px',
-	      	formLabelWidth2: '100px',
-	      	dialogFormVisible: false,
-	      	addDialogFormVisible: false,
-	      	passwordDialogVisible: false,
-	        tableData: [/*{
-	          time: '2016-05-03',
-	          name: '王小虎1',
-	          type: '1',
-	          state: '未激活'
-	        }, {
-	          time: '2016-05-03',
-	          name: '王小虎2',
-	          type: '1',
-	          state: '未激活'
-	        }, {
-	          time: '2016-05-03',
-	          name: '王小虎',
-	          type: '1',
-	          state: '未激活'
-	        }, {
-	          time: '2016-05-03',
-	          name: '王小虎',
-	          type: '1',
-	          state: '未激活'
-	        }*/],
-	        form: {
-	        	id: '',
-	          username: '',
-	          password: ''
-	        },
-	        pwds: {
-	        	pwd1: '',
-	        	pwd2: '',
-	        	pwd3: '',
-	        	pwd4: '',
-	        	pwd5: '',
-	        	pwd6: '',
-	        	pwd7: '',
-	        	pwd8: ''
-	        },
-	        rules: {
-		        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
-		        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
-		        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
-				wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
-				alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
-		    },
-		    rulesPwd: {
-		    	pwd1: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd2: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd3: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd4: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd5: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd6: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd7: [{ required: true, trigger: 'blur', message: '请输入密码'}],
-		    	pwd8: [{ required: true, trigger: 'blur', message: '请输入密码'}]
-		    }
-	      }
+export default {
+	data() {
+      return {
+      	formLabelWidth: '80px',
+      	formLabelWidth2: '100px',
+      	dialogFormVisible: false,
+      	addDialogFormVisible: false,
+      	passwordDialogVisible: false,
+        tableData: [/*{
+          time: '2016-05-03',
+          name: '王小虎1',
+          type: '1',
+          state: '未激活'
+        }, {
+          time: '2016-05-03',
+          name: '王小虎2',
+          type: '1',
+          state: '未激活'
+        }, {
+          time: '2016-05-03',
+          name: '王小虎',
+          type: '1',
+          state: '未激活'
+        }, {
+          time: '2016-05-03',
+          name: '王小虎',
+          type: '1',
+          state: '未激活'
+        }*/],
+        form: {
+        	id: '',
+          username: '',
+          password: ''
+        },
+        pwds: {
+        	pwd1: '',
+        	pwd2: '',
+        	pwd3: '',
+        	pwd4: '',
+        	pwd5: '',
+        	pwd6: '',
+        	pwd7: '',
+        	pwd8: ''
+        },
+        rules: {
+	        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+	        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+	        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
+			wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],
+			alipay: [{ required: true, trigger: 'blur', message: '请输入支付宝账号' }],
 	    },
-    	methods: {
-    		passwordManage() {
-    			let that = this;
-    			this.$set(this, 'passwordDialogVisible', true);
-    			this.ajax().get(this.Server.api.manager.password.get)
-    			.ok(function(data) {    				
-    				that.$set(that, 'pwds', data.data);
-    				that.$set(that, 'passwordDialogVisible', true);
-    			}).start();
-    		},
+	    rulesPwd: {
+	    	pwd1: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd2: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd3: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd4: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd5: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd6: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd7: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+	    	pwd8: [{ required: true, trigger: 'blur', message: '请输入密码'}]
+	    }
+      }
+    },
+	methods: {
+		passwordManage() {
+			let that = this;
+			this.$set(this, 'passwordDialogVisible', true);
+			this.ajax().get(this.Server.api.manager.password.get)
+			.ok(function(data) {    				
+				that.$set(that, 'pwds', data.data);
+				that.$set(that, 'passwordDialogVisible', true);
+			}).start();
+		},
 
-    		updatePasswords() {
-    			let that = this;
-    			this.ajax().post(this.Server.api.manager.password.update, 
-    				{pwd1: this.pwds.pwd1, pwd2: this.pwds.pwd2, 
-    				pwd3: this.pwds.pwd3, pwd4: this.pwds.pwd4, 
-    				pwd5: this.pwds.pwd5, pwd6: this.pwds.pwd6, 
-    				pwd7: this.pwds.pwd7, pwd8: this.pwds.pwd8})
-    				.ok(function(data) {
-    					that.$set(that, 'passwordDialogVisible', false);
-    					Message({
-			  				showClose: true,
-			  				message: data.msg, 
-			  				type: 'success',
-			  				duration: 2000
-			  			});		
-    				}).start();
-    		},
-
-	    	onRefesh() {
-				let that = this;
-		    	this.ajax().get(this.Server.api.manager.list)
-		    	.ok(function (data) {
-
-		    		that.$set(that, 'tableData', data.data);
-		    		
+		updatePasswords() {
+			let that = this;
+			this.ajax().post(this.Server.api.manager.password.update, 
+				{pwd1: this.pwds.pwd1, pwd2: this.pwds.pwd2, 
+				pwd3: this.pwds.pwd3, pwd4: this.pwds.pwd4, 
+				pwd5: this.pwds.pwd5, pwd6: this.pwds.pwd6, 
+				pwd7: this.pwds.pwd7, pwd8: this.pwds.pwd8})
+				.ok(function(data) {
+					that.$set(that, 'passwordDialogVisible', false);
+					Message({
+		  				showClose: true,
+		  				message: data.msg, 
+		  				type: 'success',
+		  				duration: 2000
+		  			});		
 				}).start();
-	    	},
-	    	onAddManager() {
-	    		this.$set(this, 'addDialogFormVisible', true);
-	    	},
-		      onReview(row) {
-		        console.log(row);
-		        if (row.state == 1) {
-		        	let that = this;
-				    this.ajax().post(this.Server.api.manager.active, { username: row.username })
-					.ok(function (data) {
-			  			that.$message({
-			  				showClose: true,
-			  				message: data.msg, 
-			  				type: 'success',
-			  				duration: 2000
-			  			});			  			
-			  			row.state = '2';
-			  			that.$set(that, 'tableData', that.tableData);
-					}).start();
-		        } else if (row.state == 2) {
-		        	this.$message({
-					  	showClose: true,
-					  	message: '已审核', 
-					  	type: 'success',
-					  	duration: 1000
-					});
-		        }
-		      },
+		},
 
-      onDisable(row) {
+    	onRefesh() {
+			let that = this;
+	    	this.ajax().get(this.Server.api.manager.list)
+	    	.ok(function (data) {
+
+	    		that.$set(that, 'tableData', data.data);
+	    		
+			}).start();
+    	},
+
+    	onAddManager() {
+    		this.$set(this, 'addDialogFormVisible', true);
+    	},
+
+		onReview(row) {
+			console.log(row);
+			if (row.state == 1) {
+				let that = this;
+			    this.ajax().post(this.Server.api.manager.active, { username: row.username })
+				.ok(function (data) {
+						that.$message({
+							showClose: true,
+							message: data.msg, 
+							type: 'success',
+							duration: 2000
+						});			  			
+						row.state = '2';
+						that.$set(that, 'tableData', that.tableData);
+				}).start();
+			} else if (row.state == 2) {
+				this.$message({
+				  	showClose: true,
+				  	message: '已审核', 
+				  	type: 'success',
+				  	duration: 1000
+				});
+			}
+		},
+
+		onDisable(row) {
 			let that = this;
 		    this.ajax().post(this.Server.api.manager.disable, { username: row.username })
 			.ok(function (data) {
-	  			that.$message({
-	  				showClose: true,
-	  				message: data.msg, 
-	  				type: 'success',
-	  				duration: 2000
-	  			});
-	  			row.state = '1';
-	  			that.$set(that, 'tableData', that.tableData);
-	  			//window.location.reload();		  			
-	  		}).start();
-      },
+					that.$message({
+						showClose: true,
+						message: data.msg, 
+						type: 'success',
+						duration: 2000
+					});
+					row.state = '1';
+					that.$set(that, 'tableData', that.tableData);
+					//window.location.reload();		  			
+				}).start();
+		},
 
-      onEdit(row) {
-      	this.$set(this, 'dialogFormVisible', true);
-      	this.form.id = row.id;
-      	this.form.username = row.username;
-      	this.form.password = row.password;
-      	this.form.phone = row.phone;
-      	this.form.wx = row.wx;
-      	this.form.alipay = row.alipay;
-      	this.$set(this, 'form', this.form);
-      },
+		onEdit(row) {
+			this.$set(this, 'dialogFormVisible', true);
+			this.form.id = row.id;
+			this.form.username = row.username;
+			this.form.password = row.password;
+			this.form.phone = row.phone;
+			this.form.wx = row.wx;
+			this.form.alipay = row.alipay;
+			this.$set(this, 'form', this.form);
+		},
 
-      doEdit() {
-		let that = this;
-	    this.ajax().post(this.Server.api.manager.edit,
-		  			{ id: this.form.id, username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
-		.ok(function (data) {
-  			that.$message({
-  				showClose: true,
-  				message: data.msg, 
-  				type: 'success',
-  				duration: 2000
-  			});
-  			//row.state = '1';
-  			for (let i = 0; i < that.tableData.length; i++) {
-  				let row = that.tableData[i];
-  				if (row.id == that.form.id) {
-  					row.username = that.form.username;
-  					row.password = that.form.password;
-  					break;
-  				}
-  			}
-  			that.$set(that, 'tableData', that.tableData);
-  			//window.location.reload();		  			
-  		}).start();
-      },
+		doEdit() {
+			let that = this;
+			this.ajax().post(this.Server.api.manager.edit,
+			  			{ id: this.form.id, username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
+			.ok(function (data) {
+				that.$message({
+					showClose: true,
+					message: data.msg, 
+					type: 'success',
+					duration: 2000
+				});
+				//row.state = '1';
+				for (let i = 0; i < that.tableData.length; i++) {
+					let row = that.tableData[i];
+					if (row.id == that.form.id) {
+						row.username = that.form.username;
+						row.password = that.form.password;
+						break;
+					}
+				}
+				that.$set(that, 'tableData', that.tableData);
+				//window.location.reload();		  			
+			}).start();
+		},
 
-      addManager() {
-		let that = this;
-	    this.ajax().post(this.Server.api.manager.add,
-		  			 {username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
-		.ok(function (data) {
-	  		that.$message({
-	  				showClose: true,
-	  				message: data.msg, 
-	  				type: 'success',
-	  				duration: 2000
-	  			});
-  			//row.state = '1';
-  			that.$set(that, 'addDialogFormVisible', false);
-  			that.onRefesh();		  			  			
-  		}).start();
-      },
+		addManager() {
+			let that = this;
+			this.ajax().post(this.Server.api.manager.add,
+			  			 {username: this.form.username, password: this.form.password, phone: this.form.phone, wx: this.form.wx, alipay: this.form.alipay })
+			.ok(function (data) {
+				that.$message({
+						showClose: true,
+						message: data.msg, 
+						type: 'success',
+						duration: 2000
+					});
+				//row.state = '1';
+				that.$set(that, 'addDialogFormVisible', false);
+				that.onRefesh();		  			  			
+			}).start();
+		},
 
-      submitForm(formName) {
+  		submitForm(formName) {
 	      	let that = this;
 	      	this.$refs[formName].validate((valid) => {
 	      		if (valid) {
@@ -359,7 +361,7 @@
 	      			return false;
 	      		}
 	      	});
-	    },
+    	},
 
 		formatType: function(row, column) {
       		if (row.type == 0) {
@@ -380,13 +382,12 @@
       			return '未知状态';
       		}
     	}
-
-    },
+	},
     
     mounted() {
     	this.onRefesh();
     }
-  };
+ };
 </script>
 
 <style type="text/css">
