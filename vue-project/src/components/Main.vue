@@ -148,16 +148,6 @@
 	  				}
 
 	  				that.initItems();			  			
-		  		}).notOk(function(data) {
-		  			Message({
-	  					showClose: true,
-	  					message: response.data.msg, 
-	  					type: 'error',
-	  					duration: 1000
-	  				});
-		  		}).catch(function(error) {
-		  			console.log(error);
-
 		  		}).start();
 		}
 
