@@ -156,6 +156,12 @@ const Questions = resovle => {
   })
 };
 
+const GameRules = resovle => {
+  require.ensure(['@/components/GameRules'], () => {
+    resovle(require('@/components/GameRules'))
+  })
+};
+
 //安装插件
 Vue.use(VueRouter); //挂载属性
 //创建路由对象并配置路由规则
@@ -176,7 +182,8 @@ let r = [
         { name: 'UpdateProfile', path: '/UpdateProfile', component: UpdateProfile},
         { name: 'StaticsManager', path: '/StaticsManager', component: StaticsManager },
         { name: 'SystemManage', path: '/SystemManage', component: SystemManage },
-        { name: 'Questions', path: '/Questions', component: Questions }
+        { name: 'Questions', path: '/Questions', component: Questions },
+        { name: 'GameRules', path: '/GameRules', component: GameRules }
     ];
 let router = new VueRouter({
     routes: r

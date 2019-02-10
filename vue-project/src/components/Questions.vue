@@ -91,5 +91,6 @@ a ：20元启动资金人人都承担得起，而且只要找到一个新朋友�
 	.container {
 		margin: 10px;
 		text-align: left;
+		font-size: 11pt;
 	}
 </style>

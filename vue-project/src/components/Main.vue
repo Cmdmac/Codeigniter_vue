@@ -112,7 +112,7 @@
 						{title: "团队结构", icon: "images/connections.png", level: 0, name: "TeamManager"}, 
 						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
-						[{title: "游戏规则", icon: "images/infomation.png", level: 0,}, 
+						[{title: "游戏规则", icon: "images/infomation.png", level: 0, name: 'GameRules'}, 
 						{title: "金币转账", icon: "images/money.png", level: 2}, 
 						{title: "升级记录", icon: "images/interface.png", level: 1, name: 'updateRecorders'}],
 
