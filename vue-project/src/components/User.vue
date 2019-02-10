@@ -149,13 +149,7 @@ export default {
   mounted() {
     //console.log(this.ajax().post('url'));
 
-    // 获取浏览器可视区域高度
-      this.clientHeight =   `${document.documentElement.clientHeight}`          //document.body.clientWidth;
-      //console.log(self.clientHeight);
-      window.onresize = function temp() {
-        this.clientHeight = `${document.documentElement.clientHeight}`;
-      };
-
+  
     this.$set(this, 'loading', true);
 
     let that = this;
@@ -197,12 +191,6 @@ export default {
     }
   },
 
-  watch: {
-      // 如果 `clientHeight` 发生改变，这个函数就会运行
-      clientHeight: function () {
-        this.changeFixed(this.clientHeight)
-      }
-    }
 };
 </script>
 
@@ -214,15 +202,20 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  position: fixed;/*这里一定要设置*/
 }
 
 .container2 {
   width: 80%;
   max-width: 500px;
-  display: flex;
+/*  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center;*/
 }
 
 table  {
