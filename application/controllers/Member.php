@@ -112,7 +112,7 @@ class Member extends Auth_Controller
 							$user = $this->User_Model->get($username);
 					}
 
-					$node = array('username' => $username, /*'phone' => $phone,*/ 'recommend' => $recommend,'contact' => $contact, 'leaf' => $leaf);
+					$node = array('username' => $username, /*'phone' => $phone,*/ 'recommend' => 'root','contact' => 'root', 'leaf' => $leaf, 'level' => 8);
 					//$this->json_with_data(500, $node);
 					if ($this->Member_Model->addMember($node)) {
 						return $this->json_with_code_msg(200, '推荐成功');

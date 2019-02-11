@@ -1,10 +1,10 @@
 <template>
 	<div class="container">
 		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
-		 <el-form-item label="推荐人" prop="name">
+		 <el-form-item label="推荐人" prop="recommend">
 		    <el-input :disabled="disabled" v-model="model.recommend" ></el-input>
 		  </el-form-item>
-		  <el-form-item label="接点人" prop="name">
+		  <el-form-item label="接点人" prop="contact">
 		    <el-input :disabled="disabled" v-model="model.contact" ></el-input>
 		  </el-form-item>
 		 <el-form-item label="姓名" prop="name">
@@ -61,6 +61,8 @@
 			},
 	        rules: {
 	        	name: [{ required: true, trigger: 'blur', validator: validName }] /*{required: true, message: '请输入名称', trigger: 'blur'}, {min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur'}]*/,
+	        	recommend: [{ required: true, trigger: 'blur', validator: validName }],
+	        	contact: [{ required: true, trigger: 'blur', validator: validName }],
 	        	pwd: [{ required: true, trigger: 'blur', message: '请输入密码' }],
 	        	phone: [{ required: true, trigger: 'blur', validator: validPhone }],
 				wx: [{ required: true, trigger: 'blur', message: '请输入微信账号' }],

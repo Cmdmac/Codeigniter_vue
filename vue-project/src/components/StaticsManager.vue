@@ -5,7 +5,7 @@
       <!-- <el-button type="text" @click="loadTree">刷新</el-button> -->
       <span>
         <button @click="clickRegister">注册会员</button>
-        <button @click="clickUpdate">更新会员</button>
+        <!-- <button @click="clickUpdate">更新会员</button> -->
       </span>
     </div>
     <div class="header">
