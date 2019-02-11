@@ -100,20 +100,28 @@ export default {
         return;
       }
 
+      let that = this;
+      this.ajax().get(this.Server.api.member.get + this.query)
+      .ok(function(data) {
+        that.showMemberInfo(data.data.username);
+        // that.$set(that, 'member', data.data);
+        // that.$set(that, 'dialogVisible', true);          
+      }).start();
+
       //this.showMemberInfo(this.query);
-      let q = this.query.replace(/(^\s*)|(\s*$)/g, "");
-      let r = this.findNode(this.tree, q);
-      if (r == undefined) {
-        this.$message({
-              showClose: true,
-              message: '没找到', 
-              type: 'error',
-              duration: 1000
-            });
-      } else {
-        // console.log(r);
-        this.showMemberInfo(r.name);
-      }
+      // let q = this.query.replace(/(^\s*)|(\s*$)/g, "");
+      // let r = this.findNode(this.tree, q);
+      // if (r == undefined) {
+      //   this.$message({
+      //         showClose: true,
+      //         message: '没找到', 
+      //         type: 'error',
+      //         duration: 1000
+      //       });
+      // } else {
+      //   // console.log(r);
+      //   this.showMemberInfo(r.name);
+      // }
       //alert(r);
     },
 
