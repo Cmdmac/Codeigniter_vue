@@ -47,6 +47,12 @@
 		},
 
 		mounted() {
+			if (parseInt(this.level) == 0) {
+				//未激活
+				this.$set(this, 'visible', false);
+				this.$emit('password-valide');
+				return;
+			} 
 			let lastTime = window.localStorage.getItem('last_time_input_level' + this.level);
 			// 一个小时的时间
 			if (lastTime != undefined || (new Date().getTime() - lastTime < 3600 * 1000)) {

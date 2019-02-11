@@ -2,10 +2,10 @@
 	<div class="container">
 		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="model" :rules="rules"  align="center" class="form">
 		 <el-form-item label="推荐人" prop="name">
-		    <el-input :disabled="true" v-model="model.recommend" ></el-input>
+		    <el-input :disabled="disabled" v-model="model.recommend" ></el-input>
 		  </el-form-item>
 		  <el-form-item label="接点人" prop="name">
-		    <el-input :disabled="true" v-model="model.contact" ></el-input>
+		    <el-input :disabled="disabled" v-model="model.contact" ></el-input>
 		  </el-form-item>
 		 <el-form-item label="姓名" prop="name">
 		    <el-input v-model="model.name" ></el-input>
@@ -48,6 +48,7 @@
 	      return {
 	        labelPosition: 'right',
 	        buttonLabel: '注册会员',
+	        disabled: true,
 	        model: {
 	          name: '',
 	          pwd: '',
@@ -103,6 +104,14 @@
 	    		let that = this;
 	        	this.$refs[formName].validate((valid) => {
 		          if (valid) {
+		          	if (that.model.recommend != that.model.contact) {
+		          		that.$message({
+		          			showClose: true,
+				            message: '推荐人和接点人不一样', 
+				            type: 'error',
+				            duration: 1000});
+		          		return false;
+		          	}
 		          	that.doRegister();		          	
 		          } else {
 		            console.log('error submit!!');
@@ -118,7 +127,14 @@
 
 	    mounted() {
 	    	//alert(this.$route.params.leaf);
-	    	this.$set(this.model, 'leaf', this.$route.params.leaf);
+	    	if (this.$route.params.username == undefined) {
+	    		this.$set(this, 'disabled', false);
+	    	}
+	    	let l = this.$route.params.leaf;
+	    	if (l == undefined) {
+	    		l = 1;
+	    	}
+	    	this.$set(this.model, 'leaf', l);
 	    }
 	};
 </script>

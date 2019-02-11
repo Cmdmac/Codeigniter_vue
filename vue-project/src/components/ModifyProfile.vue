@@ -140,11 +140,16 @@
 	    mounted() {
 	    	//alert(this.$route.params.leaf);
 			let that = this;
-	        this.ajax().get(this.Server.api.member.get + this.$route.params.username)
+	        this.ajax().get(this.Server.api.user.get + "?username=" + this.$route.params.username)
 	        .ok(function(data) {
 	        	data.data.old_username = that.$route.params.username;
-	          that.$set(that, 'model', data.data);
+	          	that.$set(that, 'model', data.data);
 	          //that.$set(that, 'dialogVisible', true);          
+	        }).notOk(function(data){
+	        	if (data.code == 201) {
+					data.data.old_username = that.$route.params.username;
+	          		that.$set(that, 'model', data.data);
+	        	}
 	        }).catch(function(error){
 	          console.log(error);
 	        }).start();	    

@@ -29,7 +29,7 @@ class Manager extends Auth_Controller {
 		$alipay = $this->input->post('alipay');
 
 		$this->load->model('User_Model');
-		if ($this->User_Model->registerWithType($username, $password, $phone, $wx, $alipay, 0)) {
+		if ($this->User_Model->registerWithType($username, $password, $phone, $wx, $alipay, 1)) {
 			$this->json_with_code_msg(200, '注册成功');
 		} else {
 			$this->json_with_code_msg(1001, '注册失败，用户名已存在');

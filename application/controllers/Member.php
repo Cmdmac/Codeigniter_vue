@@ -13,7 +13,7 @@ class Member extends Auth_Controller
 	private function isManager() {
 		$this->load->library('session');
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->type == 0) {
+			if ($this->session->type <= 1) {
 				return true;
 			}
 		}
@@ -44,7 +44,7 @@ class Member extends Auth_Controller
 		if (isset($member)) {
 			$this->json_with_data(200, 'ok', $member);
 		} else {
-			$this->json_with_code_msg(500, '没有这个会员', $member);
+			$this->json_with_code_msg(500, '没有这个会员');			
 		}
 	}
 
@@ -143,7 +143,7 @@ class Member extends Auth_Controller
 		$member = $this->Member_Model->getMember($old_username);
 		//var_dump($member);
 		// 检查是不是当前会员的推荐人
-		if ($member->recommend == $this->session->username) {
+		if ($this->isManager() || $member->recommend == $this->session->username) {
 			// 检查会员是不是新会员
 			$this->load->model('User_Model');
 			$user = $this->User_Model->get($username);

@@ -111,7 +111,14 @@ class User extends MY_Controller {
 			if (isset($user)) {
 				$this->json_with_data(200, 'ok', $user);
 			} else {
-				$this->json_with_code_msg(500, '没有这个用户');
+				$this->load->model('User_Model');
+				$user = $this->User_Model->get($username);
+				// var_dump($user);
+				if (isset($user)) {
+					$this->json_with_data(201, '没有在团队中', $user);
+				} else {
+					$this->json_with_code_msg(500, '没有这个会员');
+				}
 			}
 		} else {
 			$this->json_with_code_msg(401, '未登录 ');

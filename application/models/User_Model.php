@@ -21,10 +21,11 @@ class User_Model extends CI_Model {
 
 	function register($username, $password, $phone, $wx, $alipay) {
 		/**
-		0 管理员
-		1 普通会员
+		0 超级管理员
+		1 普通管理员
+		2 会员
 		**/
-		$this->registerWithType($username, $password, $phone, $wx, $alipay, 1);
+		$this->registerWithType($username, $password, $phone, $wx, $alipay, 2);
 	}
 
 	function registerWithType($username, $password, $phone, $wx, $alipay, $type) {

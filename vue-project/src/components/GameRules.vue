@@ -1,7 +1,6 @@
 <template>
 	<div class="container">
-		<p>
-			<p style="font-size: 15pt; color: red">一个身份证只能注册一个点位，违规者封号终身不得加盟 爱我中华互助联盟！</p>
+			<div style="font-size: 15pt; color: red">一个身份证只能注册一个点位，违规者封号终身不得加盟 爱我中华互助联盟！</div>
 ★★ 保持您的100%利润
 <br/>
 ★★ 不需要等待公司支付
@@ -71,7 +70,6 @@
 <br/>
 <br/>
 12.《游戏规则》解释权归爱我中华互助联盟所有。
-		</p>
 	</div>
 </template>
 <script type="text/javascript">
@@ -79,7 +77,8 @@
 		name: 'GameRules'
 	};
 </script>
-<style type="text/css" scope>	
+
+<style type="text/css" scoped>	
 .container {
 	margin: 10px;
 	background-color: #DDD;

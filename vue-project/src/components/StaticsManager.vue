@@ -3,6 +3,10 @@
     <div align="left">
       <span style="font-weight: bold; font-size: 12pt">共有<span style="color: red; font-size: 15pt">{{totalMemberCount}}</span>个注册会员 </span>
       <!-- <el-button type="text" @click="loadTree">刷新</el-button> -->
+      <span>
+        <button @click="clickRegister">注册会员</button>
+        <button @click="clickUpdate">更新会员</button>
+      </span>
     </div>
     <div class="header">
       <input class="input" v-model="query" placeholder="输入会员名查询"></input><button @click="onQuery">查询</button>
@@ -17,11 +21,10 @@
         <option value="7">7层</option>
       </select>
     </div>
+    
     <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" 
       v-on:click-handle="onClickHandler" 
       v-on:click-node="clickNode" 
-      v-on:click-register="clickRegister" 
-      v-on:click-update="clickUpdate"
       v-on:click-refresh="clickRefresh"></TreeChart>
     <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1"></div>
@@ -46,7 +49,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button v-if="user.type != 0" type="primary" @click="dialogVisible = false" >确 定</el-button>
-        <el-button v-if="user.type == 0" type="primary" @click="onModify" >修改会员信息</el-button>
+        <el-button v-if="user.type <= 1" type="primary" @click="onModify" >更新会员</el-button>
       </span>
     </el-dialog>
   </div>
@@ -80,7 +83,8 @@ export default {
   methods: {
     onModify() {
       this.$set(this, 'dialogVisible', false);
-      this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
+      this.$router.push({ name: 'UpdateMember', params: { username: this.member.username }});
+      // this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
     },
 
     onQuery() {
@@ -128,13 +132,14 @@ export default {
         }).start();
     },
 
-    clickRegister: function(node) {
-        this.$router.replace({ name: 'registeMember', params: {user: this.user, username: this.user.username, leaf: node.leaf}});
+    clickRegister: function() {
+        this.$router.push({ name: 'registeMember'});
     },
 
-    clickUpdate: function(node) {
+    clickUpdate: function() {
       // alert(node);
-        this.$router.replace({ name: 'UpdateMember', params: { username: node.name }});
+      // this.$router.push({ name: 'UpdateMember', params: { username: this.member.username }});
+        // this.$router.replace({ name: 'UpdateMember', params: { username: node.name }});
     },
 
     clickNode: function(node){

@@ -45,7 +45,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button v-if="user.type != 0" type="primary" @click="dialogVisible = false" >确 定</el-button>
-        <el-button v-if="user.type == 0" type="primary" @click="onModify" >修改会员信息</el-button>
+        <el-button v-if="user.type == 0" type="primary" @click="onModify" >更新会员</el-button>
       </span>
     </el-dialog>
     <PasswordChecker :level="this.$route.params.level" @password-valide="passwordValided"/>
@@ -78,7 +78,8 @@ export default {
   methods: {
     onModify() {
       this.$set(this, 'dialogVisible', false);
-      this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
+      // this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
+      this.$router.replace({ name: 'UpdateMember', params: { username: this.member.username }});
     },
 
     onQuery() {
