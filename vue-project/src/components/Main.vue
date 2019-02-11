@@ -140,11 +140,11 @@
 						{title: "游戏规则", icon: "images/infomation.png", level: 0, name: 'GameRules'},
 						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
-						[{title: "会员管理", icon: "images/agenda.png", name: 'StaticsManager', level: 8}, 
+						[{title: "修改资料", icon: "images/light.png", level: 0, name: 'ModifyProfile' },
 						{title: "金币转账", icon: "images/money.png", level: 2}, 
 						{title: "系统管理", icon: "images/barchart.png", level: 8, name: 'SystemManage'}],
 
-						[{title: "修改资料", icon: "images/light.png", level: 0, name: 'ModifyProfile' },
+						[{title: "会员管理", icon: "images/agenda.png", name: 'StaticsManager', level: 8}, 
 						{title: "团队结构", icon: "images/connections.png", level: 1, name: "TeamManager"},
 						{}]
 					];

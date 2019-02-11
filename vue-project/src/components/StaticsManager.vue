@@ -25,6 +25,7 @@
     <TreeChart ref="tree" :json="tree" align='center' :class="{landscape: landscape.length}" 
       v-on:click-handle="onClickHandler" 
       v-on:click-node="clickNode" 
+      v-on:click-register="clickRegister"
       v-on:click-refresh="clickRefresh"></TreeChart>
     <footer class="foot" v-if="false">
         <div align="right" style="margin-right: 10px">切换为横向<input type="checkbox" v-model="landscape" value="1"></div>
@@ -132,9 +133,10 @@ export default {
         }).start();
     },
 
-    clickRegister: function() {
-        this.$router.push({ name: 'registeMember'});
+    clickRegister: function(node) {
+        this.$router.replace({ name: 'registeMember', params: {username: node.parent, leaf: node.leaf}});
     },
+
 
     clickUpdate: function() {
       // alert(node);
@@ -227,11 +229,48 @@ export default {
       // data.showRefresh = true;
       data.showChildren = true;
       if (data.children != undefined) {
-        for (let i = 0; i < data.children.length; i++) {
-          let item = data.children[i];
-          this.totalMemberCount++;
-          this.buildTree(item);
+        // for (let i = 0; i < data.children.length; i++) {
+        //   let item = data.children[i];
+        //   this.totalMemberCount++;
+        //   this.buildTree(item);
+        // }
+        let children = data.children;
+        if (data.children.length == 2) {
+            if (children[0].leaf != 1 && children[1].leaf != 2) {
+              //exchange
+              let t = children[0];
+              children[0] = children[1];
+              children[1] = t;
+            }
+            this.buildTree(children[0]);
+            this.buildTree(children[1]);
+        } else if (data.children.length == 1) {
+            let node = children[0];
+            if (node.leaf == 1) {
+              let right = { name : '空位', children: undefined, leaf: 2, parent: data.name};
+              right.register = true;
+              children[1] = right;
+              this.buildTree(children[0]);
+            } else {
+              let left = { name : '空位', children: undefined, leaf: 1, parent: data.name};
+              left.register = true;
+              // let t = node;
+              children[0] = left;
+              children[1] = node;
+              this.buildTree(children[1]);
+            }            
+            
         }
+      } else {
+        data.children = [];
+          let left = { name : '空位', children: undefined, leaf: 1, parent: data.name};
+          let right = { name : '空位', children: undefined, leaf: 2, parent: data.name};
+          // if (data.name == this.user.username) {
+            left.register = true;
+            right.register = true;
+          // }
+          data.children.push(left);
+          data.children.push(right);
       }
     },
 
