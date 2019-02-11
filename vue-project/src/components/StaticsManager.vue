@@ -236,30 +236,31 @@ export default {
         // }
         let children = data.children;
         if (data.children.length == 2) {
-            if (children[0].leaf != 1 && children[1].leaf != 2) {
-              //exchange
-              let t = children[0];
-              children[0] = children[1];
-              children[1] = t;
-            }
-            this.buildTree(children[0]);
-            this.buildTree(children[1]);
+          this.totalMemberCount += 2;
+          if (children[0].leaf != 1 && children[1].leaf != 2) {
+            //exchange
+            let t = children[0];
+            children[0] = children[1];
+            children[1] = t;
+          }
+          this.buildTree(children[0]);
+          this.buildTree(children[1]);
         } else if (data.children.length == 1) {
-            let node = children[0];
-            if (node.leaf == 1) {
-              let right = { name : '空位', children: undefined, leaf: 2, parent: data.name};
-              right.register = true;
-              children[1] = right;
-              this.buildTree(children[0]);
-            } else {
-              let left = { name : '空位', children: undefined, leaf: 1, parent: data.name};
-              left.register = true;
-              // let t = node;
-              children[0] = left;
-              children[1] = node;
-              this.buildTree(children[1]);
-            }            
-            
+          this.totalMemberCount++;
+          let node = children[0];
+          if (node.leaf == 1) {
+            let right = { name : '空位', children: undefined, leaf: 2, parent: data.name};
+            right.register = true;
+            children[1] = right;
+            this.buildTree(children[0]);
+          } else {
+            let left = { name : '空位', children: undefined, leaf: 1, parent: data.name};
+            left.register = true;
+            // let t = node;
+            children[0] = left;
+            children[1] = node;
+            this.buildTree(children[1]);
+          }                        
         }
       } else {
         data.children = [];
