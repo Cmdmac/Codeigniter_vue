@@ -240,13 +240,13 @@ export default {
             }
             if (node.leaf == 1) {
               let right = { name : '空位' + (current + 1), children: current + 1 == level ? undefined : [], leaf: 2, parent: data.name};
-              if (data.name == this.user.username) {
+              if (data.name == this.user.username  || this.user.level >= current) {
                 right.register = true;
               }
               children[1] = right;
             } else {
               let left = { name : '空位' + (current + 1), children: current + 1 == level ? undefined : [], leaf: 1, parent: data.name};
-              if (data.name == this.user.username) {
+              if (data.name == this.user.username  || this.user.level >= current) {
                 left.register = true;
               }
               // let t = node;
@@ -272,16 +272,30 @@ export default {
     },
 
     loadTree() {
+
       let that = this;
-      this.ajax().get(this.Server.api.member.getMemberTree + this.user.username + "&level=" + this.level)
-      .ok(function (data) {
-        //console.log(response.data);
-        let tree = data.data;
-        that.totalMemberCount = 0;
-        that.buildTree(tree, 1, that.level);
-        that.$set(that, 'totalMemberCount', that.totalMemberCount);
-        that.$set(that, 'tree', tree);
-      }).start();
+      if (this.user.type <= 1) {
+        this.ajax().get(this.Server.api.member.init + "?level=" + this.level)
+          .ok(function (data) {
+            //console.log(response.data);
+            let tree = data.data;
+            that.totalMemberCount = 0;
+            that.buildTree(tree, 1, that.level);
+            that.$set(that, 'totalMemberCount', that.totalMemberCount);
+            that.$set(that, 'tree', tree);
+          }).start();
+      } else {
+        let that = this;
+        this.ajax().get(this.Server.api.member.getMemberTree + this.user.username + "&level=" + this.level)
+        .ok(function (data) {
+          //console.log(response.data);
+          let tree = data.data;
+          that.totalMemberCount = 0;
+          that.buildTree(tree, 1, that.level);
+          that.$set(that, 'totalMemberCount', that.totalMemberCount);
+          that.$set(that, 'tree', tree);
+        }).start();
+      }   
 
           // instance.get(this.Server.api.member.getMemberCount)
           // .then(function(response) {
