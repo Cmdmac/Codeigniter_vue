@@ -72,6 +72,7 @@ export default {
       .ok(function (data) {        
           //alert(response.data.msg);
             that.onLoginSuccess(data);
+            document.onkeydown = undefined;
           }).start();
   	},
 
@@ -163,6 +164,7 @@ export default {
       }
     }
   },
+
 
 };
 </script>
