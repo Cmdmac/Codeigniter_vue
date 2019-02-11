@@ -48,12 +48,12 @@
 		},
 
 		mounted() {
-			// if (parseInt(this.level) == 0) {
-			// 	//未激活
-			// 	this.$set(this, 'visible', false);
-			// 	this.$emit('password-valide');
-			// 	return;
-			// } 
+			if (parseInt(this.level) == 8) {
+				//未激活
+				this.$set(this, 'visible', false);
+				this.$emit('password-valide');
+				return;
+			} 
 			let level = parseInt(this.level);
 			let lastTime = window.localStorage.getItem('last_time_input_level' + (level + 1));
 			// 一个小时的时间
