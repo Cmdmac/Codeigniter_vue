@@ -41,6 +41,7 @@
       width="80%">
       <table cellspacing="10px">
         <tr><td class="infoHeader">姓名:</td><td class="info">{{member.username}}</td></tr>
+        <tr><td class="infoHeader">密码:</td><td class="info">{{member.password}}</td></tr>
         <tr><td class="infoHeader">级别:</td><td class="info">{{member.level}}</td></tr>
         <tr><td class="infoHeader">方向:</td><td class="info">{{member.leaf}}区 </td></tr>
         <tr><td class="infoHeader">电话:</td><td class="info">{{member.phone}}</td></tr>

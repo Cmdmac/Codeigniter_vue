@@ -8,7 +8,7 @@
 		    <el-input :disabled="true" v-model="model.contact" ></el-input>
 		  </el-form-item> -->
 		 <el-form-item label="姓名" prop="username">
-		    <el-input :disabled="true" v-model="model.username" ></el-input>
+		    <el-input :disabled="disabledName" v-model="model.username" ></el-input>
 		  </el-form-item>
 		  <el-form-item label="密码" prop="password">
 		    <el-input v-model="model.password" ></el-input>
@@ -44,9 +44,11 @@
 		name: 'UpdateProfile',
 	    data() {
 	      return {
+	      	disabledName: true,
 	        labelPosition: 'right',
 	        buttonLabel: '更 新',
 	        model: {
+	        	old_username: '',
 	          username: '',
 	          password: '',
 	          phone: '',
@@ -73,7 +75,7 @@
 		            //alert('submit!');//这里就是符合规则，然后去调对应的接口
 		            let that = this;
 		            this.ajax().post(this.Server.api.user.update,
-			  			{ username: this.model.username, password: this.model.password, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay })
+			  			{ old_username: this.model.old_username, username: this.model.username, password: this.model.password, phone: this.model.phone, wx: this.model.wx, alipay: this.model.alipay })
 			  		.ok(function (data) {
 			  			that.$message({
 		  					showClose: true,
@@ -110,13 +112,18 @@
 
 	    mounted() {
 	    	//alert(this.$route.params.leaf);
+	    	let type = window.localStorage.getItem('type');
+	    	if (type <= 1) {
+	    		this.$set(this, 'disabledName', false);
+	    	}
 			let that = this;
 	        this.ajax().get(this.Server.api.member.get + this.$route.params.username)
 	        .ok(function(data) {
 	        	data.data.old_username = that.$route.params.username;
 	          that.$set(that, 'model', data.data);
 	          //that.$set(that, 'dialogVisible', true);          
-	        }).start();	    }
+	        }).start();	    
+	    }
 	};
 </script>
 

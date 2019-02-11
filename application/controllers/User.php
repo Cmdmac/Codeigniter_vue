@@ -125,8 +125,19 @@ class User extends MY_Controller {
 		}
 	}
 
+	private function isManager() {
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
+			if ($this->session->type <= 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	//管理员修改
 	public function update() {
+		$old_username = $this->input->post('old_username');
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$phone = $this->input->post('phone');
@@ -134,13 +145,26 @@ class User extends MY_Controller {
 		$alipay = $this->input->post('alipay');
 
 		$this->load->model('User_Model');
-		$user = $this->User_Model->get($username);
+		$user = $this->User_Model->get($old_username);
 		if (isset($user)) {
-			//$this->json_with_data(200, 'ok', $user);
-			if (!$this->User_Model->update($username, $password, $phone, $wx, $alipay)) {
-				$this->json_with_code_msg(500, '更新失败');
+			//管理员
+			if ($this->isManager()) {
+				//$this->json_with_data(200, 'ok', $user);
+				if (!$this->User_Model->updateUserName($old_username, $username, $password, $phone, $wx, $alipay)) {
+					$this->json_with_code_msg(500, '更新失败');
+				} else {
+					// 更新了用户表，还需要更新会员表，否则信息对不上
+					$this->load->model('Member_Model');
+					$member = $this->Member_Model->getMember($old_username);
+					if (isset($member)) {
+						$this->Member_Model->updateMember($old_username, $username);
+					} else {
+
+					}
+					$this->json_with_code_msg(200, '更新成功');
+				}
 			} else {
-				$this->json_with_code_msg(200, '更新成功');
+				$this->json_with_code_msg(500, '不是管理员');
 			}
 		} else {
 			$this->json_with_code_msg(500, '没有这个用户');
