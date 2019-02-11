@@ -1,6 +1,6 @@
 <template>
 	<div class="container" v-if="visible">
-		<div style="color: white">{{levelStrs[parseInt(level) -1]}}级密码</div>
+		<div style="color: white">{{levelStrs[parseInt(level)]}}级密码</div>
 		<table style="width: 80%; margin-top: 20px;">
 			<tr><td><el-input placeholder="输入密码" v-model="password"></el-input></td></tr>
 			<tr><td><span style="color: yellow; font-size: 8pt;">{{error}}</span></td></tr>
@@ -26,11 +26,12 @@
 		methods: {
 			checkPassword() {
 				let that = this;
-				this.ajax().post(this.Server.api.member.checkPassword, {level: this.level, password: this.password})
+				let level = parseInt(this.level);
+				this.ajax().post(this.Server.api.member.checkPassword, {level: level + 1, password: this.password})
 				.ok(function(data) {
 					that.$emit('password-valide');
 					that.$set(that, 'visible', false);
-					window.localStorage.setItem('last_time_input_level' + that.level, new Date().getTime());
+					window.localStorage.setItem('last_time_input_level' + (level + 1), new Date().getTime());
 				}).notOk(function(data) {
 					// console.log(data);
 					// alert(data.msg);
@@ -47,13 +48,14 @@
 		},
 
 		mounted() {
-			if (parseInt(this.level) == 0) {
-				//未激活
-				this.$set(this, 'visible', false);
-				this.$emit('password-valide');
-				return;
-			} 
-			let lastTime = window.localStorage.getItem('last_time_input_level' + this.level);
+			// if (parseInt(this.level) == 0) {
+			// 	//未激活
+			// 	this.$set(this, 'visible', false);
+			// 	this.$emit('password-valide');
+			// 	return;
+			// } 
+			let level = parseInt(this.level);
+			let lastTime = window.localStorage.getItem('last_time_input_level' + (level + 1));
 			// 一个小时的时间
 			if (lastTime != undefined || (new Date().getTime() - lastTime < 3600 * 1000)) {
 				this.$set(this, 'visible', false);

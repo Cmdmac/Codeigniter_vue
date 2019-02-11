@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<span style="color: red;">更新会员会淘汰当前会员位置，更新时如果新会员没有注册将自动注册新会员</span>
 		<el-form ref="model" :label-position="labelPosition" label-width="80px" :model="user" :rules="rules"  align="center" class="form">
 		 <!-- <el-form-item label="推荐人" prop="name">
 		    <el-input :disabled="true" v-model="model.recommend" ></el-input>
@@ -127,13 +128,14 @@
 
 	    mounted() {
 	    	//alert(this.$route.params.leaf);
-	    	let that = this;
-	        this.ajax().get(this.Server.api.member.get + this.$route.params.username)
-	        .ok(function(data) {
-	        	data.data.old_username = that.$route.params.username;
-	          that.$set(that, 'user', data.data);
-	          //that.$set(that, 'dialogVisible', true);          
-	        }).start();
+	    	// let that = this;
+	     //    this.ajax().get(this.Server.api.member.get + this.$route.params.username)
+	     //    .ok(function(data) {
+	     //    	data.data.old_username = that.$route.params.username;
+	     //      that.$set(that, 'user', data.data);
+	     //    }).start();
+	     	this.user.old_username = this.$route.params.username;
+	     	this.$set(this, 'user', this.user);
 	    }
 	};
 </script>

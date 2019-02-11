@@ -48,9 +48,10 @@
         <tr><td class="infoHeader">支付宝:</td><td class="info">{{member.alipay}}</td></tr>
       </table>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
         <el-button v-if="user.type != 0" type="primary" @click="dialogVisible = false" >确 定</el-button>
-        <el-button v-if="user.type <= 1" type="primary" @click="onModify" >更新会员</el-button>
+        <el-button v-if="user.type <= 1" type="primary" @click="onModifyProfile" >修改资料</el-button>
+        <el-button v-if="user.type <= 1" @click="onReplace" >替换会员</el-button>
       </span>
     </el-dialog>
   </div>
@@ -82,10 +83,15 @@ export default {
     }
   },
   methods: {
-    onModify() {
+    onModifyProfile() {
       this.$set(this, 'dialogVisible', false);
-      this.$router.push({ name: 'UpdateMember', params: { username: this.member.username }});
+      this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
       // this.$router.replace({ name: 'UpdateProfile', params: { username: this.member.username }});
+    },
+
+    onReplace() {
+      this.$set(this, 'dialogVisible', false);
+      this.$router.replace({ name: 'UpdateMember', params: { username: this.member.username }});
     },
 
     onQuery() {
@@ -97,7 +103,7 @@ export default {
       let q = this.query.replace(/(^\s*)|(\s*$)/g, "");
       let r = this.findNode(this.tree, q);
       if (r == undefined) {
-        Message({
+        this.$message({
               showClose: true,
               message: '没找到', 
               type: 'error',
@@ -166,6 +172,8 @@ export default {
       // this.getChildren(node.name);
       if (node.children == undefined || node.children.length == 0) {
         this.getChildren(node.name);
+      } else if (node.children != undefined && node.children.length == 2 && node.children[0].name == '空位' && node.children[1].name == '空位') {
+        this.getChildren(node.name);
       }
     },
 
@@ -175,6 +183,9 @@ export default {
       .ok(function (data) {
        
         let children = data.data;
+        if (children.length == 0) {
+          return;
+        }
         let node = that.findNode(that.tree, recommend);
         //console.log(node);
         node.children = children;
@@ -185,6 +196,8 @@ export default {
           item.name = item.username;
           that.totalMemberCount++;
         }
+
+        that.buildTree(node);
 
         if (node.children.length > 0) {
           node.extend = true;
@@ -228,7 +241,7 @@ export default {
       } 
       // data.showRefresh = true;
       data.showChildren = true;
-      if (data.children != undefined) {
+      if (data.children != undefined && data.children.length > 0) {
         // for (let i = 0; i < data.children.length; i++) {
         //   let item = data.children[i];
         //   this.totalMemberCount++;
@@ -261,7 +274,7 @@ export default {
             children[1] = node;
             this.buildTree(children[1]);
           }                        
-        }
+        } 
       } else {
         data.children = [];
           let left = { name : '空位', children: undefined, leaf: 1, parent: data.name};
