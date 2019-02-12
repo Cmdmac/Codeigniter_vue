@@ -125,16 +125,6 @@ class User extends MY_Controller {
 		}
 	}
 
-	private function isManager() {
-		$this->load->library('session');
-		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->type <= 1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	//管理员修改
 	public function update() {
 		$old_username = $this->input->post('old_username');

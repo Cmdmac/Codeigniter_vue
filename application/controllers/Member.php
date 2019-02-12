@@ -10,16 +10,6 @@ class Member extends Auth_Controller
 		$this->load->helper('url');
 	}
 
-	private function isManager() {
-		$this->load->library('session');
-		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
-			if ($this->session->type <= 1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public function register() {
 		
 		$username = $this->input->post('username');

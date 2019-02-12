@@ -49,7 +49,7 @@ class Update extends MY_Controller {
 			}
 		} else {
 			//$this->json_with_code_msg(500, '没有符合条件的接点人');
-			$this->json_with_code_msg(500, '申请失败，没有符合条件的接点人');
+			$this->json_with_code_msg(500, '申请失败，没有符合条件的接点人，请联系管理员');
 		}
 	}
 
@@ -83,8 +83,8 @@ class Update extends MY_Controller {
 		$contact = $this->input->post('contact');
 		$this->load->model('Member_Model');
 		$contactFind = $this->Member_Model->findFirstContact($username);
-		if ($contact != $contactFind->username) {
-			$this->json_with_code_msg(500, '你不是'.$username."的审核人");
+		if (!$this->isManager() || $contact != $contactFind->username) {
+			$this->json_with_code_msg(500, '你不是'.$username."的审核人"."或不是管理员");
 		} else {
 			//审核
 			// 通过时，修改会员的等级、会员的接点人

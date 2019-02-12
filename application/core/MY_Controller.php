@@ -30,6 +30,16 @@ class MY_Controller extends CI_Controller {
 		header('Content-Type: application/json');
 		exit(json_encode($data));
 	}
+
+	protected function isManager() {
+		$this->load->library('session');
+		if ($this->session->has_userdata('username') && $this->session->has_userdata('type')) {
+			if ($this->session->type <= 1) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 class Auth_Controller extends MY_Controller {
