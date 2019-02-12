@@ -1,6 +1,6 @@
 // var domain = "http://192.168.43.177";
 // http://hgx830330.applinzi.com
-var host = "http://192.168.31.8";
+var host = "http://127.0.0.1";
 var pageHost = host + ":8080"
 var config = {
     base: host,

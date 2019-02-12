@@ -203,7 +203,7 @@ export default {
           let item = node.children[i];
           // item.showRefresh = true;
           item.name = item.username;
-          that.totalMemberCount++;
+          // that.totalMemberCount++;
         }
 
         that.buildTree(node);
@@ -215,7 +215,7 @@ export default {
         
         //console.log(that.tree);
         that.$set(that, 'tree', that.tree);
-        that.$set(that, 'totalMemberCount', that.totalMemberCount);
+        // that.$set(that, 'totalMemberCount', that.totalMemberCount);
         that.$refs.tree.toggleExtend(node);
         // that.$refs.tree.toggleExtend(node);
         // that.$refs.tree.toggleExtend(node);
@@ -258,7 +258,7 @@ export default {
         // }
         let children = data.children;
         if (data.children.length == 2) {
-          this.totalMemberCount += 2;
+          // this.totalMemberCount += 2;
           if (children[0].leaf != 1 && children[1].leaf != 2) {
             //exchange
             let t = children[0];
@@ -268,7 +268,7 @@ export default {
           this.buildTree(children[0]);
           this.buildTree(children[1]);
         } else if (data.children.length == 1) {
-          this.totalMemberCount++;
+          // this.totalMemberCount++;
           let node = children[0];
           if (node.leaf == 1) {
             let right = { name : '空位', children: undefined, leaf: 2, parent: data.name};
@@ -303,12 +303,18 @@ export default {
           .ok(function (data) {
             //console.log(response.data);
             let tree = data.data;
-            that.totalMemberCount = 0;
+            // that.totalMemberCount = 0;
             that.buildTree(tree);
-            that.$set(that, 'totalMemberCount', that.totalMemberCount);
+            // that.$set(that, 'totalMemberCount', that.totalMemberCount);
             that.$set(that, 'tree', tree);
           }).start();
 
+      this.ajax().get(this.Server.api.member.getMemberCount)
+      .ok(function(data) {
+        that.$set(that, 'totalMemberCount', data.data);
+      }).notOk(function(data) {
+
+      }).start();
           // instance.get(this.Server.api.member.getMemberCount)
           // .then(function(response) {
           //   if (response.data.code == 200) {

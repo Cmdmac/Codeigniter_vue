@@ -274,9 +274,14 @@ class Member extends Auth_Controller
 	public function getMemberCount() {
 		$this->load->helper('url');
 		$this->load->model('Member_Model');
-		$count = $this->Member_Model->getMembersCount();
-		//var_dump($count);
-		$this->json_with_data('200', 'ok', $count);
+		if ($this->isManager()) {
+			$count = $this->Member_Model->getMembersCount();
+			//var_dump($count);
+			$this->json_with_data('200', 'ok', $count);
+		} else {
+			$this->json_with_code_msg(500, '不是管理员');
+		}
+		
 	}
 
 	public function getMembersByLevel($level) {
