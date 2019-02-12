@@ -197,7 +197,13 @@ class Member extends Auth_Controller
 			$this->json_with_code_msg(500, '参数不正确');
 			return;
 		}
-
+		if (empty($level)) {
+			$level = 3;
+		} 
+		$level = $level;
+		if ($level > 8) {
+			$level = 8;
+		}
 		// $password = $this->input-get('password');
 		$this->load->model('Member_Model');
 		$member = $this->Member_Model->getMember($username);
@@ -210,12 +216,8 @@ class Member extends Auth_Controller
 			$level = $member->level + 1;
 		}
 		*/
-		$level = $member->level;
-		if (empty($level)) {
-			$level = 3;
-		} else if ($level > 7) {
-			$level = 7;
-		}
+		// $level = $member->level;
+
 		//var_dump($member->recommend);
 		$root = $this->Member_Model->getChildren($member->recommend);
 		//var_dump($root);
