@@ -130,6 +130,7 @@ class User extends MY_Controller {
 		$old_username = $this->input->post('old_username');
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		$level = $this->input->post('level');
 		$phone = $this->input->post('phone');
 		$wx = $this->input->post('wx');
 		$alipay = $this->input->post('alipay');
@@ -140,7 +141,7 @@ class User extends MY_Controller {
 			//管理员
 			if ($this->isManager()) {
 				//$this->json_with_data(200, 'ok', $user);
-				if (!$this->User_Model->updateUserName($old_username, $username, $password, $phone, $wx, $alipay)) {
+				if (!$this->User_Model->updateUserName($old_username, $username, $password, $level, $phone, $wx, $alipay)) {
 					$this->json_with_code_msg(500, '更新失败');
 				} else {
 					// 更新了用户表，还需要更新会员表，否则信息对不上

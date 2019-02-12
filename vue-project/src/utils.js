@@ -8,6 +8,11 @@ function isValidName(str) {
   return nameReg.test(str);
 }
 
+function isValidLevel(str) {
+  const reg = /^[1-8]{1}$/;
+  return reg.test(str);
+}
+
 var validPhone=(rule, value,callback)=>{
   if (!value){
     callback(new Error('请输入电话号码'))
@@ -38,4 +43,13 @@ var validName = (rule, value, callback) => {
   }
 }
 
-export {validPhone, validName, validPassword};
+var valideLevel = (rule, value, callback) => {
+  if (!value){
+   callback(new Error('请输入级别'))
+  } else  if (!isValidLevel(value)){
+    callback(new Error('请输入1~8的数字'))
+  } else {
+    callback()
+  }
+}
+export {validPhone, validName, validPassword, valideLevel};

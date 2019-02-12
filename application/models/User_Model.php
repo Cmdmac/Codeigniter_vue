@@ -45,9 +45,11 @@ class User_Model extends CI_Model {
 		}
 	}
 
-	public function updateUserName($old_username, $username, $password, $phone, $wx, $alipay) {
+	public function updateUserName($old_username, $username, $password, $level, $phone, $wx, $alipay) {
 		$this->load->database();
-		return $this->db->update('user', array('username' => $username, 'password' => $password, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay), array('username' => $old_username));
+		$this->load->model('Member_Model');
+		$this->Member_Model->updateMemberLevel($old_username, $level);
+		return $this->db->update('user', array('username' => $username, 'password' => $password, 'level' => $level, 'phone' => $phone, 'wx' => $wx, 'alipay' => $alipay), array('username' => $old_username));
 	}
 
 	public function update($username, $password, $phone, $wx, $alipay) {

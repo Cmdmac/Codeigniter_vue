@@ -36,6 +36,14 @@ class Member_Model extends CI_Model {
 		}
 	}
 
+	public function updateMemberLevel($username, $level) {
+		if ($this->db->update('member', array('level' => $level), array('username' => $username))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 	public function findFirstContact($username) {
 		//$username = $this->input->get('username');
