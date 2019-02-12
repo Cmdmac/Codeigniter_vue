@@ -64,4 +64,9 @@ class Update_Model extends CI_Model {
 		}
 	}
 
+	public function listInvalides() {
+		$r = $this->db->query('select * from tbl_update where state = 0 order by time desc limit 20');
+		return $r->result_array();
+	}
+
 }

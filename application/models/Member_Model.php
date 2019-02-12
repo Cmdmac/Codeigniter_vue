@@ -49,16 +49,19 @@ class Member_Model extends CI_Model {
 		//$username = $this->input->get('username');
 		$this->load->model('User_Member_Model');
 		$member = $this->User_Member_Model->get($username);
+		// var_dump($username);
 		if (!isset($member)) {
 			// $this->json_with_code_msg(500, '会员不存在');
 			return null;
 		} else {
 			//$this->load->model('User_Member_Model');
+			// var_dump($username);
 			$contactMember = $this->User_Member_Model->get($member->contact);
-			//var_dump($contactMember);
 			if (isset($contactMember)) {
 				$contactLevel = $contactMember->level;
 				if ($contactLevel <= $member->level) {
+					// var_dump($member->contact);
+					// var_dump($contactMember->contact);
 					//如果当前接点人的级别小于自己,往上查找符合条件的接点人
 					if ($contactMember->contact == 'root'/*$contactMember->username*/) {
 						//一般是管理员数据才会这样
@@ -70,6 +73,9 @@ class Member_Model extends CI_Model {
 					return $contactMember;
 				}
 			} else {
+				if ($member->contact == 'root') {
+					return $member;
+				}
 				// 会员表里找不到，看是否是管理员，管理员可以注册会员
 				/*$this->load->model('User_Model');
 				$user = $this->User_Model->get($member->contact);

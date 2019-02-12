@@ -146,7 +146,7 @@
 
 						[{title: "会员管理", icon: "images/agenda.png", name: 'StaticsManager', level: 8}, 
 						{title: "团队结构", icon: "images/connections.png", level: 1, name: "TeamManager"},
-						{}]
+						{title: '升级申请', icon: 'images/tick.png', name: 'reviewRecorders'}]
 					];
 				
 					this.$set(this, 'items', items);

@@ -62,14 +62,26 @@
 
 			refesh() {
 				let that = this;
-				this.ajax().get(this.Server.api.update.getReviewRecords + this.$route.params.username)
-				.ok(function(data){
+				if (this.user.type <= 1) {
+					this.ajax().get(this.Server.api.update.listReviewRecords)
+					.ok(function(data){
 
-					that.$set(that, 'records', data.data);
+						that.$set(that, 'records', data.data);
 
-				}).notOk(function(data) {
+					}).notOk(function(data) {
 
-				}).start();
+					}).start();
+					
+				} else {
+					this.ajax().get(this.Server.api.update.getReviewRecords + this.$route.params.username)
+					.ok(function(data){
+
+						that.$set(that, 'records', data.data);
+
+					}).notOk(function(data) {
+
+					}).start();
+				}
 			},
 
 			passwordValided() {

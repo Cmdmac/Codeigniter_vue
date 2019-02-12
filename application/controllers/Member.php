@@ -299,6 +299,7 @@ class Member extends Auth_Controller
 	public function findContact() {
 		$username = $this->input->get('username');
 		$contact = $this->findFirstContact($username);
+		// var_dump($contact);
 		if ($contact != null) {
 			$this->json_with_data(200, 'ok', $contact);
 		} else {

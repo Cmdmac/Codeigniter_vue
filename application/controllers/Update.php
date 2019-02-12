@@ -30,7 +30,7 @@ class Update extends MY_Controller {
 		$contact = $this->Member_Model->findFirstContact($username);
 		if ($contact != null) {
 			//$this->json_with_data(200, 'ok', $contact);
-			//var_dump($contact);
+			// var_dump($contact);
 			$this->load->model('Update_Model');
 			$member = $this->Member_Model->getMember($username);
 			if (!isset($member)) {
@@ -73,6 +73,15 @@ class Update extends MY_Controller {
 		} else {
 			$this->json_with_code_msg(500, '没有结果');
 		}
+	}
+
+	public function listReviewRecords() {
+		if (!$this->isManager()) {
+			$this->json_with_code_msg(403, '不是管理员');
+		}
+		$this->load->model('Update_Model');
+		$list = $this->Update_Model->listInvalides();
+		$this->json_with_data(200, 'ok', $list);
 	}
 
 	/**
