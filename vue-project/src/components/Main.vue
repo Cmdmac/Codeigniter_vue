@@ -109,7 +109,7 @@
 
 			initItems() {
 				let items = [
-						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "http://www.baidu.com"}, 
+						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "Notification"}, 
 						{title: "团队结构", icon: "images/connections.png", level: 1, name: "TeamManager"}, 
 						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
@@ -136,7 +136,7 @@
 				if (type == 0) {
 					//超级管理员
 					let items = [
-						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "http://www.baidu.com"}, 
+						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "Notification"}, 
 						{title: "游戏规则", icon: "images/infomation.png", level: 0, name: 'GameRules'},
 						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
@@ -153,7 +153,7 @@
 				} else if (type == 1) {
 					//普通管理员
 					let items = [
-						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "http://www.baidu.com"}, 
+						[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "Notification"}, 
 						{title: "游戏规则", icon: "images/infomation.png", level: 0, name: 'GameRules'},
 						{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
@@ -171,7 +171,7 @@
 			initForUser() {
 				//普通会员
 				let items = [
-					[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "http://www.baidu.com"}, 
+					[{title: "联盟公告", icon: "images/notification.png", level: 0, name: "Notification"}, 
 					{title: "游戏规则", icon: "images/infomation.png", level: 0, name: 'GameRules'},
 					{title: "问题解答", icon: "images/documents.png", level: 0, name: 'Questions'}], 
 
