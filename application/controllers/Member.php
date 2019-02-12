@@ -198,11 +198,6 @@ class Member extends Auth_Controller
 			return;
 		}
 
-		if (empty($level)) {
-			$level = 3;
-		} else if ($level > 7) {
-			$level = 7;
-		}
 		// $password = $this->input-get('password');
 		$this->load->model('Member_Model');
 		$member = $this->Member_Model->getMember($username);
@@ -215,6 +210,12 @@ class Member extends Auth_Controller
 			$level = $member->level + 1;
 		}
 		*/
+		$level = $member->level;
+		if (empty($level)) {
+			$level = 3;
+		} else if ($level > 7) {
+			$level = 7;
+		}
 		//var_dump($member->recommend);
 		$root = $this->Member_Model->getChildren($member->recommend);
 		//var_dump($root);
@@ -299,7 +300,7 @@ class Member extends Auth_Controller
 		if ($contact != null) {
 			$this->json_with_data(200, 'ok', $contact);
 		} else {
-			$this->json_with_code_msg(500, '没有符合条件的接点人');
+			$this->json_with_code_msg(500, '没有符合条件的接点人，请联系管理员');
 		}
 	}
 	/**
