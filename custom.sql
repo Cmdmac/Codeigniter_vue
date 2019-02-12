@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-02-04 13:19:59
+-- Generation Time: 2019-02-12 02:54:24
 -- 服务器版本： 10.1.10-MariaDB
 -- PHP Version: 7.0.2
 
@@ -20,11 +20,11 @@ SET time_zone = "+00:00";
 -- Database: `custom`
 --
 
--- DELIMITER $$
+DELIMITER $$
 --
 -- 函数
 --
--- CREATE DEFINER=`root`@`localhost` FUNCTION `CountLayer` (`p_node_id` INT) RETURNS INT(11) return 0$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `CountLayer` (`p_node_id` INT) RETURNS INT(11) return 0$$
 
 DELIMITER ;
 
@@ -44,6 +44,32 @@ CREATE TABLE `ci_sessions` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `config`
+--
+
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL,
+  `_key` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(10) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 转存表中的数据 `config`
+--
+
+INSERT INTO `config` (`id`, `_key`, `value`) VALUES
+(1, 'pwd1', '111111'),
+(2, 'pwd2', '222222'),
+(3, 'pwd3', '333333'),
+(4, 'pwd4', '444444'),
+(5, 'pwd5', '555555'),
+(6, 'pwd6', '666666'),
+(7, 'pwd7', '777777'),
+(8, 'pwd8', '888888');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `member`
 --
 
@@ -51,7 +77,6 @@ CREATE TABLE `member` (
   `id` int(11) NOT NULL,
   `line` int(11) NOT NULL,
   `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(11) NOT NULL,
   `recommend` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `contact` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `level` int(11) NOT NULL,
@@ -59,13 +84,6 @@ CREATE TABLE `member` (
   `leaf` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- 转存表中的数据 `member`
---
-
-INSERT INTO `member` (`id`, `line`, `username`, `phone`, `recommend`, `contact`, `level`, `state`, `leaf`, `time`) VALUES
-(120, 0, 'admin', '1876776655', 'root', 'root', 8, 2, 1, '2019-02-04 11:58:57');
 
 -- --------------------------------------------------------
 
@@ -107,7 +125,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `type`, `state`, `level`, `phone`, `wx`, `alipay`, `time`) VALUES
-(1, 'admin', 'admin', 0, 2, 1, '', 'ddd', '333', '2019-01-09 05:17:54');
+(1, 'admin', 'admin', 0, 2, 8, '18676578765', 'ddd333', '333', '2019-01-09 05:17:54');
 
 --
 -- Indexes for dumped tables
@@ -121,13 +139,18 @@ ALTER TABLE `ci_sessions`
   ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
 --
+-- Indexes for table `config`
+--
+ALTER TABLE `config`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `member`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `name` (`username`),
-  ADD UNIQUE KEY `phone` (`phone`);
+  ADD UNIQUE KEY `name` (`username`);
 
 --
 -- Indexes for table `tbl_update`
@@ -147,20 +170,25 @@ ALTER TABLE `user`
 --
 
 --
+-- 使用表AUTO_INCREMENT `config`
+--
+ALTER TABLE `config`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
 -- 使用表AUTO_INCREMENT `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 --
 -- 使用表AUTO_INCREMENT `tbl_update`
 --
 ALTER TABLE `tbl_update`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
