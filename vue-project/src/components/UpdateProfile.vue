@@ -107,6 +107,8 @@
 		          		if (r == true) {
 		          			that.doUpdateProfile();	
 		          		}
+		          	} else {
+		          		that.doUpdateProfile();	
 		          	}
 		          	// that.doUpdateProfile();		          	
 		          } else {
