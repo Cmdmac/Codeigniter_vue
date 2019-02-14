@@ -99,7 +99,7 @@
 		  				//that.model.phone = '';
 		  				//that.model.recommend = '';
 		  				//that.$set(that, 'model', that.model);
-		  				that.$router.replace({ name: 'main' });
+		  				that.$router.replace({ name: 'main', params: {needRefresh: true}});
 		  				//that.$router.go(-2);
 
 			  		}).catch(function (error) {

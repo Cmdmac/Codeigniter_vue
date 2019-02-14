@@ -181,13 +181,12 @@
 				];
 			
 				this.$set(this, 'items', items);
-			}
-		},
+			},
 
-		mounted() {
-			let that = this;
-			let username = window.localStorage.getItem('username');
-			this.ajax().get(this.Server.api.user.get + "?username=" + username)
+			refresh() {
+				let that = this;
+				let username = window.localStorage.getItem('username');
+				this.ajax().get(this.Server.api.user.get + "?username=" + username)
 		  		.ok(function (data) {			  			
 	  				//保存为全局对象
 	  				//that.Vue.prototype.globalUser = response.data.data;
@@ -212,8 +211,18 @@
 			  			}
 		  			}		  			
 		  		}).start();
-		}
+			}
+		},
 
+		mounted() {
+			this.refresh();
+		},
+
+		activated() {
+			if (this.$route.params.needRefresh != undefined && this.$route.params.needRefresh == true) {
+				this.refresh();
+			}
+		}
 	};
 </script>
 

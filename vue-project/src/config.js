@@ -43,7 +43,8 @@ var config = {
             add: host + "/index.php/update/add",
             getUpdateRecords: host + "/index.php/update/getUpdateRecords?username=",
             getReviewRecords: host + "/index.php/update/getReviewRecords?username=",
-            review: host + '/index.php/update/review'
+            review: host + '/index.php/update/review',
+            listReviewRecords: host + '/index.php/update/listReviewRecords'
         }
     },
     // page: {

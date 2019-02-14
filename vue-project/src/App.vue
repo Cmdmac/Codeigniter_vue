@@ -2,7 +2,9 @@
 
   <div id="app">
     <!-- <TitleBar /> -->
-    <router-view></router-view>
+    <keep-alive include='Main'>
+    	<router-view></router-view>
+	</keep-alive>
   </div>
 </template>
 

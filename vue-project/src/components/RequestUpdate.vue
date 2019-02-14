@@ -51,7 +51,7 @@
 	  					duration: 1000
 	  				});
 	  				//window.location = that.Server.page.main.index;
-	  				that.$router.push({name: 'main'});
+	  				that.$router.push({name: 'main'，params: {needRefresh: true}});
 				}).notOk(function(data) {					
 	  				if (data.code == 401) {
 
