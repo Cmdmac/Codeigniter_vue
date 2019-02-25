@@ -7,7 +7,11 @@
               <div v-if="false" class="avat">
                 <img :src="treeData.image_url" />
               </div>
-              <div v-if="treeData.register == undefined"  class="name"><span @click="onClickName(treeData)">{{treeData.name}}</span><i v-if="treeData.showRefresh" @click="$emit('click-refresh', treeData)" class="el-icon-refresh" style="margin-left: 1px"></i></div>
+              <div v-if="treeData.register == undefined"  class="name">
+                <span @click="onClickName(treeData)">{{treeData.name}}</span>
+                <i v-if="treeData.showRefresh" @click="$emit('click-refresh', treeData)" class="el-icon-refresh" style="margin-left: 1px"></i>
+              </div>
+              <span v-if="treeData.level">等级:{{treeData.level}}</span>
               <div class="content">
                 <div v-if="treeData.register" class="register" @click="$emit('click-register', treeData)">注册</div>
                 <div v-if="treeData.update" class="register" @click="onUpdate(treeData)">更新</div>
