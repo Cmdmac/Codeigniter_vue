@@ -81,7 +81,7 @@ export default {
 
 <style scoped>
 table{border-collapse: separate!important;border-spacing: 0!important;}
-td{position: relative; vertical-align: top;padding:0 0 40px 0;text-align: center; }
+td{position: relative; vertical-align: top;padding:0 0 25px 0;text-align: center; }
 
 .extend_handle{position: absolute;left:50%;bottom:15px; width:10px;height: 10px;padding: 10px; transform: translate3d(-15px,0,0);cursor: pointer;}
 .extend_handle:before{content:""; display: block; width:100%;height: 100%;box-sizing: border-box; border:2px solid;border-color:#ccc #ccc transparent transparent;
